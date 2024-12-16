@@ -1,0 +1,14 @@
+<h1 mat-dialog-title align="center">Alerta</h1>
+
+<div mat-dialog-content>
+<p>{{conteudoAlert.descricao}}</p>
+</div>
+
+<mat-dialog-actions align="center">
+  <button mat-stroked-button *ngIf="conteudoAlert.opcao1 && this.deviceService.isMobile()" (click)="dialogRef.close({retorno: 'opcao1', tela: 'celular'})" style="padding: 0 25px 0 25px; margin: 10px;">{{conteudoAlert.opcao1}}</button>
+  <button mat-stroked-button *ngIf="conteudoAlert.opcao2 && this.deviceService.isMobile()" (click)="dialogRef.close({retorno: 'opcao2', tela: 'celular'})" style="padding: 0 25px 0 25px; margin: 10px;">{{conteudoAlert.opcao2}}</button>
+
+  <button mat-stroked-button *ngIf="conteudoAlert.opcao1 && !this.deviceService.isMobile()" (click)="dialogRef.close({retorno: 'opcao1', tela: 'computador'})" style="padding: 0 25px 0 25px; margin: 10px;">{{conteudoAlert.opcao1}}</button>
+  <button mat-stroked-button *ngIf="conteudoAlert.opcao2 && !this.deviceService.isMobile()" (click)="dialogRef.close({retorno: 'opcao2', tela: 'computador'})" style="padding: 0 25px 0 25px; margin: 10px;">{{conteudoAlert.opcao2}}</button>
+  <button mat-stroked-button mat-dialog-close cdkFocusInitial style="padding: 0 25px 0 25px; margin: 10px;">Voltar</button>
+</mat-dialog-actions>

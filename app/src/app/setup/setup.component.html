@@ -1,0 +1,147 @@
+ <main class="main-container">
+  <section class="section-fechamento">
+    <section class="section-fechamento">
+
+      <form [formGroup]="formNumerosSelecionados" (ngSubmit)="submitCalcularFechamento()" >
+        <section style="display: flex; justify-content: center; align-self: center;" >
+          <mat-form-field class="form-input" appearance="outline">
+            <input
+            matInput
+            type="number"
+            required="true"
+            formControlName="n1" />
+          </mat-form-field>
+
+          <mat-form-field class="form-input" appearance="outline">
+            <input
+            matInput
+            type="number"
+            required="true"
+            formControlName="n2" />
+          </mat-form-field>
+
+          <mat-form-field class="form-input" appearance="outline">
+            <input
+            matInput
+            type="number"
+            required="true"
+            formControlName="n3" />
+          </mat-form-field>
+
+          <mat-form-field class="form-input" appearance="outline">
+            <input
+            matInput
+            type="number"
+            required="true"
+            formControlName="n4" />
+          </mat-form-field>
+
+          <mat-form-field class="form-input" appearance="outline">
+            <input
+            matInput
+            type="number"
+            required="true"
+            formControlName="n5" />
+          </mat-form-field>
+
+          <mat-form-field class="form-input" appearance="outline">
+            <input
+            matInput
+            type="number"
+            required="true"
+            formControlName="n6" />
+          </mat-form-field>
+
+          <mat-form-field class="form-input" appearance="outline">
+            <input
+            matInput
+            type="number"
+            required="true"
+            formControlName="n7" />
+          </mat-form-field>
+
+          <mat-form-field class="form-input" appearance="outline">
+            <input
+            matInput
+            type="number"
+            required="true"
+            formControlName="n8" />
+          </mat-form-field>
+
+          <mat-form-field class="form-input" appearance="outline">
+            <input
+            matInput
+            type="number"
+            required="true"
+            formControlName="n9" />
+          </mat-form-field>
+
+          <mat-form-field class="form-input" appearance="outline">
+            <input
+            matInput
+            type="number"
+            required="true"
+            formControlName="n10" />
+          </mat-form-field>
+
+          <mat-form-field class="form-input" appearance="outline">
+            <input
+            matInput
+            type="number"
+            required="true"
+            formControlName="n11" />
+          </mat-form-field>
+
+          <mat-form-field class="form-input" appearance="outline">
+            <input
+            matInput
+            type="number"
+            required="true"
+            formControlName="n12" />
+          </mat-form-field>
+
+          <mat-form-field class="form-input" appearance="outline">
+            <input
+            matInput
+            type="number"
+            required="true"
+            formControlName="n13" />
+          </mat-form-field>
+          <mat-form-field class="form-input" appearance="outline">
+            <input
+            matInput
+            type="number"
+            required="true"
+            formControlName="n14" />
+          </mat-form-field>
+          
+          <div class="form-input">
+            <button
+          
+            type="submit"
+            matSuffix
+            mat-stroked-button 
+            [disabled]="formNumerosSelecionados.invalid" cdkFocusInitial>
+            Calcular Fechamento
+          </button>
+          </div>
+
+        </section>
+      </form>
+    </section>
+
+  </section>
+
+   <!--    <p>Caso tenha um novo cliente, ou foi alterado o nome do cliente, esse botão atualia a lista de clientes.</p>
+
+      <div class="example-button-row">
+        <button mat-raised-button (click)="executarFuncao('cliente')" style="margin: 8px;">Recarregar Clientes</button>
+
+      </div>
+
+      <div class="example-button-row" style="margin-top: 50px;">
+        <p>Caso uma empresa não tenha horas no respectivo mês, esse botão corrige o problema da empresa não aparecer</p>
+        <button mat-raised-button (click)="executarFuncao('contrato')" style="margin: 8px;">Integrar Contratos</button>
+      </div> -->
+
+  </main>

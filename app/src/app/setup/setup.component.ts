@@ -1,32 +1,71 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatButton, MatButtonModule} from '@angular/material/button';
+
+/* import { HeaderComponent } from '../shared/header/header.component';
+import { LayoutComponent } from '../shared/layout/layout.component'; */
+
+import { SetupService } from './setup.service';
+import { ActivatedRoute } from '@angular/router';
+
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-setup',
   standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  imports: [CommonModule, ReactiveFormsModule, 
+    MatButtonModule, MatDividerModule, 
+    MatIconModule, MatDialogModule, MatFormFieldModule, 
+    MatInputModule, FormsModule ],
+  templateUrl: './setup.component.html',
+  styleUrl: './setup.component.scss',
+  //exports: [HeaderComponent]
 })
-export class AppComponent {
-  title = 'app';
- 
+export class SetupComponent {
 
-  constructor(){
+  title = 'Calculadora de Fechamento';
+
+  formNumerosSelecionados: FormGroup
+
+  constructor(
+    private setupService: SetupService,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    public dialog: MatDialog,
+  ) { 
+
+    this.formNumerosSelecionados = this.formBuilder.group({
+      n1: [1, [ Validators.required]],
+      n2: [2, [ Validators.required]],
+      n3: [3, [ Validators.required]],
+      n4: [4, [ Validators.required]],
+      n5: [5, [ Validators.required]],
+      n6: [6, [ Validators.required]],
+      n7: [7, [ Validators.required]],
+      n8: [8, [ Validators.required]],
+      n9: [9, [ Validators.required]],
+      n10: [10, [ Validators.required]],
+      n11: [11, [ Validators.required]],
+      n12: [12, [ Validators.required]],
+      n13: [13, [ Validators.required]],
+      n14: [14, [ Validators.required]]
+    }); 
+
+
+    console.log("testeasads")
     this.gerarFechamento()
-
-    console.log(this.fechamento.length)
-
-      this.fechamento.forEach(r => {
-          console.log(r)
-      })
-
   }
 
-   
 
-
+  submitCalcularFechamento(){
+    console.log(this.formNumerosSelecionados.value)
+  }
 
   numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // Conjunto principal
   tamanhoJogo = 7; // Quantidade de números por jogo
@@ -36,9 +75,11 @@ export class AppComponent {
 
   gerarFechamento() {
     this.processando = true;
-
     // Gerar fechamento otimizado
     this.fechamento = this.fecharJogos(this.numeros, this.tamanhoJogo, this.garantirAcertos);
+
+    console.log(this.fechamento.length)
+    console.log(this.fechamento)
 
     this.processando = false;
   }
@@ -98,62 +139,11 @@ export class AppComponent {
 
 
 
-  numeros1 = [2, 6, 8, 19, 21, 23, 31, 35, 37] // [2, 6, 8, 19, 21, 23, 31, 35, 37, 41, 45, 49, 52, 57];
-  //numeros2 = [35, 37, 41, 45, 49, 52, 57] // [2, 6, 8, 19, 21, 23, 31, 35, 37, 41, 45, 49, 52, 57];
 
-  combinacoes4: number[][] = [];
-  combinacoes7: number[][] = [];
- construirCombinacao(){
+  private buildFormHoraContratada(h: number): void {
+    /* this.formNumerosSelecionados = this.formBuilder.group({
+      hora: [h, [ Validators.required, Validators.max(250), Validators.min(0)]]
+    }); */
+  }
 
-
-    // Gerar combinações de 6 números
-    this.combinacoes4 = this.gerarCombinacoes2(this.numeros1, 4)
-    this.combinacoes7 = this.gerarCombinacoes2(this.numeros1, 7)
-
-
-    console.log(this.combinacoes4.length)
-    console.log(this.combinacoes7.length)
-
-    //   console.log(this.combinacoes1[0].toString())
-
-
-    //this.combinacoes1.forEach(r => console.log(r))
-      this.combinacoes7.forEach((r7, i7) => {
-        var qtd_localizado7 = 0
-        this.combinacoes4.forEach((r4, i4) => {
-          var qtd_localizado4 = 0;
-          r4.forEach(rr4 => {
-            r7.forEach(rr7 => {
-              if(rr4 == rr7){
-                qtd_localizado4++;
-              }
-            })
-          })
-          if(qtd_localizado4 == 4){
-            qtd_localizado7++;
-          }
-        })
-
-      this.combinacoes7[i7].push(qtd_localizado7)
-      /*  //console.log(r)
-        if(this.combinacoes7[i7].length == 7){
-          this.combinacoes7[i7].push(qtd_localizado7)
-        } else {
-          this.combinacoes7[i7][7]++
-        } */
-      
-      })
-    
-      this.combinacoes7.forEach(r => console.log(r))      
-      this.combinacoes4.forEach(r => console.log(r))
-    }
-
-    gerarCombinacoes2(array: number[], tamanho: number): number[][] {
-    if (tamanho === 1) return array.map(el => [el]);
-
-    return array.flatMap((el, i) =>
-      this.gerarCombinacoes(array.slice(i + 1), tamanho - 1).map(comb => [el, ...comb])
-    );
-    }
-
- }
+}
