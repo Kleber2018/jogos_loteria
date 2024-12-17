@@ -63,7 +63,6 @@
             matInput
             type="number"
             min="0" max="60"
-            required="true"
             formControlName="n7" />
           </mat-form-field>
 
@@ -123,9 +122,32 @@
           </mat-form-field>
         </section>
 
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+          <mat-form-field appearance="outline">
+            <mat-label>Tamanho dos jogos</mat-label>
+            <input
+            matInput
+            type="number"
+            required="true"
+            min="6" max="10" 
+            formControlName="tamanhoJogo" />
+          </mat-form-field>
+        </section>
+
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+          <mat-form-field  appearance="outline">
+            <mat-label>Quantidade minima de de acertos</mat-label>
+            <input
+            matInput
+            type="number"
+            min="0" max="60"
+            required="true"
+            formControlName="acertos" />
+          </mat-form-field>
+        </section>
 
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
-          <div class="form-input">
+          <div>
             <button
             style="margin: 10px;"
             type="submit"
@@ -139,6 +161,22 @@
           </div>
         </section>
       </form>
+    </section>
+
+    <section class="section-fechamento" *ngIf="fechamentos">
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <p style="padding: 8px; margin: 0px;">Para montar o fechamento de {{numeros.length}} números com garantia de pelo menos {{garantirAcertos}} acertos, você vai precisar fazer {{fechamentos.length}} jogos de {{tamanhoJogo}}</p>
+      </section>
+      
+    </section>
+
+    <section class="section-fechamento" *ngIf="fechamentos">
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  *ngFor="let fechamento of fechamentos">
+        <div *ngFor="let f of fechamento">
+          <p style="padding: 8px; margin: 0px;">{{f}}</p>
+        </div>
+
+      </section>
     </section>
 
   </section>

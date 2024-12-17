@@ -47,14 +47,16 @@ export class SetupComponent {
       n4: [4, [ Validators.required, Validators.min(1), Validators.max(60)]],
       n5: [5, [ Validators.required, Validators.min(1), Validators.max(60)]],
       n6: [6, [ Validators.required, Validators.min(1), Validators.max(60)]],
-      n7: [7, [ Validators.required, Validators.min(1), Validators.max(60)]],
+      n7: [7, [Validators.min(1), Validators.max(60)]],
       n8: [8 , [Validators.min(1), Validators.max(60)]],
       n9: [9, [Validators.min(1), Validators.max(60)]],
       n10: [10, [Validators.min(1), Validators.max(60)]],
       n11: [, [Validators.min(1), Validators.max(60)]],
       n12: [, [Validators.min(1), Validators.max(60)]],
       n13: [, [Validators.min(1), Validators.max(60)]],
-      n14: [, [Validators.min(1), Validators.max(60)]]
+      n14: [, [Validators.min(1), Validators.max(60)]],
+      tamanhoJogo: [7, [Validators.min(1), Validators.max(60)]],
+      acertos: [4, [Validators.min(3), Validators.max(6)]]
     }); 
 
 
@@ -64,33 +66,40 @@ export class SetupComponent {
 
 
   submitCalcularFechamento(){
-    console.log(this.formNumerosSelecionados.value.n1)
 
-    let numeros = Array.from({ length: 14 }, (_, i) => 
+    let nums = Array.from({ length: 14 }, (_, i) => 
       this.formNumerosSelecionados.value[`n${i + 1}`]
     );
 
     // Remover duplicados e null/undefined
-    numeros = [...new Set(numeros)].filter(num => num !== null && num !== undefined);
+    nums = [...new Set(nums)].filter(num => num !== null && num !== undefined);
 
     // Exibir o resultado
-    console.log('Números sem duplicatas:', numeros);
+    console.log('Números sem duplicatas:', nums);
+
+    this.numeros = nums;
+    this.tamanhoJogo = this.formNumerosSelecionados.value.tamanhoJogo
+    this.garantirAcertos = this.formNumerosSelecionados.value.acertos
+    this.gerarFechamento()
+
 
   }
 
   numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // Conjunto principal
   tamanhoJogo = 7; // Quantidade de números por jogo
   garantirAcertos = 4; // Garantia de 4 acertos
-  fechamento: number[][] = []; // Resultado final do fechamento
+  fechamentos: number[][] = []; // Resultado final do fechamento
   processando = false;
 
   gerarFechamento() {
     this.processando = true;
     // Gerar fechamento otimizado
-    this.fechamento = this.fecharJogos(this.numeros, this.tamanhoJogo, this.garantirAcertos);
+    this.fechamentos = this.fecharJogos(this.numeros, this.tamanhoJogo, this.garantirAcertos);
 
-    console.log(this.fechamento.length)
-    console.log(this.fechamento)
+    console.log(this.fechamentos.length)
+    console.log(this.fechamentos)
+    console.log("tamanho do jogo", this.formNumerosSelecionados.value.tamanhoJogo)
+
 
     this.processando = false;
   }
