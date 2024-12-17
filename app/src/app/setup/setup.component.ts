@@ -41,20 +41,20 @@ export class SetupComponent {
   ) { 
 
     this.formNumerosSelecionados = this.formBuilder.group({
-      n1: [1, [ Validators.required]],
-      n2: [2, [ Validators.required]],
-      n3: [3, [ Validators.required]],
-      n4: [4, [ Validators.required]],
-      n5: [5, [ Validators.required]],
-      n6: [6, [ Validators.required]],
-      n7: [7, [ Validators.required]],
-      n8: [8, [ Validators.required]],
-      n9: [9, [ Validators.required]],
-      n10: [10, [ Validators.required]],
-      n11: [11, [ Validators.required]],
-      n12: [12, [ Validators.required]],
-      n13: [13, [ Validators.required]],
-      n14: [14, [ Validators.required]]
+      n1: [1, [ Validators.required, Validators.min(1), Validators.max(60)]],
+      n2: [2, [ Validators.required, Validators.min(1), Validators.max(60)]],
+      n3: [3, [ Validators.required, Validators.min(1), Validators.max(60)]],
+      n4: [4, [ Validators.required, Validators.min(1), Validators.max(60)]],
+      n5: [5, [ Validators.required, Validators.min(1), Validators.max(60)]],
+      n6: [6, [ Validators.required, Validators.min(1), Validators.max(60)]],
+      n7: [7, [ Validators.required, Validators.min(1), Validators.max(60)]],
+      n8: [8 , [Validators.min(1), Validators.max(60)]],
+      n9: [9, [Validators.min(1), Validators.max(60)]],
+      n10: [10, [Validators.min(1), Validators.max(60)]],
+      n11: [, [Validators.min(1), Validators.max(60)]],
+      n12: [, [Validators.min(1), Validators.max(60)]],
+      n13: [, [Validators.min(1), Validators.max(60)]],
+      n14: [, [Validators.min(1), Validators.max(60)]]
     }); 
 
 
@@ -64,7 +64,18 @@ export class SetupComponent {
 
 
   submitCalcularFechamento(){
-    console.log(this.formNumerosSelecionados.value)
+    console.log(this.formNumerosSelecionados.value.n1)
+
+    let numeros = Array.from({ length: 14 }, (_, i) => 
+      this.formNumerosSelecionados.value[`n${i + 1}`]
+    );
+
+    // Remover duplicados e null/undefined
+    numeros = [...new Set(numeros)].filter(num => num !== null && num !== undefined);
+
+    // Exibir o resultado
+    console.log('Números sem duplicatas:', numeros);
+
   }
 
   numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // Conjunto principal
