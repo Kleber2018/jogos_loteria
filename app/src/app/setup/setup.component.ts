@@ -50,19 +50,22 @@ export class SetupComponent {
       n7: [7, [Validators.min(1), Validators.max(60)]],
       n8: [8 , [Validators.min(1), Validators.max(60)]],
       n9: [9, [Validators.min(1), Validators.max(60)]],
-      n10: [10, [Validators.min(1), Validators.max(60)]],
+      n10: [, [Validators.min(1), Validators.max(60)]],
       n11: [, [Validators.min(1), Validators.max(60)]],
       n12: [, [Validators.min(1), Validators.max(60)]],
       n13: [, [Validators.min(1), Validators.max(60)]],
       n14: [, [Validators.min(1), Validators.max(60)]],
       tamanhoJogo: [7, [Validators.min(1), Validators.max(60)]],
-      acertos: [4, [Validators.min(3), Validators.max(6)]]
+      acertos: [4, [Validators.min(3), Validators.max(6)]],
+      cotas: [1, [Validators.min(1), Validators.max(100)]]
     }); 
 
 
     console.log("testeasads")
     this.gerarFechamento()
   }
+
+
 
 
   submitCalcularFechamento(){
@@ -83,9 +86,83 @@ export class SetupComponent {
     this.gerarFechamento()
 
 
+    this.calcularCustoJogo()
+
   }
 
-  numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // Conjunto principal
+  valorCadaJogo = 0;
+  valorTotalBolao = 0;
+  valorPorCota = 0;
+  msgErroCotas = ""
+  msgErroCotas2 = ""
+  msgErroCotas3 = ""
+  calcularCustoJogo(){
+    if (this.tamanhoJogo == 6) {
+      this.valorCadaJogo = 5;
+    } else if (this.tamanhoJogo == 7) {
+      this.valorCadaJogo = 35;
+    } else if (this.tamanhoJogo == 8) {
+      this.valorCadaJogo = 140;
+    } else if (this.tamanhoJogo == 9) {
+      this.valorCadaJogo = 420;
+    } else if (this.tamanhoJogo == 10) {
+      this.valorCadaJogo = 1050;
+    } else if (this.tamanhoJogo == 11) {
+      this.valorCadaJogo = 2310;
+    } else if (this.tamanhoJogo == 12) {
+      this.valorCadaJogo = 4620;
+    } else if (this.tamanhoJogo == 13) {
+      this.valorCadaJogo = 8580;
+    } else if (this.tamanhoJogo == 14) {
+      this.valorCadaJogo = 15015;
+    }
+
+
+    this.valorTotalBolao = this.fechamentos.length * this.valorCadaJogo
+
+    this.valorPorCota = this.valorTotalBolao/this.formNumerosSelecionados.value.cotas
+
+    if (this.tamanhoJogo == 6) {
+      if(this.valorPorCota < 6){
+        this.msgErroCotas = "Atenção: Para um bolão de 6 números o valor mínimo por cota é de R$ 6,00";
+      }
+      if(this.formNumerosSelecionados.value.cotas > 8){
+        this.msgErroCotas2 = "Atenção 2: Para um bolão de 6 números só é permitido no máximo 8 cotas";
+      }
+
+    } else if (this.tamanhoJogo == 7) {
+      if(this.valorPorCota < 7){
+        this.msgErroCotas = "Atenção: Para um bolão de 7 números o valor mínimo por cota é de R$ 7,00";
+      }
+      if(this.formNumerosSelecionados.value.cotas > 8){
+        this.msgErroCotas2 = "Atenção 2: Para um bolão de 7 números só é permitido no máximo 50 cotas";
+      }
+    } else if (this.tamanhoJogo == 8) {
+      if(this.valorPorCota < 7){
+        this.msgErroCotas = "Atenção: Para um bolão de 8 números o valor mínimo por cota é de R$ 7,00";
+      }
+      
+    }
+    else if (this.tamanhoJogo == 9) {
+      if(this.valorPorCota < 7){
+        this.msgErroCotas = "Atenção: Para um bolão de 9 números o valor mínimo por cota é de R$ 7,00";
+      }
+     
+    }
+
+    if(this.fechamentos.length > 10){
+      this.msgErroCotas3 = "Atenção 3: 10 jogos é a quantidade máxima de jogos no recibo, você vai ter que descartar alguns jogos ou fazer um segundo bolão";
+    }
+
+
+   
+
+
+
+
+  }
+
+  numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9]; // Conjunto principal
   tamanhoJogo = 7; // Quantidade de números por jogo
   garantirAcertos = 4; // Garantia de 4 acertos
   fechamentos: number[][] = []; // Resultado final do fechamento
@@ -99,7 +176,7 @@ export class SetupComponent {
     console.log(this.fechamentos.length)
     console.log(this.fechamentos)
     console.log("tamanho do jogo", this.formNumerosSelecionados.value.tamanhoJogo)
-
+    this.calcularCustoJogo()
 
     this.processando = false;
   }

@@ -2,7 +2,16 @@
   <section class="section-fechamento">
     <section class="section-fechamento">
 
+      <section class="section-fechamento">
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+            <h2 style="padding: 8px; margin: 24px 0px; ">Calculadora para motagem de fechamento de jogos da Mega-Sena</h2>
+        </section>
+      </section>
+
       <form [formGroup]="formNumerosSelecionados" (ngSubmit)="submitCalcularFechamento()" >
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <p style="padding: 8px; margin: 8px 0px; ">Preencha os números escolhidos:</p>
+        </section>
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
           <mat-form-field class="form-input" appearance="outline">
             <input
@@ -121,7 +130,9 @@
             formControlName="n14" />
           </mat-form-field>
         </section>
-
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <p style="padding: 8px; margin: 8px 0px; ">Configurações do bolão: </p>
+        </section>
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
           <mat-form-field appearance="outline">
             <mat-label>Tamanho dos jogos</mat-label>
@@ -134,7 +145,7 @@
           </mat-form-field>
         </section>
 
-          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
           <mat-form-field  appearance="outline">
             <mat-label>Quantidade minima de de acertos</mat-label>
             <input
@@ -143,6 +154,17 @@
             min="0" max="60"
             required="true"
             formControlName="acertos" />
+          </mat-form-field>
+        </section>
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+          <mat-form-field  appearance="outline">
+            <mat-label>Quantidade de cotas do bolão</mat-label>
+            <input
+            matInput
+            type="number"
+            min="1" max="100"
+            required="true"
+            formControlName="cotas" />
           </mat-form-field>
         </section>
 
@@ -161,13 +183,30 @@
           </div>
         </section>
       </form>
+
+
+    </section>
+    <mat-divider style="width: 100%; margin: 8px 0px;"></mat-divider>
+    <section class="section-fechamento" *ngIf="fechamentos">
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <p style="padding: 8px; margin: 0px;">Para montar o fechamento de {{numeros.length}} números com garantia de pelo menos {{garantirAcertos}} acertos, você vai precisar fazer <b>{{fechamentos.length}} jogos </b> de {{tamanhoJogo}} números</p>
+      </section>
+      
     </section>
 
     <section class="section-fechamento" *ngIf="fechamentos">
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
-          <p style="padding: 8px; margin: 0px;">Para montar o fechamento de {{numeros.length}} números com garantia de pelo menos {{garantirAcertos}} acertos, você vai precisar fazer {{fechamentos.length}} jogos de {{tamanhoJogo}}</p>
+          <p style="padding: 8px; margin: 0px;">O custo total do bolão vai ser de <b>R$ {{valorTotalBolao}},00</b>, dividido por <b>{{formNumerosSelecionados.value.cotas}} cotas</b> com o valor por cota de <b>R$ {{valorPorCota}} reais </b></p>
       </section>
-      
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+        <span style="padding: 8px; margin: 0px; color: brown;">{{msgErroCotas}}</span>
+      </section>
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+        <span style="padding: 8px; margin: 0px; color: brown;">{{msgErroCotas2}}</span>
+      </section>
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+        <span style="padding: 8px; margin: 0px; color: brown;">{{msgErroCotas3}}</span>
+      </section>
     </section>
 
     <section class="section-fechamento" *ngIf="fechamentos">
@@ -178,6 +217,17 @@
 
       </section>
     </section>
+
+    <mat-divider style="width: 100%; margin: 54px 0px;"></mat-divider>
+    <section class="section-fechamento">
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <p style="padding: 8px; margin: 8px 0px 40px 0px; color: rgb(85, 85, 85);">Atualização 22/12/24 - outras informações em </p>
+          <a  style="padding: 8px 0px; margin: 8px 0px 32px 0px; color: rgb(85, 85, 85);" href="https://loterias.caixa.gov.br/Paginas/Mega-Sena.aspx" target="_blank" rel="noopener noreferrer">Loterias Caixa</a>
+
+      </section>
+    </section>
+
+     
 
   </section>
 
