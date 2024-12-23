@@ -31,6 +31,11 @@ export class SetupComponent {
 
   title = 'Calculadora de Fechamento';
 
+  numerosMaisSorteados = [46, 25, 45, 33, 11, 19, 20, 34, 43, 47]
+  numerosMenosSorteados = [12, 53, 44, 30, 51, 36, 23]
+
+  jogoGerado: number[] = [];
+
   formNumerosSelecionados: FormGroup
 
   constructor(
@@ -60,13 +65,45 @@ export class SetupComponent {
       cotas: [1, [Validators.min(1), Validators.max(100)]]
     }); 
 
+    this.jogoGerado = this.setupService.gerarJogo(this.numerosMaisSorteados, this.numerosMenosSorteados);
 
-    console.log("testeasads")
+    this.buildForm(this.jogoGerado)
+
     this.gerarFechamento()
+
+    console.log("mais sorteados em 2024:", this.numerosMaisSorteados)
+    console.log("mais sorteados em 2024:", this.numerosMenosSorteados)
+
+    
   }
 
 
+  buildForm(jogo: number[]){
 
+    if(jogo.length > 8){
+      this.formNumerosSelecionados = this.formBuilder.group({
+        n1: [jogo[0], [ Validators.required, Validators.min(1), Validators.max(60)]],
+        n2: [jogo[1], [ Validators.required, Validators.min(1), Validators.max(60)]],
+        n3: [jogo[2], [ Validators.required, Validators.min(1), Validators.max(60)]],
+        n4: [jogo[3], [ Validators.required, Validators.min(1), Validators.max(60)]],
+        n5: [jogo[4], [ Validators.required, Validators.min(1), Validators.max(60)]],
+        n6: [jogo[5], [ Validators.required, Validators.min(1), Validators.max(60)]],
+        n7: [jogo[6], [Validators.min(1), Validators.max(60)]],
+        n8: [jogo[7] , [Validators.min(1), Validators.max(60)]],
+        n9: [jogo[8], [Validators.min(1), Validators.max(60)]],
+        n10: [, [Validators.min(1), Validators.max(60)]],
+        n11: [, [Validators.min(1), Validators.max(60)]],
+        n12: [, [Validators.min(1), Validators.max(60)]],
+        n13: [, [Validators.min(1), Validators.max(60)]],
+        n14: [, [Validators.min(1), Validators.max(60)]],
+        tamanhoJogo: [7, [Validators.min(1), Validators.max(60)]],
+        acertos: [4, [Validators.min(3), Validators.max(6)]],
+        cotas: [1, [Validators.min(1), Validators.max(100)]]
+      }); 
+    }
+    
+
+  }
 
   submitCalcularFechamento(){
 
@@ -97,6 +134,10 @@ export class SetupComponent {
   msgErroCotas2 = ""
   msgErroCotas3 = ""
   calcularCustoJogo(){
+    this.msgErroCotas = ""
+    this.msgErroCotas2 = ""
+    this.msgErroCotas3 = ""
+
     if (this.tamanhoJogo == 6) {
       this.valorCadaJogo = 5;
     } else if (this.tamanhoJogo == 7) {
@@ -117,7 +158,6 @@ export class SetupComponent {
       this.valorCadaJogo = 15015;
     }
 
-
     this.valorTotalBolao = this.fechamentos.length * this.valorCadaJogo
 
     this.valorPorCota = this.valorTotalBolao/this.formNumerosSelecionados.value.cotas
@@ -134,7 +174,7 @@ export class SetupComponent {
       if(this.valorPorCota < 7){
         this.msgErroCotas = "Atenção: Para um bolão de 7 números o valor mínimo por cota é de R$ 7,00";
       }
-      if(this.formNumerosSelecionados.value.cotas > 8){
+      if(this.formNumerosSelecionados.value.cotas > 50){
         this.msgErroCotas2 = "Atenção 2: Para um bolão de 7 números só é permitido no máximo 50 cotas";
       }
     } else if (this.tamanhoJogo == 8) {
@@ -142,8 +182,7 @@ export class SetupComponent {
         this.msgErroCotas = "Atenção: Para um bolão de 8 números o valor mínimo por cota é de R$ 7,00";
       }
       
-    }
-    else if (this.tamanhoJogo == 9) {
+    } else if (this.tamanhoJogo == 9) {
       if(this.valorPorCota < 7){
         this.msgErroCotas = "Atenção: Para um bolão de 9 números o valor mínimo por cota é de R$ 7,00";
       }
@@ -152,13 +191,7 @@ export class SetupComponent {
 
     if(this.fechamentos.length > 10){
       this.msgErroCotas3 = "Atenção 3: 10 jogos é a quantidade máxima de jogos no recibo, você vai ter que descartar alguns jogos ou fazer um segundo bolão";
-    }
-
-
-   
-
-
-
+    } 
 
   }
 
