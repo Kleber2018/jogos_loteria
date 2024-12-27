@@ -199,6 +199,9 @@
           <p style="padding: 8px; margin: 0px;">O custo total do bolão vai ser de <b>R$ {{valorTotalBolao}},00</b>, dividido por <b>{{formNumerosSelecionados.value.cotas}} cotas</b> com o valor por cota de <b>R$ {{valorPorCota}} reais </b></p>
       </section>
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+        <p style="padding: 8px; margin: 0px;">Com base nos ultimos {{resultadosUltimos2024.length}} jogos de 2024 você teria acertado {{totalQuadras}} quadras, {{totalQuinas}} quinas, {{totalSenas}} senas</p>
+      </section>
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
         <span style="padding: 8px; margin: 0px; color: brown;">{{msgErroCotas}}</span>
       </section>
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
@@ -209,19 +212,34 @@
       </section>
     </section>
 
-    <section class="section-fechamento" *ngIf="fechamentos">
+    <!-- <section class="section-fechamento" *ngIf="fechamentos">
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  *ngFor="let fechamento of fechamentos">
         <div *ngFor="let f of fechamento">
           <p style="padding: 8px; margin: 0px;">{{f}}</p>
         </div>
 
       </section>
+    </section> -->
+
+    <section class="section-fechamento" style="margin-top: 50px;" *ngIf="resultadosJogos">
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  *ngFor="let resultJogo of resultadosJogos">
+        <div *ngFor="let res of resultJogo.jogo">
+          <p style="padding: 8px; margin: 0px;">{{res}}</p>
+        </div>
+        <p style="padding: 8px; margin: 0px; color: grey;">({{resultJogo.quadras}} {{resultJogo.quinas}} {{resultJogo.senas}})</p>
+      </section>
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;">
+        <p style="padding: 8px; margin: 0px; color: grey; margin-top: 24px;">(quadras quinas senas) que seriam feitas nos {{resultadosUltimos2024.length}} jogos de 2024</p>
+      </section>
     </section>
+
+
+    
 
     <mat-divider style="width: 100%; margin: 54px 0px;"></mat-divider>
     <section class="section-fechamento">
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap; margin: 8px 0px 40px 0px; " >
-          <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);">Atualização 22/12/24 - outras informações em </p>
+          <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);">Atualização 26/12/24 - outras informações em </p>
           <a  style="padding: 4px 0px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);" href="https://loterias.caixa.gov.br/Paginas/Mega-Sena.aspx" target="_blank" rel="noopener noreferrer">Loterias Caixa</a>
           <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);">| Desenvolvido por KLRS</p>
       </section>
