@@ -8,6 +8,53 @@
         </section>
       </section>
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <p style="padding: 8px; margin: 8px 0px; ">Clique no botão abaixo apra gerar um jogo com a seguinte configuração: 3 números que mais sairam, 2 números que mais sairam, números sequenciais e números de ao menos 2 quadrantes</p>
+        </section>
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="gerarJogoNovamente(9)">
+            9 números
+          </button>
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="gerarJogoNovamente(10)">
+            10 números
+          </button>
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="gerarJogoNovamente(11)">
+            11 números
+          </button>
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="gerarJogoNovamente(12)">
+            12 números
+          </button>
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="gerarJogoNovamente(13)">
+            13 números
+          </button>
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="gerarJogoNovamente(14)">
+            14 números
+          </button>
+        </section>
         <form [formGroup]="formNumerosSelecionados" (ngSubmit)="submitCalcularFechamento()" >
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
             <p style="padding: 8px; margin: 8px 0px; ">Preencha os números escolhidos:</p>

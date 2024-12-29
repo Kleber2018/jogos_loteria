@@ -30,7 +30,7 @@ export class  SetupService {
   gerarJogo(
     maisSorteados: number[],
     menosSorteados: number[],
-    tamanhoJogo: number = 9
+    tamanhoJogo: number = 10
   ): number[] {
     if (maisSorteados.length < 4 || menosSorteados.length < 2) {
       throw new Error('Listas de mais/menos sorteados insuficientes.');
