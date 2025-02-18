@@ -1,0 +1,25 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+
+}
+
+.section-fechamento {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
+}
+
+
+.form-input {
+  width: 72px;
+  margin: 1px;
+}
+
