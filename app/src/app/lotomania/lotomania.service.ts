@@ -12,7 +12,7 @@ import { observeInsideAngular } from '@angular/fire'; */
 @Injectable({
   providedIn: 'root'
 })
-export class  SetupService {
+export class  LotomaniaService {
 
   // private pesquisaArquetipoCollection: AngularFirestoreCollection<PesquisaArquetipo>;
   // private enumCollection: AngularFirestoreCollection<any>;
