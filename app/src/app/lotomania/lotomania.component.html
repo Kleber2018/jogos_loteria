@@ -1,4 +1,4 @@
- <main class="main-container">
+<main class="main-container">
   <section class="section-fechamento">
     <section class="section-fechamento">
 
@@ -16,13 +16,6 @@
             style="margin: 10px;"
             matSuffix
             mat-stroked-button 
-            (click)="gerarJogoNovamente(9)">
-            9 números
-          </button>
-          <button
-            style="margin: 10px;"
-            matSuffix
-            mat-stroked-button 
             (click)="gerarJogoNovamente(10)">
             10 números
           </button>
@@ -30,30 +23,24 @@
             style="margin: 10px;"
             matSuffix
             mat-stroked-button 
-            (click)="gerarJogoNovamente(11)">
-            11 números
+            (click)="gerarJogoNovamente(16)">
+            16 números
           </button>
           <button
             style="margin: 10px;"
             matSuffix
             mat-stroked-button 
-            (click)="gerarJogoNovamente(12)">
-            12 números
+            (click)="gerarJogoNovamente(20)">
+            20 números
           </button>
           <button
             style="margin: 10px;"
             matSuffix
             mat-stroked-button 
-            (click)="gerarJogoNovamente(13)">
-            13 números
+            (click)="gerarJogoNovamente(20)">
+            20 números
           </button>
-          <button
-            style="margin: 10px;"
-            matSuffix
-            mat-stroked-button 
-            (click)="gerarJogoNovamente(14)">
-            14 números
-          </button>
+         
         </section>
         <form [formGroup]="formNumerosSelecionados" (ngSubmit)="submitCalcularFechamento()" >
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
@@ -176,6 +163,48 @@
               min="0" max="60"
               formControlName="n14" />
             </mat-form-field>
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="0" max="60"
+              formControlName="n15" />
+            </mat-form-field>
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="0" max="60"
+              formControlName="n16" />
+            </mat-form-field>
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="0" max="60"
+              formControlName="n17" />
+            </mat-form-field>
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="0" max="60"
+              formControlName="n18" />
+            </mat-form-field>
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="0" max="60"
+              formControlName="n19" />
+            </mat-form-field>
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="0" max="60"
+              formControlName="n20" />
+            </mat-form-field>
           </section>
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
             <p style="padding: 8px; margin: 8px 0px; ">Configurações do bolão: </p>
@@ -286,8 +315,8 @@
     <mat-divider style="width: 100%; margin: 54px 0px;"></mat-divider>
     <section class="section-fechamento">
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap; margin: 8px 0px 40px 0px; " >
-          <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);">Atualização 29/12/24 - outras informações em </p>
-          <a  style="padding: 4px 0px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);" href="https://loterias.caixa.gov.br/Paginas/Mega-Sena.aspx" target="_blank" rel="noopener noreferrer">Loterias Caixa</a>
+          <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);">Atualização 10/03/25 - outras informações em </p>
+          <a  style="padding: 4px 0px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);" href="https://loterias.caixa.gov.br/Paginas/Lotomania.aspx" target="_blank" rel="noopener noreferrer">Loterias Caixa</a>
           <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);">| Desenvolvido por KLRS</p>
       </section>
     </section>
