@@ -80,7 +80,7 @@
               matInput
               type="number"
               required="true"
-              min="2" max="10" 
+              min="10" max="50" 
               formControlName="tamanhoJogo" />
             </mat-form-field>
           </section>
@@ -91,7 +91,7 @@
               <input
               matInput
               type="number"
-              min="0" max="10"
+              min="2" max="10"
               required="true"
               formControlName="acertos" />
             </mat-form-field>
@@ -115,7 +115,7 @@
               type="submit"
               matSuffix
               mat-stroked-button 
-              [disabled]="formNumerosSelecionados.invalid" cdkFocusInitial>
+              [disabled]="formNumSelecionados.invalid" cdkFocusInitial>
 
               Calcular Fechamento
             </button>
@@ -136,7 +136,7 @@
 
     <section class="section-fechamento" *ngIf="fechamentos">
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
-          <p style="padding: 8px; margin: 0px;">O custo total do bolão vai ser de <b>R$ {{valorTotalBolao}},00</b>, dividido por <b>{{formNumerosSelecionados.value.cotas}} cotas</b> com o valor por cota de <b>R$ {{valorPorCota}} reais </b></p>
+          <p style="padding: 8px; margin: 0px;">O custo total do bolão vai ser de <b>R$ {{valorTotalBolao}},00</b>, dividido por <b *ngIf="formNumSelecionados">{{formNumSelecionados.value.cotas}} cotas</b> com o valor por cota de <b>R$ {{valorPorCota}} reais </b></p>
       </section>
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
         <p style="padding: 8px; margin: 0px;">Com base nos ultimos {{resultadosUltimos2024.length}} jogos de 2024 você teria acertado {{totalQuadras}} quadras, {{totalQuinas}} quinas, {{totalSenas}} senas</p>
