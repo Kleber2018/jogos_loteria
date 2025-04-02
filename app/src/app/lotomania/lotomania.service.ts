@@ -27,7 +27,7 @@ export class  LotomaniaService {
   /**
    * Gera um jogo de 9 números baseado nos critérios fornecidos.
    */
-  gerarJogo(
+  gerarJogoLotomania(
     maisSorteados: number[],
     menosSorteados: number[],
     tamanhoJogo: number = 50
@@ -38,19 +38,19 @@ export class  LotomaniaService {
 
     const jogo: Set<number> = new Set();
 
-    // Adiciona 4 números dos mais sorteados
-    while (jogo.size < 4) {
+    // Adiciona 25 números dos mais sorteados
+    while (jogo.size < 25) {
       const numero = this.getAleatorio(maisSorteados);
       jogo.add(numero);
     }
 
-    // Adiciona 2 números dos menos sorteados
-    while (jogo.size < 6) {
+    // Adiciona 5 números dos menos sorteados
+    while (jogo.size < 30) {
       const numero = this.getAleatorio(menosSorteados);
       jogo.add(numero);
     }
 
-    // Adiciona 3 números aleatórios do restante
+    // Adiciona 20 números aleatórios do restante
     const numerosRestantes = this.numerosLotomania.filter(
       (n) => !jogo.has(n)
     );
@@ -71,6 +71,5 @@ export class  LotomaniaService {
     return lista[indice];
   }
    
-
 
   }
