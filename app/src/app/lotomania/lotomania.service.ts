@@ -30,7 +30,7 @@ export class  LotomaniaService {
   gerarJogoLotomania(
     maisSorteados: number[],
     menosSorteados: number[],
-    tamanhoJogo: number = 50
+    tamanhoJogo: number = 62
   ): number[] {
     if (maisSorteados.length < 4 || menosSorteados.length < 2) {
       throw new Error('Listas de mais/menos sorteados insuficientes.');
@@ -38,14 +38,14 @@ export class  LotomaniaService {
 
     const jogo: Set<number> = new Set();
 
-    // Adiciona 25 números dos mais sorteados
-    while (jogo.size < 25) {
+    // Adiciona 30 números dos mais sorteados
+    while (jogo.size < 30) {
       const numero = this.getAleatorio(maisSorteados);
       jogo.add(numero);
     }
 
     // Adiciona 5 números dos menos sorteados
-    while (jogo.size < 30) {
+    while (jogo.size < 35) {
       const numero = this.getAleatorio(menosSorteados);
       jogo.add(numero);
     }
