@@ -10,7 +10,7 @@ import { LotomaniaService } from './lotomania.service';
 import { ActivatedRoute } from '@angular/router';
 
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
@@ -29,7 +29,7 @@ import { numtop20MenosRepetidos, numtop40MaisRepetidos, resultadoLotomania } fro
   //exports: [HeaderComponent]
 })
 export class LotomaniaComponent {
- title = 'Calculadora de Fechamento';
+  title = 'Calculadora de Fechamento Lotomania';
 
   numerosMaisSorteados = numtop40MaisRepetidos
   numerosMenosSorteados = numtop20MenosRepetidos
@@ -41,6 +41,12 @@ export class LotomaniaComponent {
 
   formNumerosSelecionados: FormGroup
 
+  public formNumSelecionados: FormGroup | undefined;
+
+  get nums(): FormArray {
+    return this.formNumSelecionados?.get('nums') as FormArray;
+  }
+
   totalQuadras = 0;
   totalQuinas = 0;
   totalSenas = 0;
@@ -51,6 +57,14 @@ export class LotomaniaComponent {
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
   ) { 
+
+    /* this.formNumSelecionados = this.formBuilder.group({
+      nums: this.formBuilder.array([]),
+      tamanhoJogo: [16, [Validators.min(0), Validators.max(99)]],
+      acertos: [3, [Validators.min(3), Validators.max(6)]],
+      cotas: [1, [Validators.min(0), Validators.max(100)]]
+
+    }) */
 
     this.formNumerosSelecionados = this.formBuilder.group({
       n1: [1, [ Validators.required, Validators.min(0), Validators.max(99)]],
@@ -77,7 +91,7 @@ export class LotomaniaComponent {
       n22: [18, ],
       n23: [19, ],
       n24: [20, ],
-      tamanhoJogo: [10, [Validators.min(0), Validators.max(99)]],
+      tamanhoJogo: [16, [Validators.min(0), Validators.max(99)]],
       acertos: [3, [Validators.min(3), Validators.max(6)]],
       cotas: [1, [Validators.min(0), Validators.max(100)]]
     }); 
@@ -90,6 +104,8 @@ export class LotomaniaComponent {
     console.log("+ sorteados em 2024:", this.numerosMaisSorteados)
     console.log("- sorteados em 2024:", this.numerosMenosSorteados)
     console.log("Gerados:", this.numerosGerados)
+
+
     
   }
   
@@ -152,7 +168,22 @@ export class LotomaniaComponent {
 
 
   buildForm(numGerados: number[], acertos: number, cotas: number){
-    if(numGerados.length == 12){
+    if(numGerados.length > 50){
+
+      this.formNumSelecionados = this.formBuilder.group({
+        nums: this.formBuilder.array(numGerados.map( op => {
+          return this.formBuilder.group({
+            num: op
+          })
+        })),
+        tamanhoJogo: [16, [Validators.min(0), Validators.max(99)]],
+        acertos: [3, [Validators.min(3), Validators.max(6)]],
+        cotas: [1, [Validators.min(0), Validators.max(100)]]
+      })
+
+      console.log("build:, ", this.formNumSelecionados.value)
+
+
       this.formNumerosSelecionados = this.formBuilder.group({
         n1: [numGerados[0], [ Validators.required, Validators.min(0), Validators.max(99)]],
         n2: [numGerados[1], [ Validators.required, Validators.min(0), Validators.max(99)]],
@@ -174,12 +205,16 @@ export class LotomaniaComponent {
         n18: [],
         n19: [],
         n20: [],
-        tamanhoJogo: [10, [Validators.min(0), Validators.max(99)]],
+        n21: [],
+        n22: [],
+        n23: [],
+        n24: [],
+        tamanhoJogo: [16, [Validators.min(0), Validators.max(99)]],
         acertos: [acertos, [Validators.min(3), Validators.max(6)]],
         cotas: [cotas, [Validators.min(0), Validators.max(100)]]
       }); 
 
-      this.gerarFechamento(numGerados)
+      //this.gerarFechamento(numGerados)
     } else  if(numGerados.length == 15){
       this.formNumerosSelecionados = this.formBuilder.group({
         n1: [numGerados[0], [ Validators.required, Validators.min(0), Validators.max(99)]],
@@ -202,72 +237,17 @@ export class LotomaniaComponent {
         n18: [],
         n19: [],
         n20: [],
-        tamanhoJogo: [10, [Validators.min(0), Validators.max(99)]],
+        n21: [],
+        n22: [],
+        n23: [],
+        n24: [],
+        tamanhoJogo: [16, [Validators.min(0), Validators.max(99)]],
         acertos: [acertos, [Validators.min(3), Validators.max(6)]],
         cotas: [cotas, [Validators.min(0), Validators.max(100)]]
       }); 
 
-      this.gerarFechamento(numGerados)
-    } else  if(numGerados.length == 18){
-      this.formNumerosSelecionados = this.formBuilder.group({
-        n1: [numGerados[0], [ Validators.required, Validators.min(0), Validators.max(99)]],
-        n2: [numGerados[1], [ Validators.required, Validators.min(0), Validators.max(99)]],
-        n3: [numGerados[2], [ Validators.required, Validators.min(0), Validators.max(99)]],
-        n4: [numGerados[3], [ Validators.required, Validators.min(0), Validators.max(99)]],
-        n5: [numGerados[4], [ Validators.required, Validators.min(0), Validators.max(99)]],
-        n6: [numGerados[5], [ Validators.required, Validators.min(0), Validators.max(99)]],
-        n7: [numGerados[6], [ Validators.required, Validators.min(0), Validators.max(99)]],
-        n8: [numGerados[7] , [ Validators.required, Validators.min(0), Validators.max(99)]],
-        n9: [numGerados[8], [ Validators.required, Validators.min(0), Validators.max(99)]],
-        n10: [numGerados[9], [ Validators.required, Validators.min(0), Validators.max(99)]],
-        n11: [numGerados[10], [Validators.min(0), Validators.max(99)]],
-        n12: [numGerados[11], [Validators.min(0), Validators.max(99)]],
-        n13: [numGerados[12] , [Validators.min(0), Validators.max(99)]],
-        n14: [numGerados[13], [Validators.min(0), Validators.max(99)]],
-        n15: [numGerados[14], [Validators.min(0), Validators.max(99)]],
-        n16: [numGerados[15], [Validators.min(0), Validators.max(99)]],
-        n17: [numGerados[16], [Validators.min(0), Validators.max(99)]],
-        n18: [numGerados[17], [Validators.min(0), Validators.max(99)]],
-        n19: [],
-        n20: [],
-        tamanhoJogo: [10, [Validators.min(0), Validators.max(99)]],
-        acertos: [acertos, [Validators.min(3), Validators.max(6)]],
-        cotas: [cotas, [Validators.min(0), Validators.max(100)]]
-      }); 
-
-      this.gerarFechamento(numGerados)
-    }  else  if(numGerados.length == 20){
-      if(acertos > 5){
-        acertos = 3
-      }
-      this.formNumerosSelecionados = this.formBuilder.group({
-        n1: [numGerados[0], [ Validators.required, Validators.min(0), Validators.max(99)]],
-        n2: [numGerados[1], [ Validators.required, Validators.min(0), Validators.max(99)]],
-        n3: [numGerados[2], [ Validators.required, Validators.min(0), Validators.max(99)]],
-        n4: [numGerados[3], [ Validators.required, Validators.min(0), Validators.max(99)]],
-        n5: [numGerados[4], [ Validators.required, Validators.min(0), Validators.max(99)]],
-        n6: [numGerados[5], [ Validators.required, Validators.min(0), Validators.max(99)]],
-        n7: [numGerados[6], [Validators.min(0), Validators.max(99)]],
-        n8: [numGerados[7] , [Validators.min(0), Validators.max(99)]],
-        n9: [numGerados[8], [Validators.min(0), Validators.max(99)]],
-        n10: [numGerados[9], [Validators.min(0), Validators.max(99)]],
-        n11: [numGerados[10], [Validators.min(0), Validators.max(99)]],
-        n12: [numGerados[11], [Validators.min(0), Validators.max(99)]],
-        n13: [numGerados[12] , [Validators.min(0), Validators.max(99)]],
-        n14: [numGerados[13], [Validators.min(0), Validators.max(99)]],
-        n15: [numGerados[14], [Validators.min(0), Validators.max(99)]],
-        n16: [numGerados[15], [Validators.min(0), Validators.max(99)]],
-        n17: [numGerados[16], [Validators.min(0), Validators.max(99)]],
-        n18: [numGerados[17], [Validators.min(0), Validators.max(99)]],
-        n19: [numGerados[18], [Validators.min(0), Validators.max(99)]],
-        n20: [numGerados[19], [Validators.min(0), Validators.max(99)]],
-        tamanhoJogo: [10, [Validators.min(0), Validators.max(99)]],
-        acertos: [acertos, [Validators.min(3), Validators.max(6)]],
-        cotas: [cotas, [Validators.min(0), Validators.max(100)]]
-      }); 
-
-      this.gerarFechamento(numGerados)
-    }
+      //this.gerarFechamento(numGerados)
+    } 
   }
 
   submitCalcularFechamento(){
