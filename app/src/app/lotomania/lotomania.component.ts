@@ -66,7 +66,7 @@ export class LotomaniaComponent {
 
   numeros = [ 14, 23, 27, 28, 29, 30, 32, 38, 39, 40, 41, 44, 45, 70, 71, 79, 86, 88, 93, 97]; // Conjunto principal
   tamanhoJogo = 50; // Quantidade de números por jogo
-  garantirAcertos = 15; // Garantia de 4 acertos
+  garantirAcertos = 12; // Garantia de 4 acertos
   fechamentos: number[][] = []; // Resultado final do fechamento
   processando = false;
 
@@ -153,6 +153,7 @@ export class LotomaniaComponent {
 
   buildForm(numGerados: number[], acertos: number = 15, cotas: number){
     if(numGerados.length > 50){
+
       this.formNumSelecionados = this.formBuilder.group({
         nums: this.formBuilder.array(numGerados.map( op => {
           return this.formBuilder.group({
@@ -160,7 +161,7 @@ export class LotomaniaComponent {
           })
         })),
         tamanhoJogo: [50],
-        acertos: [15, [Validators.min(2), Validators.max(20)]],
+        acertos: [12, [Validators.min(2), Validators.max(20)]],
         cotas: [1, [Validators.min(0), Validators.max(100)]]
       })
       console.log("build:, ", this.formNumSelecionados.value)
@@ -204,20 +205,21 @@ export class LotomaniaComponent {
         this.numeros = nums
         this.tamanhoJogo = this.formNumSelecionados.value.tamanhoJogo
         this.garantirAcertos = this.formNumSelecionados.value.acertos
+        alert("ALERTA: Para fechamentos com muitos números e com quantidade minima de acertos maior que 12 pode gerar um travamento enquanto é feito o calculo")
   
         if(this.numeros.length > 70){
           if(this.garantirAcertos > 15){
-            alert("Erro, memória insuficiente ")
+            alert("Erro, memória insuficiente, diminua a quantidade minima de acertos ")
             this.garantirAcertos = 12
           }
         } else if(this.numeros.length > 60){
           if(this.garantirAcertos > 18){
-            alert("Erro, memória insuficiente ")
+            alert("Erro, memória insuficiente, diminua a quantidade minima de acertos ")
             this.garantirAcertos = 15
           }
         } else if(this.garantirAcertos > 20){
           alert("Erro, o máximo é 20 ")
-            this.garantirAcertos = 18
+            this.garantirAcertos = 15
         }  
        /*  //teste para gerar numeros aleatórios
         //--------------------------
