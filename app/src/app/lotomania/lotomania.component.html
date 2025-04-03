@@ -5,13 +5,14 @@
       <section class="section-fechamento">
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
             <h2 style="padding: 8px; margin: 24px 0px; ">Calculadora para motagem de fechamento de jogos da Lotomania</h2>
-            
         </section>
       </section>
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+        <section style="display: flex; justify-content: center; align-self: center; width: 100%;" >
+          <img src="../assets/logo-lotomania-512.png"  alt="Logo lotomania" width="200" style="margin: -88px 0px -64px">
+        </section>
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
-          <img src="assets/logo-lotomania-512.png"  alt="Logo lotomania">
-          <p style="padding: 8px; margin: 8px 0px; ">Clique no botão abaixo apra gerar um jogo com a seguinte configuração: 3 números que mais sairam, 2 números que mais sairam, números sequenciais e números de ao menos 2 quadrantes</p>
+          <p style="padding: 8px; margin: 8px 0px; ">Clique no botão abaixo para gerar um jogo com a seguinte configuração: 30 números que mais sairam, 5 números que menos sairam, e outros números aleatórios</p>
         </section>
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
           <button
@@ -54,7 +55,7 @@
 
         <form *ngIf="formNumSelecionados" [formGroup]="formNumSelecionados" (ngSubmit)="submitCalcularFechamento()" >
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
-            <p style="padding: 8px; margin: 8px 0px; ">Preencha os números escolhidos:</p>
+            <p style="padding: 8px; margin: 8px 0px; ">Preencha os números escolhidos nos {{formNumSelecionados.value.nums.length}} campos:</p>
           </section>
           <div style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  formArrayName="nums">
               <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  *ngFor="let num of nums.controls; let i=index">
@@ -73,7 +74,7 @@
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
             <p style="padding: 8px; margin: 8px 0px; ">Configurações do bolão: </p>
           </section>
-          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+         <!--  <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
             <mat-form-field appearance="outline">
               <mat-label>Tamanho dos jogos</mat-label>
               <input
@@ -83,7 +84,7 @@
               min="10" max="50" 
               formControlName="tamanhoJogo" />
             </mat-form-field>
-          </section>
+          </section> -->
 
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
             <mat-form-field  appearance="outline">
@@ -91,7 +92,7 @@
               <input
               matInput
               type="number"
-              min="2" max="10"
+              min="9" max="20"
               required="true"
               formControlName="acertos" />
             </mat-form-field>
@@ -126,20 +127,20 @@
       </section>
 
     </section>
-    <mat-divider style="width: 100%; margin: 8px 0px;"></mat-divider>
-    <section class="section-fechamento" *ngIf="fechamentos">
+    <mat-divider style="width: 100%; margin: 8px 0px;" *ngIf="resultadosJogos.length > 0"></mat-divider>
+    <section class="section-fechamento" *ngIf="fechamentos.length > 0">
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
           <p style="padding: 8px; margin: 0px;">Para montar o fechamento de {{numeros.length}} números com garantia de pelo menos {{garantirAcertos}} acertos, você vai precisar fazer <b>{{fechamentos.length}} jogos </b> de {{tamanhoJogo}} números</p>
       </section>
       
     </section>
 
-    <section class="section-fechamento" *ngIf="fechamentos">
+    <section class="section-fechamento" *ngIf="fechamentos.length > 0">
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
           <p style="padding: 8px; margin: 0px;">O custo total do bolão vai ser de <b>R$ {{valorTotalBolao}},00</b>, dividido por <b *ngIf="formNumSelecionados">{{formNumSelecionados.value.cotas}} cotas</b> com o valor por cota de <b>R$ {{valorPorCota}} reais </b></p>
       </section>
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
-        <p style="padding: 8px; margin: 0px;">Com base nos ultimos {{resultadosUltimos2024.length}} jogos de 2024 você teria acertado {{totalQuadras}} quadras, {{totalQuinas}} quinas, {{totalSenas}} senas</p>
+        <p style="padding: 8px; margin: 0px;" >Com base nos ultimos {{resultadosUltimos2024.length}} jogos de 2024 e 2025 você teria acertado com 0: {{ this.totalAcertosPeriodo['zero'] }}, 15: {{ this.totalAcertosPeriodo['quinze'] }}, 16: {{ this.totalAcertosPeriodo['dezesseis'] }}, 17: {{ this.totalAcertosPeriodo['dezessete'] }}, 18: {{ this.totalAcertosPeriodo['dezoito'] }}, 19: {{ this.totalAcertosPeriodo['dezenove'] }}, 20: {{ this.totalAcertosPeriodo['vinte'] }} </p>
       </section>
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
         <span style="padding: 8px; margin: 0px; color: brown;">{{msgErroCotas}}</span>
@@ -161,15 +162,15 @@
       </section>
     </section> -->
 
-    <section class="section-fechamento" style="margin-top: 50px;" *ngIf="resultadosJogos">
+    <section class="section-fechamento" style="margin-top: 40px;" *ngIf="resultadosJogos">
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  *ngFor="let resultJogo of resultadosJogos">
         <div *ngFor="let res of resultJogo.jogo">
           <p style="padding: 8px; margin: 0px;">{{res}}</p>
         </div>
-        <p style="padding: 8px; margin: 0px; color: grey;">({{resultJogo.quadras}} {{resultJogo.quinas}} {{resultJogo.senas}})</p>
+        <p style="padding: 24px; margin: 0px; color: grey;">({{resultJogo.zero}} {{resultJogo.quinze}} {{resultJogo.dezesseis}} {{resultJogo.dezessete}} {{resultJogo.dezoito}} {{resultJogo.dezenove}} {{resultJogo.vinte}})</p>
       </section>
-      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;">
-        <p style="padding: 8px; margin: 0px; color: grey; margin-top: 24px;">(quadras quinas senas) que seriam feitas nos {{resultadosUltimos2024.length}} jogos de 2024</p>
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" *ngIf="resultadosJogos.length > 0">
+        <p style="padding: 8px; margin: 0px; color: grey; margin-top: 24px;">(0, 15, 16, 17, 18, 19, 20) acertos que seriam feitas nos {{resultadosUltimos2024.length}} jogos de jan/2024 até mar/2025</p>
       </section>
     </section>
 
@@ -179,7 +180,7 @@
     <mat-divider style="width: 100%; margin: 54px 0px;"></mat-divider>
     <section class="section-fechamento">
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap; margin: 8px 0px 40px 0px; " >
-          <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);">Atualização 10/03/25 - outras informações em </p>
+          <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);">Atualização 02/04/25 - outras informações em </p>
           <a  style="padding: 4px 0px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);" href="https://loterias.caixa.gov.br/Paginas/Lotomania.aspx" target="_blank" rel="noopener noreferrer">Loterias Caixa</a>
           <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);">| Desenvolvido por KLRS</p>
       </section>
