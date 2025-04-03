@@ -287,17 +287,27 @@ export class LotomaniaComponent {
   
         this.processando = true;
         // Gerar fechamento otimizado
-        console.log(this.numeros.slice(0, ((this.numeros.length-2)/3)))
-        console.log(this.numeros.slice(((this.numeros.length-2)/3), ((this.numeros.length-2)/3)*2))
-        console.log(this.numeros.slice(((this.numeros.length-2)/3)*2, ((this.numeros.length-2)/3)*3))
-        //const fechamentoPart1 = await this.fecharJogos(this.numeros, this.tamanhoJogo, this.garantirAcertos);
+       
+        const fechamentoPart1 = await this.fecharJogos(this.numeros.slice(0, ((this.numeros.length-2)/3)), this.tamanhoJogo, this.garantirAcertos);
+        console.log(fechamentoPart1)
+        const fechamentoPart2 = await this.fecharJogos(this.numeros.slice(((this.numeros.length-2)/3), ((this.numeros.length-2)/3)*2), this.tamanhoJogo, this.garantirAcertos);
+        const fechamentoPart3 = await this.fecharJogos(this.numeros.slice(((this.numeros.length-2)/3)*2, ((this.numeros.length-2)/3)*3), this.tamanhoJogo, this.garantirAcertos);
+        const fechamentoPart4 = [this.numeros[this.numeros.length-2], this.numeros[this.numeros.length-1]]
 
         //this.fechamentos = await this.fecharJogos(this.numeros, this.tamanhoJogo, this.garantirAcertos);
+
+        this.fechamentos = []
+
+        fechamentoPart1.forEach((linha, indiceLinha) => {
+          var construindoArrayLinha = linha.concat(fechamentoPart2[indiceLinha]).concat(fechamentoPart3[indiceLinha]).concat(fechamentoPart4)
+          this.fechamentos.push(construindoArrayLinha)
+        });
+
+       // this.fechamentos = [...fechamentoPart1, ...fechamentoPart2, ...fechamentoPart3]
+        console.log("fechamento", this.fechamentos)
         this.calcularCustoJogo()
         this.processando = false;
         this.calcularResultados(this.fechamentos);
-      
-     
     }
   }
 
