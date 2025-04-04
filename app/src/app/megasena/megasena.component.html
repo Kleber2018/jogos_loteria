@@ -14,7 +14,7 @@
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
           <p style="padding: 8px; margin: 8px 0px; text-align: center; ">Utilizar fechamento de jogos da loteria aumenta as chances de acerto em prêmios secundários, tornando o bolão de jogos mais eficiente e estratégico.</p>
           
-          <p style="padding: 8px; margin: 4px 0px; text-align: center; font-weight: bolder;">Nessa calculadora você consegue: </p>
+          <p style="padding: 8px; margin: 4px 0px; text-align: center; font-weight: bolder;">Nessa calculadora de jogos você consegue: </p>
           <div class="container-logo-text" style="width: 100%; justify-content: center;">
             <div class="container-logo-text">
               <mat-icon fontIcon="arrow_right"></mat-icon>
@@ -42,7 +42,7 @@
           <div class="container-logo-text" style="width: 100%; justify-content: center;">
             <div class="container-logo-text">
               <mat-icon fontIcon="arrow_right"></mat-icon>
-              <p style="padding: 4px; margin: 0px 0px 0px; text-align: center;  align-self: center;">Você pode escolher os números ou pedir uma sugestão de jogo.</p>
+              <p style="padding: 4px; margin: 0px 0px 0px; text-align: center;  align-self: center;">Escolher os números ou pedir uma sugestão de jogo.</p>
             </div>
           </div>
         </section>
@@ -319,7 +319,7 @@
 
     <section class="section-fechamento" *ngIf="fechamentos">
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
-          <p style="padding: 8px; margin: 0px;">O custo total do bolão vai ser de <b>R$ {{valorTotalBolao}},00</b>, dividido por <b>{{formNumerosSelecionados.value.cotas}} cotas</b> com o valor por cota de <b>R$ {{valorPorCota}} reais </b></p>
+          <p style="padding: 8px; margin: 0px;">O custo total do bolão vai ser de <b>R$ {{valorTotalBolao}},00</b>, dividido por <b>{{qtdCotas}} cotas</b> com o valor por cota de <b>R$ {{valorPorCota}} reais </b></p>
       </section>
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
         <p style="padding: 8px; margin: 0px;">Com base nos ultimos {{resultadosUltimos2024.length}} jogos de 2024 você teria acertado {{totalQuadras}} quadras, {{totalQuinas}} quinas, {{totalSenas}} senas</p>

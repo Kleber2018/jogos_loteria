@@ -415,6 +415,7 @@ export class MegasenaComponent {
   valorCadaJogo = 0;
   valorTotalBolao = 0;
   valorPorCota = 0;
+  qtdCotas = 0
   msgErroCotas = ""
   msgErroCotas2 = ""
   msgErroCotas3 = ""
@@ -444,6 +445,7 @@ export class MegasenaComponent {
 
     this.valorTotalBolao = this.fechamentos.length * this.valorCadaJogo
     this.valorPorCota = this.valorTotalBolao/this.formNumerosSelecionados.value.cotas
+    this.qtdCotas = this.formNumerosSelecionados.value.cotas
     if (this.tamanhoJogo == 6) {
       if(this.valorPorCota < 6){
         this.msgErroCotas = "Atenção: Para um bolão de 6 números o valor mínimo por cota é de R$ 6,00";
@@ -470,7 +472,9 @@ export class MegasenaComponent {
       }
     }
     if(this.fechamentos.length > 10){
-      this.msgErroCotas3 = "Atenção 3: 10 jogos é a quantidade máxima de jogos no recibo, você vai ter que descartar alguns jogos ou fazer um segundo bolão";
+      var qtdBoloes = Math.ceil(this.fechamentos.length/10)
+
+      this.msgErroCotas3 = "Atenção 3: 10 jogos é a quantidade máxima de jogos no recibo, você vai precisar dividir esses jogos em "+qtdBoloes+ " bolões";
     } 
 
   }
