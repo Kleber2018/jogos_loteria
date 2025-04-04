@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SetupComponent } from './setup.component';
+import { MegasenaComponent } from './megasena.component';
 
 describe('RelatorioComponent', () => {
-  let component: SetupComponent;
-  let fixture: ComponentFixture<SetupComponent>;
+  let component: MegasenaComponent;
+  let fixture: ComponentFixture<MegasenaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SetupComponent]
+      imports: [MegasenaComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(SetupComponent);
+    fixture = TestBed.createComponent(MegasenaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

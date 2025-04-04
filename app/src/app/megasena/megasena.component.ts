@@ -6,7 +6,7 @@ import {MatButton, MatButtonModule} from '@angular/material/button';
 /* import { HeaderComponent } from '../shared/header/header.component';
 import { LayoutComponent } from '../shared/layout/layout.component'; */
 
-import { SetupService } from './setup.service';
+import { MegasenaService } from './megasena.service';
 import { ActivatedRoute } from '@angular/router';
 
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -23,11 +23,11 @@ import { CommonModule } from '@angular/common';
     MatButtonModule, MatDividerModule, 
     MatIconModule, MatDialogModule, MatFormFieldModule, 
     MatInputModule, FormsModule ],
-  templateUrl: './setup.component.html',
-  styleUrl: './setup.component.scss',
+  templateUrl: './megasena.component.html',
+  styleUrl: './megasena.component.scss',
   //exports: [HeaderComponent]
 })
-export class SetupComponent {
+export class MegasenaComponent {
 
   title = 'Calculadora de Fechamento';
 
@@ -212,7 +212,7 @@ export class SetupComponent {
   totalSenas = 0;
 
   constructor(
-    private setupService: SetupService,
+    private megasenaService: MegasenaService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
@@ -238,7 +238,7 @@ export class SetupComponent {
       cotas: [1, [Validators.min(1), Validators.max(100)]]
     }); 
 
-    this.numerosGerados = this.setupService.gerarJogo(this.numerosMaisSorteados, this.numerosMenosSorteados);
+    this.numerosGerados = this.megasenaService.gerarJogo(this.numerosMaisSorteados, this.numerosMenosSorteados);
     this.buildForm(this.numerosGerados)
     console.log("+ sorteados em 2024:", this.numerosMaisSorteados)
     console.log("- sorteados em 2024:", this.numerosMenosSorteados)
@@ -246,7 +246,7 @@ export class SetupComponent {
   }
 
   gerarJogoNovamente(tamanho: number){
-    this.numerosGerados = this.setupService.gerarJogo(this.numerosMaisSorteados, this.numerosMenosSorteados, tamanho);
+    this.numerosGerados = this.megasenaService.gerarJogo(this.numerosMaisSorteados, this.numerosMenosSorteados, tamanho);
     this.buildForm(this.numerosGerados)
   }
 

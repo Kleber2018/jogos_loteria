@@ -4,16 +4,16 @@
   justify-content: start;
   align-items: center;
   width: 100%;
-
 }
 
 .section-fechamento {
   display: flex;
   flex-direction: column;
   justify-content: start;
-  align-items: start;
+  align-items: center;
   overflow-y: auto;
   width: 100%;
+  max-width: 1050px;
   height: 100%;
 }
 
