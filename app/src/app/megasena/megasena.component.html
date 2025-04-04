@@ -360,6 +360,35 @@
     </section>
 
 
+    <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap; width: 100%; " >
+        <p style="padding: 8px; margin: 8px 0px; text-align: center; ">Fazer o download do jogo em pdf</p>
+      </section>
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+        <button
+          style="margin: 10px;"
+          matSuffix
+          mat-stroked-button 
+          (click)="gerarPDF('resumo')">
+          <mat-icon>cloud_download</mat-icon>Resumo
+        </button>
+          <button
+          style="margin: 10px;"
+          matSuffix
+          mat-stroked-button 
+          (click)="gerarPDF('completo')">
+          <mat-icon>cloud_download</mat-icon>Completo
+        </button>
+        <button
+          style="margin: 10px;"
+          matSuffix
+          mat-stroked-button 
+          (click)="gerarPDF('jogo')">
+          <mat-icon>cloud_download</mat-icon>Jogo
+        </button>
+      </section>
+    </section>
+
     
 
     <mat-divider style="width: 100%; margin: 54px 0px 54px;"></mat-divider>

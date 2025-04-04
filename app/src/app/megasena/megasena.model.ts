@@ -15,9 +15,9 @@ export interface timeTotalizerProjects {
 
 
   export interface pdfLoteria {
-        numeros: [number],
+        numeros: number[],
         jogos: number[][],
-        minAcertos: number,
+        garantirAcertos: number,
         probabilidade?: number,
         tipoPdf?: string
       }

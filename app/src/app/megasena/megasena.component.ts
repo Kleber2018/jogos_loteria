@@ -473,16 +473,16 @@ export class MegasenaComponent {
 
 
 
-  async gerarPDF(numeros: [number], jogos: number[][], minAcertos: number, probabilidade: number, tipoPdf: string) {
+  async gerarPDF(tipoPdf: string) {
 
-    const varPdfLoteria: pdfLoteria = {numeros, jogos, minAcertos, probabilidade, tipoPdf}
+    const varPdfLoteria: pdfLoteria = {numeros: this.numeros, jogos: this.fechamentos, garantirAcertos: this.garantirAcertos, probabilidade: this.probabilidade, tipoPdf:tipoPdf }
 
     const documentDefinition =  await this.pdfService.pdfJogo(varPdfLoteria); // true significa imprimir imagens
     
-    switch (tipoPdf) {
-      case 'Completo': pdfMake.createPdf(documentDefinition).download(new Date().getDate+'/'+new Date().getMonth+'Fechamento-'+numeros.length+'números-'+minAcertos+'acertos - Completo'); break;
-      case 'SemValor': pdfMake.createPdf(documentDefinition).download(new Date().getDate+'/'+new Date().getMonth+'Fechamento-'+numeros.length+'números-'+minAcertos+'acertos'); break;
-      case 'jogo': pdfMake.createPdf(documentDefinition).download(new Date().getDate+'/'+new Date().getMonth+'Fechamento-'+numeros.length+'números-'+minAcertos+'acertos - Jogo'); break;
+    switch (tipoPdf+"teste") {
+      case 'completo': pdfMake.createPdf(documentDefinition).download(new Date().getDate+'/'+new Date().getMonth+'Fechamento-'+varPdfLoteria.numeros.length+'números-'+varPdfLoteria.garantirAcertos+'acertos - Completo'); break;
+      case 'resumo': pdfMake.createPdf(documentDefinition).download(new Date().getDate+'/'+new Date().getMonth+'Fechamento-'+varPdfLoteria.numeros.length+'números-'+varPdfLoteria.garantirAcertos+'acertos'); break;
+      case 'jogo': pdfMake.createPdf(documentDefinition).download(new Date().getDate+'/'+new Date().getMonth+'Fechamento-'+varPdfLoteria.numeros.length+'números-'+varPdfLoteria.garantirAcertos+'acertos - Jogo'); break;
       default: pdfMake.createPdf(documentDefinition).open(); break;
     } 
   }
