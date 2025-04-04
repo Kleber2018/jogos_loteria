@@ -233,8 +233,8 @@ export class MegasenaComponent {
       n12: [, [Validators.min(1), Validators.max(60)]],
       n13: [, [Validators.min(1), Validators.max(60)]],
       n14: [, [Validators.min(1), Validators.max(60)]],
-      tamanhoJogo: [7, [Validators.min(1), Validators.max(60)]],
-      acertos: [4, [Validators.min(3), Validators.max(6)]],
+      tamanhoJogo: [7, [Validators.min(6), Validators.max(15)]],
+      acertos: [4, [Validators.min(2), Validators.max(6)]],
       cotas: [1, [Validators.min(1), Validators.max(100)]]
     }); 
 
@@ -288,9 +288,9 @@ export class MegasenaComponent {
         n12: [, [Validators.min(1), Validators.max(60)]],
         n13: [, [Validators.min(1), Validators.max(60)]],
         n14: [, [Validators.min(1), Validators.max(60)]],
-        tamanhoJogo: [7, [Validators.min(1), Validators.max(60)]],
-        acertos: [4, [Validators.min(3), Validators.max(6)]],
-        cotas: [1, [Validators.min(1), Validators.max(100)]]
+        tamanhoJogo: [this.formNumerosSelecionados.value.tamanhoJogo, [Validators.min(6), Validators.max(16)]],
+        acertos: [this.formNumerosSelecionados.value.acertos, [Validators.min(2), Validators.max(6)]],
+        cotas: [this.formNumerosSelecionados.value.cotas, [Validators.min(1), Validators.max(100)]]
       }); 
       this.gerarFechamento(numGerados)
     } else if(numGerados.length == 10){
@@ -309,9 +309,9 @@ export class MegasenaComponent {
         n12: [, [Validators.min(1), Validators.max(60)]],
         n13: [, [Validators.min(1), Validators.max(60)]],
         n14: [, [Validators.min(1), Validators.max(60)]],
-        tamanhoJogo: [7, [Validators.min(1), Validators.max(60)]],
-        acertos: [4, [Validators.min(3), Validators.max(6)]],
-        cotas: [1, [Validators.min(1), Validators.max(100)]]
+        tamanhoJogo: [this.formNumerosSelecionados.value.tamanhoJogo, [Validators.min(6), Validators.max(16)]],
+        acertos: [this.formNumerosSelecionados.value.acertos, [Validators.min(2), Validators.max(6)]],
+        cotas: [this.formNumerosSelecionados.value.cotas, [Validators.min(1), Validators.max(100)]]
       }); 
 
       this.gerarFechamento(numGerados)
@@ -331,9 +331,9 @@ export class MegasenaComponent {
         n12: [, [Validators.min(1), Validators.max(60)]],
         n13: [, [Validators.min(1), Validators.max(60)]],
         n14: [, [Validators.min(1), Validators.max(60)]],
-        tamanhoJogo: [7, [Validators.min(1), Validators.max(60)]],
-        acertos: [4, [Validators.min(3), Validators.max(6)]],
-        cotas: [1, [Validators.min(1), Validators.max(100)]]
+        tamanhoJogo: [this.formNumerosSelecionados.value.tamanhoJogo, [Validators.min(6), Validators.max(16)]],
+        acertos: [this.formNumerosSelecionados.value.acertos, [Validators.min(2), Validators.max(6)]],
+        cotas: [this.formNumerosSelecionados.value.cotas, [Validators.min(1), Validators.max(100)]]
       }); 
 
       this.gerarFechamento(numGerados)
@@ -353,9 +353,9 @@ export class MegasenaComponent {
         n12: [numGerados[11], [Validators.min(1), Validators.max(60)]],
         n13: [, [Validators.min(1), Validators.max(60)]],
         n14: [, [Validators.min(1), Validators.max(60)]],
-        tamanhoJogo: [7, [Validators.min(1), Validators.max(60)]],
-        acertos: [4, [Validators.min(3), Validators.max(6)]],
-        cotas: [1, [Validators.min(1), Validators.max(100)]]
+        tamanhoJogo: [this.formNumerosSelecionados.value.tamanhoJogo, [Validators.min(6), Validators.max(16)]],
+        acertos: [this.formNumerosSelecionados.value.acertos, [Validators.min(2), Validators.max(6)]],
+        cotas: [this.formNumerosSelecionados.value.cotas, [Validators.min(1), Validators.max(100)]]
       }); 
 
       this.gerarFechamento(numGerados)
@@ -375,9 +375,9 @@ export class MegasenaComponent {
         n12: [numGerados[11], [Validators.min(1), Validators.max(60)]],
         n13: [numGerados[12], [Validators.min(1), Validators.max(60)]],
         n14: [, [Validators.min(1), Validators.max(60)]],
-        tamanhoJogo: [7, [Validators.min(1), Validators.max(60)]],
-        acertos: [4, [Validators.min(3), Validators.max(6)]],
-        cotas: [1, [Validators.min(1), Validators.max(100)]]
+        tamanhoJogo: [this.formNumerosSelecionados.value.tamanhoJogo, [Validators.min(6), Validators.max(16)]],
+        acertos: [this.formNumerosSelecionados.value.acertos, [Validators.min(2), Validators.max(6)]],
+        cotas: [this.formNumerosSelecionados.value.cotas, [Validators.min(1), Validators.max(100)]]
       }); 
 
       this.gerarFechamento(numGerados)
@@ -397,13 +397,13 @@ export class MegasenaComponent {
         n12: [numGerados[11], [Validators.min(1), Validators.max(60)]],
         n13: [numGerados[12], [Validators.min(1), Validators.max(60)]],
         n14: [numGerados[13], [Validators.min(1), Validators.max(60)]],
-        tamanhoJogo: [7, [Validators.min(1), Validators.max(60)]],
-        acertos: [4, [Validators.min(3), Validators.max(6)]],
-        cotas: [1, [Validators.min(1), Validators.max(100)]]
+        tamanhoJogo: [this.formNumerosSelecionados.value.tamanhoJogo, [Validators.min(6), Validators.max(16)]],
+        acertos: [this.formNumerosSelecionados.value.acertos, [Validators.min(2), Validators.max(6)]],
+        cotas: [this.formNumerosSelecionados.value.cotas, [Validators.min(1), Validators.max(100)]]
       }); 
 
       this.gerarFechamento(numGerados)
-    }
+    } 
   }
 
   submitCalcularFechamento(){

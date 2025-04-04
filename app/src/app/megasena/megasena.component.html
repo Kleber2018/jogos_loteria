@@ -11,12 +11,51 @@
         </section>
       </section>
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
-
-
-        
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
-          <p style="padding: 8px; margin: 8px 0px; text-align: center; ">Clique no botão abaixo para gerar um jogo com a seguinte configuração: 3 números que mais sairam, 2 números que mais sairam, números sequenciais e números de ao menos 2 quadrantes</p>
+          <p style="padding: 8px; margin: 8px 0px; text-align: center; ">Utilizar fechamento de jogos da loteria aumenta as chances de acerto em prêmios secundários, tornando o bolão de jogos mais eficiente e estratégico.</p>
+          
+          <p style="padding: 8px; margin: 4px 0px; text-align: center; font-weight: bolder;">Nessa calculadora você consegue: </p>
+          <div class="container-logo-text" style="width: 100%; justify-content: center;">
+            <div class="container-logo-text">
+              <mat-icon fontIcon="arrow_right"></mat-icon>
+              <p style="padding: 4px; margin: 0px 0px 0px; text-align: center;  align-self: center;"> Escolher até 14 números para montar o fechamento;</p>
+            </div>
+          </div>
+          <div class="container-logo-text" style="width: 100%; justify-content: center;">
+            <div class="container-logo-text">
+              <mat-icon fontIcon="arrow_right"></mat-icon>
+              <p style="padding: 4px; margin: 0px 0px 0px; text-align: center;  align-self: center;">Escolher a quantidade de números por volante de apostas;</p>
+            </div>
+          </div>
+          <div class="container-logo-text" style="width: 100%; justify-content: center;">
+            <div class="container-logo-text">
+              <mat-icon fontIcon="arrow_right"></mat-icon>
+              <p style="padding: 4px; margin: 0px 0px 0px; text-align: center;  align-self: center;">Escolher a quantidade de acertos que deseja garantir;</p>
+            </div>
+          </div>
+          <div class="container-logo-text" style="width: 100%; justify-content: center;">
+            <div class="container-logo-text">
+              <mat-icon fontIcon="arrow_right"></mat-icon>
+              <p style="padding: 4px; margin: 0px 0px 0px; text-align: center;  align-self: center;">Escolher o número de cotas para ter o valor do bolão por cota;</p>
+            </div>
+          </div>
+          <div class="container-logo-text" style="width: 100%; justify-content: center;">
+            <div class="container-logo-text">
+              <mat-icon fontIcon="arrow_right"></mat-icon>
+              <p style="padding: 4px; margin: 0px 0px 0px; text-align: center;  align-self: center;">Você pode escolher os números ou pedir uma sugestão de jogo.</p>
+            </div>
+          </div>
         </section>
+
+        <mat-divider style="width: 100%; margin-top: 24px;"></mat-divider>
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <p style="padding: 8px; margin: 8px 0px; text-align: center; width: 100%; ">Então vamos ao jogo</p>
+          <p style="padding: 8px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Primeiro escolha os seus números da sorte</p>
+
+          <p style="text-align: center; color: rgb(100, 100, 100); ">Se preferir você pode pedir para o sistema te sugerir uma sequencia de números da sorte, utilizando com base os resultados dos concursos de 2024 e 2025</p>
+        </section>
+
+       
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
           <button
             style="margin: 10px;"
@@ -63,7 +102,8 @@
         </section>
         <form [formGroup]="formNumerosSelecionados" (ngSubmit)="submitCalcularFechamento()" >
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
-            <p style="padding: 8px; margin: 8px 0px; ">Preencha os números escolhidos:</p>
+            <p style="padding: 8px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Esses são os seus números da sorte:</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); ">Você pode alterar os números da maneira que quiser</p>
           </section>
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
             <mat-form-field class="form-input" appearance="outline">
@@ -183,19 +223,33 @@
               formControlName="n14" />
             </mat-form-field>
           </section>
+          
+          
+          <mat-divider style="width: 100%; margin-top: 24px;"></mat-divider>
+
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
-            <p style="padding: 8px; margin: 8px 0px; ">Configurações do bolão: </p>
+            <p style="padding: 8px; margin: 8px 0px; text-align: center; width: 100%; ">Configurações do bolão</p>
+            <p style="padding: 4px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Escolha a quantidade de números que vai ser marcado nos volantes:</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px;">Você pode escolher cartela entre 6 e 11 números</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; width: 100%;">Recomendação de menor custo: jogo de 6 números</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; padding-bottom: 16px;">Recomendação para bolões: Jogo de 7 números, para conseguir gerar as cotas com recibos separados</p>
           </section>
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
             <mat-form-field appearance="outline">
-              <mat-label>Tamanho dos jogos</mat-label>
+              <mat-label>Números Cartela</mat-label>
               <input
               matInput
               type="number"
               required="true"
-              min="6" max="10" 
+              min="6" max="11" 
               formControlName="tamanhoJogo" />
             </mat-form-field>
+          </section>
+
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+            <p style="padding: 4px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Escolha a garantia de acertos do fechamento:</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; width: 100%">Quanto maior a garantia de acertos, maior vai ser a quantidade de combinações necessárias</p>
+                      <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; padding-bottom: 16px;">O algoritimo garante aproximadamente 99% de chance de acerto se essa quantidade de números estiver na sequencia de números selecionados</p>
           </section>
 
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
@@ -204,11 +258,17 @@
               <input
               matInput
               type="number"
-              min="0" max="60"
+              min="2" max="5"
               required="true"
               formControlName="acertos" />
             </mat-form-field>
           </section>
+
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+            <p style="padding: 4px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Escolha a quantidade de cotas do bolão:</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; padding-bottom: 16px;">Para auxiliar no cálculo do valor de cada cota do bolão</p>
+          </section>
+
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
             <mat-form-field  appearance="outline">
               <mat-label>Quantidade de cotas do bolão</mat-label>
@@ -221,6 +281,8 @@
             </mat-form-field>
           </section>
 
+          <mat-divider style="width: 100%; margin: 24px 0px 12px;"></mat-divider>
+
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
             <div>
               <button
@@ -229,8 +291,7 @@
               matSuffix
               mat-stroked-button 
               [disabled]="formNumerosSelecionados.invalid" cdkFocusInitial>
-
-              Calcular Fechamento
+              Gerar Fechamento
             </button>
 
             </div>
@@ -242,9 +303,18 @@
     <mat-divider style="width: 100%; margin: 8px 0px;"></mat-divider>
     <section class="section-fechamento" *ngIf="fechamentos">
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
-          <p style="padding: 8px; margin: 0px;">Para montar o fechamento de {{numeros.length}} números com garantia de pelo menos {{garantirAcertos}} acertos, você vai precisar fazer <b>{{fechamentos.length}} jogos </b> de {{tamanhoJogo}} números</p>
+        <p style="padding: 8px; margin: 8px 0px; text-align: center; width: 100%; ">O seu fechamento</p>
       </section>
-      
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+        <div style="padding: 8px; margin: 8px 0px; text-align: center;" *ngFor="let numGerado of numerosGerados;  let i = index">
+          <p *ngIf="i == 0">( {{numGerado}}</p>
+          <p *ngIf="(i !== (numerosGerados.length-1)) && i!== 0">{{numGerado}},</p>
+          <p *ngIf="i == (numerosGerados.length-1)">{{numGerado}} )</p>
+        </div>
+      </section>
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <p style="padding: 8px; margin: 0px; text-align: center">Com esse fechamento de {{numeros.length}} números e com garantia de pelo menos {{garantirAcertos}} acertos, você vai precisar fazer <b>{{fechamentos.length}} jogos </b> de {{tamanhoJogo}} números</p>
+      </section>
     </section>
 
     <section class="section-fechamento" *ngIf="fechamentos">
@@ -254,13 +324,13 @@
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
         <p style="padding: 8px; margin: 0px;">Com base nos ultimos {{resultadosUltimos2024.length}} jogos de 2024 você teria acertado {{totalQuadras}} quadras, {{totalQuinas}} quinas, {{totalSenas}} senas</p>
       </section>
-      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" *ngIf="msgErroCotas">
         <span style="padding: 8px; margin: 0px; color: brown;">{{msgErroCotas}}</span>
       </section>
-      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" *ngIf="msgErroCotas2">
         <span style="padding: 8px; margin: 0px; color: brown;">{{msgErroCotas2}}</span>
       </section>
-      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" *ngIf="msgErroCotas3" >
         <span style="padding: 8px; margin: 0px; color: brown;">{{msgErroCotas3}}</span>
       </section>
     </section>
@@ -274,7 +344,7 @@
       </section>
     </section> -->
 
-    <section class="section-fechamento" style="margin-top: 50px;" *ngIf="resultadosJogos">
+    <section class="section-fechamento" style="margin-top: 40px;" *ngIf="resultadosJogos">
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  *ngFor="let resultJogo of resultadosJogos">
         <div *ngFor="let res of resultJogo.jogo">
           <p style="padding: 8px; margin: 0px;">{{res}}</p>
@@ -282,20 +352,23 @@
         <p style="padding: 8px; margin: 0px; color: grey;">({{resultJogo.quadras}} {{resultJogo.quinas}} {{resultJogo.senas}})</p>
       </section>
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;">
-        <p style="padding: 8px; margin: 0px; color: grey; margin-top: 24px;">(quadras quinas senas) que seriam feitas nos {{resultadosUltimos2024.length}} jogos de 2024</p>
+        <p style="padding: 8px; margin: 0px; color: grey; margin-top: 24px; text-align: center">(quadras quinas senas) que seriam feitas nos {{resultadosUltimos2024.length}} jogos de 2024</p>
       </section>
     </section>
 
 
     
 
-    <mat-divider style="width: 100%; margin: 54px 0px;"></mat-divider>
+    <mat-divider style="width: 100%; margin: 54px 0px 54px;"></mat-divider>
     <section class="section-fechamento">
-      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap; margin: 8px 0px 40px 0px; " >
-          <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);">Atualização 29/12/24 - outras informações em </p>
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap; margin: 8px 0px 0px 0px; " >
+          <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);">Atualização 04/04/25 - outras informações em </p>
           <a  style="padding: 4px 0px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);" href="https://loterias.caixa.gov.br/Paginas/Mega-Sena.aspx" target="_blank" rel="noopener noreferrer">Loterias Caixa</a>
           <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);">| Desenvolvido por KLRS</p>
       </section>
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap; margin: 8px 0px 40px 0px; " >
+        <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85); text-align: center">A estratégia de fechamentos de jogos é uma abordagem econômica para aumentar as chances de ganhar prêmios secundários. Para otimizar a quantidade de apostas, o algoritmo pode excluir algumas combinações.</p>
+    </section>
     </section>
 
      

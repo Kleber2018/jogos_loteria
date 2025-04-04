@@ -23,3 +23,13 @@
   margin: 1px;
 }
 
+p {
+  font-size: medium;
+}
+
+.container-logo-text {
+  display: flex;
+  align-items: center;
+  //gap: 2px; /* Espaço entre ícone e texto */
+}
+
