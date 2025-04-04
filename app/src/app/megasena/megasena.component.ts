@@ -475,7 +475,17 @@ export class MegasenaComponent {
 
   async gerarPDF(tipoPdf: string) {
 
-    const varPdfLoteria: pdfLoteria = {numeros: this.numeros, jogos: this.fechamentos, garantirAcertos: this.garantirAcertos, probabilidade: this.probabilidade, tipoPdf:tipoPdf }
+    const varPdfLoteria: pdfLoteria = {
+        numeros: this.numeros, 
+        jogos: this.fechamentos, 
+        garantirAcertos: this.garantirAcertos, 
+        tamanhoJogosVolante: this.tamanhoJogo, 
+        probabilidade: this.probabilidade, 
+        tipoPdf:tipoPdf,
+        valorTotalBolao: this.valorTotalBolao,
+        valorPorCota: this.valorPorCota,
+        qtdCotas: this.qtdCotas
+      }
 
     const documentDefinition =  await this.pdfService.pdfJogo(varPdfLoteria); // true significa imprimir imagens
     

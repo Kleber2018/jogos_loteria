@@ -18,6 +18,10 @@ export interface timeTotalizerProjects {
         numeros: number[],
         jogos: number[][],
         garantirAcertos: number,
+        tamanhoJogosVolante: number,
         probabilidade?: number,
-        tipoPdf?: string
+        tipoPdf?: string,
+        valorTotalBolao: number,
+        valorPorCota: number,
+        qtdCotas: number
       }

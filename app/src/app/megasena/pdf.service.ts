@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { pdfLoteria } from './megasena.model';
+import { MegaSena } from '../../assets/base64/logos';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,12 @@ export class PdfService {
 
     async pdfJogo(varPdfLoteria: pdfLoteria) {
      
-  
-     
+       
       var tabConf = null
       var TabControleExpedicao = null
       var pageMarginTop = 60
+
+      
 
       return {
         pageSize: 'A4',
@@ -28,34 +30,26 @@ export class PdfService {
             // headers are automatically repeated if the table spans over multiple pages
             // you can declare how many rows should be treated as headers
             headerRows: 1,
-            widths: [ 67, 290, 81, 67 ],
+            widths: [ 105, 305, 105 ],
             heights: [19],
             body: [
-              [ {text: 'GEMSD', bold: true, fontSize: 14, color: 'blue', margin: [0,2,0,0]}, 
-                {text: 'SOLICITAÇÃO DE SERVIÇO ELETROMECÂNICO', bold: true, fontSize: 13, margin: [0,2,0,0]}, 
+              [ {image: MegaSena, width: 96, margin: [0,1,0,0]},
+                {text: 'FECHAMENTO DA MEGA-SENA', bold: true, fontSize: 13, margin: [0,2,0,0]}, 
                 {text: [
-                  {text: 'SD ', bold: true},
-                  {text: 'texto', bold: true, color:'red', fontSize: 16}
+                  {text: 'Data: ', bold: true, margin: [0,2,0,0]},
+                  {text: new Date().getDate()+'/'+(new Date().getMonth()+1)+'/'+new Date().getFullYear(), margin: [0,4,0,0]},
                   
                 ]},
-                {text: 'SANEPAR', fontSize: 14, bold: true, color: 'blue', margin: [0,2,0,0]} 
               ]
             ]
           }
-        },
-        TabControleExpedicao,],
+        }],
 
-        
-        // text: 'Versão 1.10 Digital - Abril/2020', style: 'valores'
-       
         footer: function(currentPage: any, pageCount: any, pageSize: any) { 
          return [
-            { text: 'Versão 1.10 SSE Digital - Maio/2021                                                                   '+ currentPage.toString() + ' de ' + pageCount, alignment: 'right', margin: [0, 0, 29, 0], fontSize: 10,},
+            { text: 'Versão 1.10 SSE Digital - abril/2025                                                                   '+ currentPage.toString() + ' de ' + pageCount, alignment: 'right', margin: [0, 0, 29, 0], fontSize: 10,},
             { canvas: [ { type: 'rect', x: 170, y: 32, w: pageSize.width - 170, h: 40 } ] }
           ]}, 
-          
-          
-          // return 'Versão 1.07 Digital - Abril/2020                                 ' + currentPage.toString() + ' of ' + pageCount; },
   
         // by default we use portrait, you can change it to landscape if you wish
         pageOrientation: 'portrait', //landscape
@@ -65,85 +59,32 @@ export class PdfService {
         content: [
           {
             table: {
-              widths: [103, 252, 160],
+              widths: [534],
               heights: 25,
               body: [
                 [
-                  {text: [
-                    {text: 'Data: ', bold: true},
-                    new Date().getDate()+'/'+(new Date().getMonth()+1)+'/'+new Date().getFullYear()
-                  ]},
-                  {text: [
-                    {text: 'Solicitante: ', bold: true},
-                    "solicitacaoPdf.solicitante"
-                  ]},
-                  {text: 'OSE: ', bold: true}
+                  {text: `Com esse fechamento de ${varPdfLoteria.numeros.length} números e com garantia de pelo menos ${varPdfLoteria.garantirAcertos} acertos, você vai precisar fazer ${varPdfLoteria.jogos.length} jogos de ${varPdfLoteria.tamanhoJogosVolante} números`, alignment: 'center'},
+                ],
+                [
+                  {text: `O custo total do bolão vai ser de R$ ${varPdfLoteria.valorTotalBolao},00, dividido por ${varPdfLoteria.qtdCotas} cotas</b> com o valor por cota de R$ ${varPdfLoteria.valorPorCota} reais `, alignment: 'center'},
+                ],
+                [
+                  {text: `A probabilidade de você acertar  ${varPdfLoteria.garantirAcertos} números entre os escolhidos é de 1 para ${varPdfLoteria.probabilidade}`, alignment: 'center'},
                 ],
               ]
             }
           },
        
-          {
-            table: {
-              widths: [ 90, 132, 139, 145],
-              heights: 28,
-              body: [
-                [
-                  {text: [
-                    {text: 'Modalidade: ', bold: true},
-                    "solicitacaoPdf.CATEGORIA?.modalidade"
-                  ]},
-                  {text: [
-                    {text: 'Causa: ', bold: true},
-                    "solicitacaoPdf.CATEGORIA?.causa?.cod"
-                  ]}, 
-  
-                  {text: [
-                    {text: 'Efeito: ', bold: true},
-                    "solicitacaoPdf.CATEGORIA?.efeito?.cod"
-                  ]}, 
-                  {text: [
-                    {text: 'Serviço: ', bold: true},
-                    "solicitacaoPdf.CATEGORIA?.servico?.cod"
-                  ]}, 
-                ],
-              ]
-            }
-          },
-          {text: 'SERVIÇO SOLICITADO', style: 'tituloServico'},
-          {
-            table: {
-              widths: [534],
-              heights: [50],
-              body: [
-                [{text: 'solicitacaoPdf.SERVICO.solicitado', style: 'descricaoServico'}]
-              ]
-            }
-          },
 
-   
-          tabConf,  
-          {text: 'VALORES DA SSE', style: 'tituloServico'},
-          {
-            style: 'valores',
-            table: {
-              widths: [62, 10, 56, 59, 56, 112, 65, 51],
-              heights: 20,
-              body: [
-                ['Data NF', 'M/S', 'NF','OS', 'CC', 'FORNECEDOR', 'VALOR R$', 'VISTO'],
-                ['','','','','','','',''],
-                ['','','','','','','',''],
-                ['','','','','','','','']
-              ]
-            }
-          },
+          {text: 'Jogos', style: 'tituloServico'},
+ 
           {
             style: 'valores',
             table: {
               widths: [534],
               heights: [10],
               body: [
-                ['Legenda: CC - Comparativo de Consulta / M - Materiais / NF - Nota Fiscal / OS Ordem de Serviço / S - Serviços']
+                ['Lista de Jogos a ser desenvolvido']
               ]
             
             }
@@ -318,5 +259,32 @@ export class PdfService {
         }
       }
     ]
+    }
+
+    getBase64ImageFromURL(url: string) {
+      return new Promise((resolve, reject) => {
+        var img = new Image();
+        img.setAttribute("crossOrigin", "anonymous");
+    
+        img.onload = () => {
+          var canvas = document.createElement("canvas");
+          canvas.width = img.width;
+          canvas.height = img.height;
+    
+          var ctx = canvas.getContext("2d");
+         if(ctx){
+          ctx.drawImage(img, 0, 0);
+         }
+          var dataURL = canvas.toDataURL("image/png");
+    
+          resolve(dataURL);
+        };
+    
+        img.onerror = error => {
+          reject(error);
+        };
+    
+        img.src = url;
+      });
     }
 }
