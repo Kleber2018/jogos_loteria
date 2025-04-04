@@ -17,6 +17,17 @@
   height: 100%;
 }
 
+.sub-section-fechamento {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  overflow-y: auto;
+  width: 100%;
+  max-width: 1050px;
+  height: 100%;
+}
+
 
 .form-input {
   width: 72px;

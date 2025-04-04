@@ -210,6 +210,11 @@ export class MegasenaComponent {
   totalQuadras = 0;
   totalQuinas = 0;
   totalSenas = 0;
+  numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9]; // Conjunto principal
+  tamanhoJogo = 7; // Quantidade de números por jogo
+  garantirAcertos = 4; // Garantia de 4 acertos
+  fechamentos: number[][] = []; // Resultado final do fechamento
+  processando = false;
 
   constructor(
     private megasenaService: MegasenaService,
@@ -217,6 +222,8 @@ export class MegasenaComponent {
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
   ) { 
+
+    console.log(this.route.snapshot.paramMap.get('cod'))
 
     this.formNumerosSelecionados = this.formBuilder.group({
       n1: [1, [ Validators.required, Validators.min(1), Validators.max(60)]],
@@ -234,7 +241,7 @@ export class MegasenaComponent {
       n13: [, [Validators.min(1), Validators.max(60)]],
       n14: [, [Validators.min(1), Validators.max(60)]],
       tamanhoJogo: [7, [Validators.min(6), Validators.max(15)]],
-      acertos: [4, [Validators.min(2), Validators.max(6)]],
+      acertos: [this.garantirAcertos, [Validators.min(2), Validators.max(6)]],
       cotas: [1, [Validators.min(1), Validators.max(100)]]
     }); 
 
@@ -476,14 +483,59 @@ export class MegasenaComponent {
 
       this.msgErroCotas3 = "Atenção 3: 10 jogos é a quantidade máxima de jogos no recibo, você vai precisar dividir esses jogos em "+qtdBoloes+ " bolões";
     } 
+  }
+
+  probabilidade = 0
+  verificarProbabilidade(qtd_numeros: number, garantia_acertos: number){
+    this.probabilidade = 0
+    console.log(qtd_numeros, garantia_acertos)
+    //quadra
+    if(garantia_acertos == 4){
+      if(qtd_numeros == 7){
+        this.probabilidade = 1038
+      } else if(qtd_numeros == 8){
+        this.probabilidade = 539
+      } else if(qtd_numeros == 9){
+        this.probabilidade = 312
+      } else if(qtd_numeros == 10){
+        this.probabilidade = 195
+      } else if(qtd_numeros == 11){
+        this.probabilidade = 129
+      } else if(qtd_numeros == 12){
+        this.probabilidade = 90
+      } else if(qtd_numeros == 13){
+        this.probabilidade = 65
+      } else if(qtd_numeros == 14){
+        this.probabilidade = 48
+      } else if(qtd_numeros == 15){
+        this.probabilidade = 37
+      }
+    } else if(garantia_acertos == 5){
+      if(qtd_numeros == 7){
+        this.probabilidade = 44981
+      } else if(qtd_numeros == 8){
+        this.probabilidade = 17192
+      } else if(qtd_numeros == 9){
+        this.probabilidade = 7791
+      } else if(qtd_numeros == 10){
+        this.probabilidade = 3973
+      } else if(qtd_numeros == 11){
+        this.probabilidade = 2211
+      } else if(qtd_numeros == 12){
+        this.probabilidade = 1317
+      } else if(qtd_numeros == 13){
+        this.probabilidade = 828
+      } else if(qtd_numeros == 14){
+        this.probabilidade = 544
+      } else if(qtd_numeros == 15){
+        this.probabilidade = 370
+      } else if(qtd_numeros == 16){
+        this.probabilidade = 260
+      }
+    }
 
   }
 
-  numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9]; // Conjunto principal
-  tamanhoJogo = 7; // Quantidade de números por jogo
-  garantirAcertos = 4; // Garantia de 4 acertos
-  fechamentos: number[][] = []; // Resultado final do fechamento
-  processando = false;
 
   async gerarFechamento(nGerados: number[]) {
     let nums = Array.from({ length: 14 }, (_, i) => 
@@ -504,6 +556,7 @@ export class MegasenaComponent {
     this.calcularCustoJogo()
     this.processando = false;
     this.calcularResultados(this.fechamentos);
+    this.verificarProbabilidade(this.numeros.length, this.garantirAcertos)
   }
 
   // Função para gerar o fechamento otimizado

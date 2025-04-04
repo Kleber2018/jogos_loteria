@@ -1,10 +1,10 @@
  <main class="main-container">
   <section class="section-fechamento">
-    <section class="section-fechamento">
+    <section class="sub-section-fechamento">
 
       <section class="section-fechamento">
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
-            <h2 style="padding: 8px; margin: 24px 0px; ">Calculadora para motagem de fechamento de jogos da Mega-Sena</h2>
+            <h2 style="padding: 8px; margin: 24px 0px; text-align: center; font-weight: bolder;">Calculadora para motagem de fechamento de jogos da Mega-Sena</h2>
         </section>
         <section style="display: flex; justify-content: center; align-self: center; width: 100%;" >
           <img src="../assets/logo-mega-sena-512.png"  alt="Logo lotomania" width="200" style="margin: -10px 0px 0px">
@@ -324,6 +324,9 @@
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
         <p style="padding: 8px; margin: 0px;">Com base nos ultimos {{resultadosUltimos2024.length}} jogos de 2024 você teria acertado {{totalQuadras}} quadras, {{totalQuinas}} quinas, {{totalSenas}} senas</p>
       </section>
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" *ngIf="probabilidade !== 0">
+        <p style="padding: 8px; margin: 0px;"> A probabilidade de você acertar  {{garantirAcertos}} números entre os escolhidos é de 1 para {{probabilidade}}</p>
+      </section>
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" *ngIf="msgErroCotas">
         <span style="padding: 8px; margin: 0px; color: brown;">{{msgErroCotas}}</span>
       </section>
@@ -344,7 +347,7 @@
       </section>
     </section> -->
 
-    <section class="section-fechamento" style="margin-top: 40px;" *ngIf="resultadosJogos">
+    <section class="section-fechamento" style="margin-top: 32px;" *ngIf="resultadosJogos">
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  *ngFor="let resultJogo of resultadosJogos">
         <div *ngFor="let res of resultJogo.jogo">
           <p style="padding: 8px; margin: 0px;">{{res}}</p>
@@ -374,17 +377,5 @@
      
 
   </section>
-
-   <!--    <p>Caso tenha um novo cliente, ou foi alterado o nome do cliente, esse botão atualia a lista de clientes.</p>
-
-      <div class="example-button-row">
-        <button mat-raised-button (click)="executarFuncao('cliente')" style="margin: 8px;">Recarregar Clientes</button>
-
-      </div>
-
-      <div class="example-button-row" style="margin-top: 50px;">
-        <p>Caso uma empresa não tenha horas no respectivo mês, esse botão corrige o problema da empresa não aparecer</p>
-        <button mat-raised-button (click)="executarFuncao('contrato')" style="margin: 8px;">Integrar Contratos</button>
-      </div> -->
 
   </main>
