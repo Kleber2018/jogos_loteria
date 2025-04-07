@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, CSP_NONCE, signal } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButton, MatButtonModule} from '@angular/material/button';
@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { resultadoMegaSena } from './resultado';
+import { cods, resultadoMegaSena } from './resultado';
 import { PdfService } from './pdf.service';
 import { pdfLoteria } from './megasena.model';
 pdfMake.vfs = pdfFonts.vfs;
@@ -72,6 +72,8 @@ export class MegasenaComponent {
 
   formNumerosSelecionados: FormGroup
 
+  formCodAcesso: FormGroup
+
   totalQuadras = 0;
   totalQuinas = 0;
   totalSenas = 0;
@@ -81,6 +83,21 @@ export class MegasenaComponent {
   fechamentos: number[][] = []; // Resultado final do fechamento
   processando = false;
 
+  acessoCods = cods
+  autenticado = false
+
+
+  valorCadaJogo = 0;
+  valorTotalBolao = 0;
+  valorPorCota = 0;
+  qtdCotas = 0
+  msgErroCotas = ""
+  msgErroCotas2 = ""
+  msgErroCotas3 = ""
+
+  msgErro = ""
+
+
   constructor(
     private megasenaService: MegasenaService,
     private route: ActivatedRoute,
@@ -89,8 +106,12 @@ export class MegasenaComponent {
     private pdfService: PdfService
   ) { 
 
+    this.autenticado = false;
     console.log(this.route.snapshot.paramMap.get('cod'))
 
+    this.formCodAcesso = this.formBuilder.group({
+      cod: [""],
+    })
     this.formNumerosSelecionados = this.formBuilder.group({
       n1: [1, [ Validators.required, Validators.min(1), Validators.max(60)]],
       n2: [2, [ Validators.required, Validators.min(1), Validators.max(60)]],
@@ -111,11 +132,37 @@ export class MegasenaComponent {
       cotas: [1, [Validators.min(1), Validators.max(100)]]
     }); 
 
+
+    this.acessoCods.forEach(cod => {
+      if(this.route.snapshot.paramMap.get('cod') == cod){
+        this.autenticado=true;
+        this.inicializarFormulárioJogo()
+      }
+    });
+    
+  }
+
+  verificarCodAutenticacao(){
+    //this.msgErro = ""
+    console.log("verificando", this.acessoCods.length, this.formCodAcesso.value.cod)
+    this.acessoCods.forEach((cod, i) => {
+
+      if(this.acessoCods.length == (i+1) ){
+        console.log("código inválido")
+        this.msgErro = "Código inválido"
+      } 
+      if(this.formCodAcesso.value.cod == cod){
+        this.autenticado=true;
+        this.inicializarFormulárioJogo()
+      }
+    });
+  }
+
+  inicializarFormulárioJogo(){
     this.numerosGerados = this.megasenaService.gerarJogo(this.numerosMaisSorteados, this.numerosMenosSorteados);
     this.buildForm(this.numerosGerados)
     console.log("+ sorteados em 2024:", this.numerosMaisSorteados)
-    console.log("- sorteados em 2024:", this.numerosMenosSorteados)
-    
+    console.log("- sorteados em 2024:", this.numerosMenosSorteados)    
   }
 
   gerarJogoNovamente(tamanho: number){
@@ -285,13 +332,7 @@ export class MegasenaComponent {
     this.calcularCustoJogo()
   }
 
-  valorCadaJogo = 0;
-  valorTotalBolao = 0;
-  valorPorCota = 0;
-  qtdCotas = 0
-  msgErroCotas = ""
-  msgErroCotas2 = ""
-  msgErroCotas3 = ""
+
   calcularCustoJogo(){
     this.msgErroCotas = ""
     this.msgErroCotas2 = ""
