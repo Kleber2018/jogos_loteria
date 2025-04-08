@@ -27,5 +27,7 @@ export interface timeTotalizerProjects {
         totalQuadras: number,
         totalQuinas: number,
         totalSenas: number,
-        qtdJogosConfe: number
+        qtdJogosConfe: number,
+        premio: number,
+        dataSorteio: any
       }

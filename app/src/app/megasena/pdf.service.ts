@@ -36,9 +36,8 @@ export class PdfService {
               [ {image: MegaSena, width: 96, margin: [0,1,0,0]},
                 {text: 'FECHAMENTO DA MEGA-SENA', bold: true, fontSize: 13, margin: [0,2,0,0]}, 
                 {text: [
-                  {text: 'Data: ', bold: true, margin: [0,2,0,0]},
-                  {text: new Date().getDate()+'/'+(new Date().getMonth()+1)+'/'+new Date().getFullYear(), margin: [0,4,0,0]},
-                  
+                  {text: 'Sorteio: ', bold: true, margin: [0,4,0,0]},
+                  {text: new Date(varPdfLoteria.dataSorteio).getDate()+'/'+(new Date(varPdfLoteria.dataSorteio).getMonth()+1)+'/'+new Date(varPdfLoteria.dataSorteio).getFullYear(), margin: [0,4,0,0]},
                 ]},
               ]
             ]
@@ -179,26 +178,54 @@ export class PdfService {
       }
 
       if(varPdfLoteria.tipoPdf == "completo"){
-        return [
-          {
-            table: {
-              widths: [534],
-              heights: 40,
-              body: [
-                [
-                  { 
-                    stack: [
-                      {text: `Com esse fechamento de ${varPdfLoteria.numeros.length} números e com garantia de pelo menos ${varPdfLoteria.garantirAcertos} acertos, você vai precisar fazer ${varPdfLoteria.jogos.length} jogos de ${varPdfLoteria.tamanhoJogosVolante} números`, alignment: 'center', margin: [0, 8, 0, 4]},
-                      {text: `O custo total do bolão vai ser de R$ ${varPdfLoteria.valorTotalBolao},00, dividido por ${varPdfLoteria.qtdCotas} cotas com o valor por cota de R$ ${varPdfLoteria.valorPorCota} reais`, alignment: 'center' , margin: [0, 4, 0, 4]},
-                      {text: `Com base nos ultimos ${varPdfLoteria.qtdJogosConfe} jogos de 2024 você teria acertado ${varPdfLoteria.totalQuadras} quadras, ${varPdfLoteria.totalQuinas} quinas, ${varPdfLoteria.totalSenas} senas`, alignment: 'center' , margin: [0, 4, 0, 4]},
-                      {text: `A probabilidade de você acertar ${txtGarantirAcertos} entre os números escolhidos é de 1 para ${varPdfLoteria.probabilidade} `, alignment: 'center' , margin: [0, 4, 0, 8]},
-                    ]
-                  }
+
+        if(varPdfLoteria.premio > 10){
+          return [
+            {
+              table: {
+                widths: [534],
+                heights: 40,
+                body: [
+                  [
+                    { 
+                      stack: [
+                        {text: `Com esse fechamento de ${varPdfLoteria.numeros.length} números e com garantia de pelo menos ${varPdfLoteria.garantirAcertos} acertos, você vai precisar fazer ${varPdfLoteria.jogos.length} jogos de ${varPdfLoteria.tamanhoJogosVolante} números`, alignment: 'center', margin: [0, 8, 0, 4]},
+                        {text: `Sorteio dia ${String(new Date(varPdfLoteria.dataSorteio).getDate()).padStart(2, '0')}/${String(new Date(varPdfLoteria.dataSorteio).getMonth() + 1).padStart(2, '0')}/${new Date(varPdfLoteria.dataSorteio).getFullYear()} com prêmio previsto de R$ ${varPdfLoteria.premio },00`, alignment: 'center', margin: [0, 4, 0, 4]},
+                        {text: `O custo total do bolão vai ser de R$ ${varPdfLoteria.valorTotalBolao},00, dividido por ${varPdfLoteria.qtdCotas} cotas com o valor por cota de R$ ${varPdfLoteria.valorPorCota} reais`, alignment: 'center' , margin: [0, 4, 0, 4]},
+                        {text: `Com base nos ultimos ${varPdfLoteria.qtdJogosConfe} jogos de 2024 você teria acertado ${varPdfLoteria.totalQuadras} quadras, ${varPdfLoteria.totalQuinas} quinas, ${varPdfLoteria.totalSenas} senas`, alignment: 'center' , margin: [0, 4, 0, 4]},
+                        {text: `A probabilidade de você acertar ${txtGarantirAcertos} entre os números escolhidos é de 1 para ${varPdfLoteria.probabilidade} `, alignment: 'center' , margin: [0, 4, 0, 8]},
+                      ]
+                    }
+                  ]
                 ]
-              ]
-            }
-          },
-        ]
+              }
+            },
+          ]
+        } else {
+          return [
+            {
+              table: {
+                widths: [534],
+                heights: 40,
+                body: [
+                  [
+                    { 
+                      stack: [
+                        {text: `Com esse fechamento de ${varPdfLoteria.numeros.length} números e com garantia de pelo menos ${varPdfLoteria.garantirAcertos} acertos, você vai precisar fazer ${varPdfLoteria.jogos.length} jogos de ${varPdfLoteria.tamanhoJogosVolante} números`, alignment: 'center', margin: [0, 8, 0, 4]},
+                        {text: `Sorteio dia ${String(new Date(varPdfLoteria.dataSorteio).getDate()).padStart(2, '0')}/${String(new Date(varPdfLoteria.dataSorteio).getMonth() + 1).padStart(2, '0')}/${new Date(varPdfLoteria.dataSorteio).getFullYear()}`, alignment: 'center', margin: [0, 4, 0, 4]},
+                        {text: `O custo total do bolão vai ser de R$ ${varPdfLoteria.valorTotalBolao},00, dividido por ${varPdfLoteria.qtdCotas} cotas com o valor por cota de R$ ${varPdfLoteria.valorPorCota} reais`, alignment: 'center' , margin: [0, 4, 0, 4]},
+                        {text: `Com base nos ultimos ${varPdfLoteria.qtdJogosConfe} jogos de 2024 você teria acertado ${varPdfLoteria.totalQuadras} quadras, ${varPdfLoteria.totalQuinas} quinas, ${varPdfLoteria.totalSenas} senas`, alignment: 'center' , margin: [0, 4, 0, 4]},
+                        {text: `A probabilidade de você acertar ${txtGarantirAcertos} entre os números escolhidos é de 1 para ${varPdfLoteria.probabilidade} `, alignment: 'center' , margin: [0, 4, 0, 8]},
+                      ]
+                    }
+                  ]
+                ]
+              }
+            },
+          ]
+        }
+
+       
       } else if(varPdfLoteria.tipoPdf == "resumo" ){
         return [
           {

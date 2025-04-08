@@ -335,6 +335,33 @@
               formControlName="comissao" />
             </mat-form-field>
           </section>
+
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+            <p style="padding: 4px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Data do sorteio e valor que está concorrendo</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; padding-bottom: 16px;">Para complementar o relatório</p>
+          </section>
+
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+            <mat-form-field  appearance="outline">
+              <mat-label>Prêmio</mat-label>
+              <input
+              matInput
+              type="number"
+              min="0" max="600000000"
+              required="true"
+              formControlName="premio" />
+            </mat-form-field>
+          </section>
+
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+            <mat-form-field appearance="outline">
+              <mat-label>Data do sorteio</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="dataSorteio">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </section>
+
   
           <mat-divider style="width: 100%; margin: 24px 0px 12px;"></mat-divider>
   
@@ -378,6 +405,9 @@
 
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
             <p class="text-descrip">O custo total do bolão vai ser de <b>{{valorTotalBolao  | currency}}</b>, dividido por <b>{{qtdCotas}} cotas</b> com o valor por cota de <b>{{valorPorCota  | currency}} reais </b></p>
+        </section>
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <p class="text-descrip">O próximo sorteio é dia {{this.formNumerosSelecionados.value.dataSorteio | date: 'd/M/yy'}} com prêmio previsto de  {{this.formNumerosSelecionados.value.premio | currency }}</p>
         </section>
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
           <p class="text-descrip">Com base nos ultimos {{resultadosUltimos2024.length}} jogos de 2024 você teria acertado {{totalQuadras}} quadras, {{totalQuinas}} quinas, {{totalSenas}} senas</p>

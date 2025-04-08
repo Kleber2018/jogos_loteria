@@ -1,4 +1,4 @@
-import { Component, CSP_NONCE, signal } from '@angular/core';
+import { Component, CSP_NONCE, numberAttribute, signal } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButton, MatButtonModule} from '@angular/material/button';
@@ -10,7 +10,7 @@ import { MegasenaService } from './megasena.service';
 import { ActivatedRoute } from '@angular/router';
 
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
@@ -21,15 +21,17 @@ import { cods, resultadoMegaSena } from './resultado';
 import { PdfService } from './pdf.service';
 import { pdfLoteria } from './megasena.model';
 pdfMake.vfs = pdfFonts.vfs;
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {provideNativeDateAdapter} from '@angular/material/core';
 
 @Component({
   selector: 'app-setup',
   standalone: true,
+  providers: [provideNativeDateAdapter()],
   imports: [CommonModule, ReactiveFormsModule, 
     MatButtonModule, MatDividerModule, 
     MatIconModule, MatDialogModule, MatFormFieldModule, 
-    MatInputModule, FormsModule ],
+    MatInputModule, FormsModule, MatDatepickerModule],
   templateUrl: './megasena.component.html',
   styleUrl: './megasena.component.scss',
   //exports: [HeaderComponent]
@@ -97,7 +99,8 @@ export class MegasenaComponent {
 
   msgErro = ""
 
-
+  dataProximoConcurso = new FormControl((new Date()).toISOString());
+  
   constructor(
     private megasenaService: MegasenaService,
     private route: ActivatedRoute,
@@ -105,6 +108,8 @@ export class MegasenaComponent {
     public dialog: MatDialog,
     private pdfService: PdfService
   ) { 
+
+    this.dataProximoConcurso = new FormControl(this.getClosestPreferredDay().toDateString());
 
     this.autenticado = false;
     console.log(this.route.snapshot.paramMap.get('cod'))
@@ -130,7 +135,9 @@ export class MegasenaComponent {
       tamanhoJogo: [7, [Validators.min(6), Validators.max(15)]],
       acertos: [this.garantirAcertos, [Validators.min(2), Validators.max(6)]],
       cotas: [1, [Validators.min(1), Validators.max(100)]],
-      comissao: [0, [Validators.min(0), Validators.max(2000)]]
+      comissao: [0, [Validators.min(0), Validators.max(2000)]],
+      dataSorteio: [(new Date()).toISOString()],
+      premio: [0]
     }); 
 
 
@@ -141,6 +148,26 @@ export class MegasenaComponent {
       }
     });
     
+  }
+
+  getClosestPreferredDay(date: Date = new Date()): Date {
+    const preferredDays = [2, 4, 6]; // Terça, Quinta, Sábado
+    const currentDay = date.getDay(); // 0 = domingo, 6 = sábado
+  
+    let minDiff = 7;
+    let closestDayOffset = 0;
+  
+    preferredDays.forEach(day => {
+      let diff = (day - currentDay + 7) % 7;
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestDayOffset = diff;
+      }
+    });
+  
+    const closestDate = new Date(date);
+    closestDate.setDate(date.getDate() + closestDayOffset);
+    return closestDate;
   }
 
   verificarCodAutenticacao(){
@@ -212,7 +239,9 @@ export class MegasenaComponent {
         tamanhoJogo: [this.formNumerosSelecionados.value.tamanhoJogo, [Validators.min(6), Validators.max(16)]],
         acertos: [this.formNumerosSelecionados.value.acertos, [Validators.min(2), Validators.max(6)]],
         cotas: [this.formNumerosSelecionados.value.cotas, [Validators.min(1), Validators.max(100)]],
-        comissao: [this.formNumerosSelecionados.value.comissao, [Validators.min(0), Validators.max(2000)]]
+        comissao: [this.formNumerosSelecionados.value.comissao, [Validators.min(0), Validators.max(2000)]],
+        dataSorteio: [this.formNumerosSelecionados.value.dataSorteio],
+        premio: [this.formNumerosSelecionados.value.premio]
       }); 
       this.gerarFechamento(numGerados)
     } else if(numGerados.length == 10){
@@ -234,7 +263,9 @@ export class MegasenaComponent {
         tamanhoJogo: [this.formNumerosSelecionados.value.tamanhoJogo, [Validators.min(6), Validators.max(16)]],
         acertos: [this.formNumerosSelecionados.value.acertos, [Validators.min(2), Validators.max(6)]],
         cotas: [this.formNumerosSelecionados.value.cotas, [Validators.min(1), Validators.max(100)]],
-        comissao: [this.formNumerosSelecionados.value.comissao, [Validators.min(0), Validators.max(1000)]]
+        comissao: [this.formNumerosSelecionados.value.comissao, [Validators.min(0), Validators.max(1000)]],
+        dataSorteio: [this.formNumerosSelecionados.value.dataSorteio],
+        premio: [this.formNumerosSelecionados.value.premio]
       }); 
 
       this.gerarFechamento(numGerados)
@@ -257,7 +288,9 @@ export class MegasenaComponent {
         tamanhoJogo: [this.formNumerosSelecionados.value.tamanhoJogo, [Validators.min(6), Validators.max(16)]],
         acertos: [this.formNumerosSelecionados.value.acertos, [Validators.min(2), Validators.max(6)]],
         cotas: [this.formNumerosSelecionados.value.cotas, [Validators.min(1), Validators.max(100)]],
-        comissao: [this.formNumerosSelecionados.value.comissao, [Validators.min(0), Validators.max(2000)]]
+        comissao: [this.formNumerosSelecionados.value.comissao, [Validators.min(0), Validators.max(2000)]],
+        dataSorteio: [this.formNumerosSelecionados.value.dataSorteio],
+        premio: [this.formNumerosSelecionados.value.premio]
       }); 
 
       this.gerarFechamento(numGerados)
@@ -280,7 +313,9 @@ export class MegasenaComponent {
         tamanhoJogo: [this.formNumerosSelecionados.value.tamanhoJogo, [Validators.min(6), Validators.max(16)]],
         acertos: [this.formNumerosSelecionados.value.acertos, [Validators.min(2), Validators.max(6)]],
         cotas: [this.formNumerosSelecionados.value.cotas, [Validators.min(1), Validators.max(100)]],
-        comissao: [this.formNumerosSelecionados.value.comissao, [Validators.min(0), Validators.max(2000)]]
+        comissao: [this.formNumerosSelecionados.value.comissao, [Validators.min(0), Validators.max(2000)]],
+        dataSorteio: [this.formNumerosSelecionados.value.dataSorteio],
+        premio: [this.formNumerosSelecionados.value.premio]
       }); 
 
       this.gerarFechamento(numGerados)
@@ -303,7 +338,9 @@ export class MegasenaComponent {
         tamanhoJogo: [this.formNumerosSelecionados.value.tamanhoJogo, [Validators.min(6), Validators.max(16)]],
         acertos: [this.formNumerosSelecionados.value.acertos, [Validators.min(2), Validators.max(6)]],
         cotas: [this.formNumerosSelecionados.value.cotas, [Validators.min(1), Validators.max(100)]],
-        comissao: [this.formNumerosSelecionados.value.comissao, [Validators.min(0), Validators.max(2000)]]
+        comissao: [this.formNumerosSelecionados.value.comissao, [Validators.min(0), Validators.max(2000)]],
+        dataSorteio: [this.formNumerosSelecionados.value.dataSorteio],
+        premio: [this.formNumerosSelecionados.value.premio]
       }); 
 
       this.gerarFechamento(numGerados)
@@ -326,7 +363,9 @@ export class MegasenaComponent {
         tamanhoJogo: [this.formNumerosSelecionados.value.tamanhoJogo, [Validators.min(6), Validators.max(16)]],
         acertos: [this.formNumerosSelecionados.value.acertos, [Validators.min(2), Validators.max(6)]],
         cotas: [this.formNumerosSelecionados.value.cotas, [Validators.min(1), Validators.max(100)]],
-        comissao: [this.formNumerosSelecionados.value.comissao, [Validators.min(0), Validators.max(2000)]]
+        comissao: [this.formNumerosSelecionados.value.comissao, [Validators.min(0), Validators.max(2000)]],
+        dataSorteio: [this.formNumerosSelecionados.value.dataSorteio],
+        premio: [this.formNumerosSelecionados.value.premio]
       }); 
 
       this.gerarFechamento(numGerados)
@@ -536,7 +575,9 @@ export class MegasenaComponent {
         totalQuadras: this.totalQuadras,
         totalQuinas: this.totalQuinas,
         totalSenas: this.totalSenas,
-        qtdJogosConfe: this.resultadosUltimos2024.length
+        qtdJogosConfe: this.resultadosUltimos2024.length,
+        premio: this.formNumerosSelecionados.value.premio,
+        dataSorteio: this.formNumerosSelecionados.value.dataSorteio
       }
 
     const documentDefinition =  await this.pdfService.pdfJogo(varPdfLoteria); // true significa imprimir imagens
