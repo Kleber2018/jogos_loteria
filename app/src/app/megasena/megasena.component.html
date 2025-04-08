@@ -318,6 +318,23 @@
               formControlName="cotas" />
             </mat-form-field>
           </section>
+
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+            <p style="padding: 4px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Informe o valor da comissão do vendedor</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; padding-bottom: 16px;">Esse valor será acresentado no valor da somatória dos jogos para ter o valor de cada cota</p>
+          </section>
+  
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+            <mat-form-field  appearance="outline">
+              <mat-label>Comissão</mat-label>
+              <input
+              matInput
+              type="number"
+              min="0" max="2000"
+              required="true"
+              formControlName="comissao" />
+            </mat-form-field>
+          </section>
   
           <mat-divider style="width: 100%; margin: 24px 0px 12px;"></mat-divider>
   
@@ -348,24 +365,25 @@
           <p style="padding: 8px; margin: 8px 0px; text-align: center; width: 100%; ">O seu fechamento</p>
         </section>
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
-          <div style="padding: 8px; margin: 8px 0px; text-align: center;" *ngFor="let numGerado of numerosGerados;  let i = index">
-            <p *ngIf="i == 0">( {{numGerado}}</p>
-            <p *ngIf="(i !== (numerosGerados.length-1)) && i!== 0">{{numGerado}},</p>
-            <p *ngIf="i == (numerosGerados.length-1)">{{numGerado}} )</p>
+          <div style="padding: 4px; margin: 4px 0px; text-align: center;" *ngFor="let numGerado of numerosGerados;  let i = index">
+            <!-- <p *ngIf="i == 0" style="min-width: 28px">( {{numGerado}}</p>
+            <p *ngIf="(i !== (numerosGerados.length-1)) && i!== 0">{{numGerado}},</p>-->
+            <p *ngIf="i == (numerosGerados.length-1)" style="min-width: 28px">{{numGerado}}</p> 
+            <p *ngIf="(i !== (numerosGerados.length-1))">{{numGerado}},</p>
           </div>
         </section>
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
-            <p style="padding: 8px; margin: 0px; text-align: center">Com esse fechamento de {{numeros.length}} números e com garantia de pelo menos {{garantirAcertos}} acertos, você vai precisar fazer <b>{{fechamentos.length}} jogos </b> de {{tamanhoJogo}} números</p>
+            <p class="text-descrip">Com esse fechamento de {{numeros.length}} números e com garantia de pelo menos {{garantirAcertos}} acertos, você vai precisar fazer <b>{{fechamentos.length}} jogos </b> de {{tamanhoJogo}} números</p>
         </section>
 
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
-            <p style="padding: 8px; margin: 0px;">O custo total do bolão vai ser de <b>R$ {{valorTotalBolao}},00</b>, dividido por <b>{{qtdCotas}} cotas</b> com o valor por cota de <b>R$ {{valorPorCota}} reais </b></p>
+            <p class="text-descrip">O custo total do bolão vai ser de <b>{{valorTotalBolao  | currency}}</b>, dividido por <b>{{qtdCotas}} cotas</b> com o valor por cota de <b>{{valorPorCota  | currency}} reais </b></p>
         </section>
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
-          <p style="padding: 8px; margin: 0px;">Com base nos ultimos {{resultadosUltimos2024.length}} jogos de 2024 você teria acertado {{totalQuadras}} quadras, {{totalQuinas}} quinas, {{totalSenas}} senas</p>
+          <p class="text-descrip">Com base nos ultimos {{resultadosUltimos2024.length}} jogos de 2024 você teria acertado {{totalQuadras}} quadras, {{totalQuinas}} quinas, {{totalSenas}} senas</p>
         </section>
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" *ngIf="probabilidade !== 0">
-          <p style="padding: 8px; margin: 0px;"> A probabilidade de você acertar  {{garantirAcertos}} números entre os escolhidos é de 1 para {{probabilidade}}</p>
+          <p class="text-descrip"> A probabilidade de você acertar  {{garantirAcertos}} números entre os escolhidos é de 1 para {{probabilidade}}</p>
         </section>
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" *ngIf="msgErroCotas">
           <span style="padding: 8px; margin: 0px; color: brown;">{{msgErroCotas}}</span>
@@ -380,7 +398,10 @@
   
       <!--array de jogos gerados-->
       <section class="sub-section-fechamento" style="margin-top: 32px;" *ngIf="resultadosJogos.length > 0">
-        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  *ngFor="let resultJogo of resultadosJogos">
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  *ngFor="let resultJogo of resultadosJogos; index as i">
+          <mat-divider *ngIf="(i%3) == 1"> </mat-divider>
+
+          <mat-divider style="width: 100%; margin: 8px 0px;" *ngIf="((i+1)%3) == 1">jogo</mat-divider>
           <div *ngFor="let res of resultJogo.jogo">
             <p style="padding: 8px; margin: 0px;">{{res}}</p>
           </div>
@@ -428,9 +449,9 @@
     <mat-divider style="width: 100%; margin: 54px 0px 54px;"></mat-divider>
     <section class="section-fechamento">
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap; margin: 8px 0px 0px 0px; " >
-          <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);">Atualização 04/04/25 - outras informações em </p>
-          <a  style="padding: 4px 0px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);" href="https://loterias.caixa.gov.br/Paginas/Mega-Sena.aspx" target="_blank" rel="noopener noreferrer">Loterias Caixa</a>
-          <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85);">| Desenvolvido por KLRS</p>
+          <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85); align-items: center;">Atualização 07/04/25 - Outras informações em </p>
+          <a  style="padding: 4px 0px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85); align-items: center;" href="https://loterias.caixa.gov.br/Paginas/Mega-Sena.aspx" target="_blank" rel="noopener noreferrer">Loterias Caixa</a>
+          <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85); align-items: center;">| Desenvolvido por KLRS</p>
       </section>
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap; margin: 8px 0px 40px 0px; " >
         <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85); text-align: center">A estratégia de fechamentos de jogos é uma abordagem econômica para aumentar as chances de ganhar prêmios secundários. Para otimizar a quantidade de apostas, o algoritmo pode excluir algumas combinações.</p>
