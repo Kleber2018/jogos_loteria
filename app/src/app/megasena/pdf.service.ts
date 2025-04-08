@@ -80,12 +80,12 @@ export class PdfService {
           {text: 'Jogos', style: 'tituloServico'},
  
           {
-            style: 'valores',
+            style: 'textJogos',
             table: {
               widths: [534],
               heights: [10],
               body: [
-                ['Lista de Jogos a ser desenvolvido']
+                [this.retornaJogos(varPdfLoteria)]
               ]
             }
           },
@@ -132,8 +132,8 @@ export class PdfService {
           cabecalho: {
             alignment: 'center',
           },
-          valores: {
-            fontSize: 9,
+          textJogos: {
+            fontSize: 12,
             alignment: 'center'
           },
           descricaoServico: {
@@ -150,18 +150,17 @@ export class PdfService {
 
 
 
-    retornaTabObs(OBS: string){
+    retornaJogos(jgs: pdfLoteria){
+
+      const jogos = jgs.jogos.map(jg => ({ text: jg+", ", margin: [4, 4, 4, 0]}));
+        
+
+
       return [
-        {text: 'OBSERVAÇÃO', style: 'tituloServico'},
         {
-          table: {
-            widths: [534],
-            heights: [30],
-            body: [
-              [{text: OBS, style: 'descricaoServico'}]
-            ]
-          }
-        }
+          ol: jogos,
+          alignment: 'start'
+        },
       ]
     }
 
