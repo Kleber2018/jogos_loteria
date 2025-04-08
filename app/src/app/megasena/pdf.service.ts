@@ -17,15 +17,7 @@ export class PdfService {
       var tabConf = null
       var TabControleExpedicao = null
       var pageMarginTop = 60
-      var txtGarantirAcertos = "3"
-
-      if(varPdfLoteria.garantirAcertos == 4){
-        txtGarantirAcertos = "a quadra"
-      } else if(varPdfLoteria.garantirAcertos == 5){
-        txtGarantirAcertos = "a quina"
-      } else if(varPdfLoteria.garantirAcertos == 2){
-        txtGarantirAcertos = "2 "
-      }
+     
       
 
       return {
@@ -65,24 +57,7 @@ export class PdfService {
         // [left, top, right, bottom] or [horizontal, vertical] or just a number for equal margins
         pageMargins: [ 25, pageMarginTop, 23, 40 ],
         content: [
-          {
-            table: {
-              widths: [534],
-              heights: 40,
-              body: [
-                [
-                   { 
-                    stack: [
-                      {text: `Com esse fechamento de ${varPdfLoteria.numeros.length} números e com garantia de pelo menos ${varPdfLoteria.garantirAcertos} acertos, você vai precisar fazer ${varPdfLoteria.jogos.length} jogos de ${varPdfLoteria.tamanhoJogosVolante} números`, alignment: 'center', margin: [0, 8, 0, 4]},
-                      {text: `O custo total do bolão vai ser de R$ ${varPdfLoteria.valorTotalBolao},00, dividido por ${varPdfLoteria.qtdCotas} cotas com o valor por cota de R$ ${varPdfLoteria.valorPorCota} reais`, alignment: 'center' , margin: [0, 4, 0, 4]},
-                      {text: `Com base nos ultimos ${varPdfLoteria.qtdJogosConfe} jogos de 2024 você teria acertado ${varPdfLoteria.totalQuadras} quadras, ${varPdfLoteria.totalQuinas} quinas, ${varPdfLoteria.totalSenas} senas`, alignment: 'center' , margin: [0, 4, 0, 4]},
-                      {text: `A probabilidade de você acertar  ${txtGarantirAcertos} números entre os escolhidos é de 1 para ${varPdfLoteria.probabilidade} `, alignment: 'center' , margin: [0, 4, 0, 8]},
-                    ]
-                  }
-                ]
-              ]
-            }
-          },
+         this.retornaDescricao(varPdfLoteria),
        
 
           {text: 'Jogos', style: 'tituloServico'},
@@ -189,6 +164,66 @@ export class PdfService {
           margin: [16, 8, 0, 12]
         },
       ]
+    }
+
+
+    retornaDescricao(varPdfLoteria: pdfLoteria){
+      var txtGarantirAcertos = "3"
+
+      if(varPdfLoteria.garantirAcertos == 4){
+        txtGarantirAcertos = "a quadra"
+      } else if(varPdfLoteria.garantirAcertos == 5){
+        txtGarantirAcertos = "a quina"
+      } else if(varPdfLoteria.garantirAcertos == 2){
+        txtGarantirAcertos = "2 "
+      }
+
+      if(varPdfLoteria.tipoPdf == "completo"){
+        return [
+          {
+            table: {
+              widths: [534],
+              heights: 40,
+              body: [
+                [
+                  { 
+                    stack: [
+                      {text: `Com esse fechamento de ${varPdfLoteria.numeros.length} números e com garantia de pelo menos ${varPdfLoteria.garantirAcertos} acertos, você vai precisar fazer ${varPdfLoteria.jogos.length} jogos de ${varPdfLoteria.tamanhoJogosVolante} números`, alignment: 'center', margin: [0, 8, 0, 4]},
+                      {text: `O custo total do bolão vai ser de R$ ${varPdfLoteria.valorTotalBolao},00, dividido por ${varPdfLoteria.qtdCotas} cotas com o valor por cota de R$ ${varPdfLoteria.valorPorCota} reais`, alignment: 'center' , margin: [0, 4, 0, 4]},
+                      {text: `Com base nos ultimos ${varPdfLoteria.qtdJogosConfe} jogos de 2024 você teria acertado ${varPdfLoteria.totalQuadras} quadras, ${varPdfLoteria.totalQuinas} quinas, ${varPdfLoteria.totalSenas} senas`, alignment: 'center' , margin: [0, 4, 0, 4]},
+                      {text: `A probabilidade de você acertar ${txtGarantirAcertos} entre os números escolhidos é de 1 para ${varPdfLoteria.probabilidade} `, alignment: 'center' , margin: [0, 4, 0, 8]},
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+        ]
+      } else if(varPdfLoteria.tipoPdf == "resumo" ){
+        return [
+          {
+            table: {
+              widths: [534],
+              heights: 40,
+              body: [
+                [
+                  { 
+                    stack: [
+                      {text: `Com esse fechamento de ${varPdfLoteria.numeros.length} números e com garantia de pelo menos ${varPdfLoteria.garantirAcertos} acertos, você vai precisar fazer ${varPdfLoteria.jogos.length} jogos de ${varPdfLoteria.tamanhoJogosVolante} números`, alignment: 'center', margin: [0, 8, 0, 4]},
+                      {text: `Com base nos ultimos ${varPdfLoteria.qtdJogosConfe} jogos de 2024 você teria acertado ${varPdfLoteria.totalQuadras} quadras, ${varPdfLoteria.totalQuinas} quinas, ${varPdfLoteria.totalSenas} senas`, alignment: 'center' , margin: [0, 4, 0, 4]},
+                      {text: `A probabilidade de você acertar ${txtGarantirAcertos} entre os números escolhidos é de 1 para ${varPdfLoteria.probabilidade} `, alignment: 'center' , margin: [0, 4, 0, 8]},
+                    ]
+                  }
+                ]
+              ]
+            }
+          },
+        ]
+      } else {
+        return []
+      }
+
+      
     }
 
 

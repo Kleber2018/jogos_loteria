@@ -537,7 +537,6 @@ export class MegasenaComponent {
         totalQuinas: this.totalQuinas,
         totalSenas: this.totalSenas,
         qtdJogosConfe: this.resultadosUltimos2024.length
-
       }
 
     const documentDefinition =  await this.pdfService.pdfJogo(varPdfLoteria); // true significa imprimir imagens
