@@ -532,7 +532,12 @@ export class MegasenaComponent {
         tipoPdf:tipoPdf,
         valorTotalBolao: this.valorTotalBolao,
         valorPorCota: this.valorPorCota,
-        qtdCotas: this.qtdCotas
+        qtdCotas: this.qtdCotas,
+        totalQuadras: this.totalQuadras,
+        totalQuinas: this.totalQuinas,
+        totalSenas: this.totalSenas,
+        qtdJogosConfe: this.resultadosUltimos2024.length
+
       }
 
     const documentDefinition =  await this.pdfService.pdfJogo(varPdfLoteria); // true significa imprimir imagens

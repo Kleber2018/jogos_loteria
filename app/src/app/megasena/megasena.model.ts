@@ -23,5 +23,9 @@ export interface timeTotalizerProjects {
         tipoPdf?: string,
         valorTotalBolao: number,
         valorPorCota: number,
-        qtdCotas: number
+        qtdCotas: number,
+        totalQuadras: number,
+        totalQuinas: number,
+        totalSenas: number,
+        qtdJogosConfe: number
       }

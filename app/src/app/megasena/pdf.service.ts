@@ -47,7 +47,7 @@ export class PdfService {
 
         footer: function(currentPage: any, pageCount: any, pageSize: any) { 
          return [
-            { text: 'Versão 1.10 SSE Digital - abril/2025                                                                   '+ currentPage.toString() + ' de ' + pageCount, alignment: 'right', margin: [0, 0, 29, 0], fontSize: 10,},
+            { text: 'Esse documento é só um resumo dos números do bolão, NÃO VALE COMO COMPROVANTE DE APOSTA.\nFechamento bolão Mega-Sena - v1.2 \n' + currentPage.toString() + ' de ' + pageCount, alignment: 'center', margin: [0, 0, 29, 0], fontSize: 9,},
             { canvas: [ { type: 'rect', x: 170, y: 32, w: pageSize.width - 170, h: 40 } ] }
           ]}, 
   
@@ -60,17 +60,18 @@ export class PdfService {
           {
             table: {
               widths: [534],
-              heights: 25,
+              heights: 40,
               body: [
                 [
-                  {text: `Com esse fechamento de ${varPdfLoteria.numeros.length} números e com garantia de pelo menos ${varPdfLoteria.garantirAcertos} acertos, você vai precisar fazer ${varPdfLoteria.jogos.length} jogos de ${varPdfLoteria.tamanhoJogosVolante} números`, alignment: 'center'},
-                ],
-                [
-                  {text: `O custo total do bolão vai ser de R$ ${varPdfLoteria.valorTotalBolao},00, dividido por ${varPdfLoteria.qtdCotas} cotas</b> com o valor por cota de R$ ${varPdfLoteria.valorPorCota} reais `, alignment: 'center'},
-                ],
-                [
-                  {text: `A probabilidade de você acertar  ${varPdfLoteria.garantirAcertos} números entre os escolhidos é de 1 para ${varPdfLoteria.probabilidade}`, alignment: 'center'},
-                ],
+                   { 
+                    stack: [
+                      {text: `Com esse fechamento de ${varPdfLoteria.numeros.length} números e com garantia de pelo menos ${varPdfLoteria.garantirAcertos} acertos, você vai precisar fazer ${varPdfLoteria.jogos.length} jogos de ${varPdfLoteria.tamanhoJogosVolante} números`, alignment: 'center', margin: [0, 8, 0, 4]},
+                      {text: `O custo total do bolão vai ser de R$ ${varPdfLoteria.valorTotalBolao},00, dividido por ${varPdfLoteria.qtdCotas} cotas com o valor por cota de R$ ${varPdfLoteria.valorPorCota} reais`, alignment: 'center' , margin: [0, 4, 0, 4]},
+                      {text: `Com base nos ultimos ${varPdfLoteria.qtdJogosConfe} jogos de 2024 você teria acertado ${varPdfLoteria.totalQuadras} quadras, ${varPdfLoteria.totalQuinas} quinas, ${varPdfLoteria.totalSenas} senas`, alignment: 'center' , margin: [0, 4, 0, 4]},
+                      {text: `A probabilidade de você acertar  ${varPdfLoteria.garantirAcertos} números entre os escolhidos é de 1 para ${varPdfLoteria.probabilidade} `, alignment: 'center' , margin: [0, 4, 0, 8]},
+                    ]
+                  }
+                ]
               ]
             }
           },
@@ -86,7 +87,6 @@ export class PdfService {
               body: [
                 ['Lista de Jogos a ser desenvolvido']
               ]
-            
             }
           },
 
@@ -237,27 +237,6 @@ export class PdfService {
           ]
         }
       },
-      {
-        style: 'header2',
-        table: {
-          // headers are automatically repeated if the table spans over multiple pages
-          // you can declare how many rows should be treated as headers
-          headerRows: 1,
-          widths: [ 67, 290, 81, 67 ],
-          heights: [19],
-          body: [
-            [ {text: 'GEMSD', bold: true, fontSize: 14, color: 'blue', margin: [0,2,0,0]}, 
-              {text: 'SOLICITAÇÃO DE SERVIÇO ELETROMECÂNICO', bold: true, fontSize: 13, margin: [0,2,0,0]}, 
-              {text: [
-                {text: 'SD ', bold: true},
-                {text: s.referencia, bold: true, color:'red', fontSize: 16}
-                
-              ]},
-              {text: 'SANEPAR', fontSize: 14, bold: true, color: 'blue', margin: [0,2,0,0]} 
-            ]
-          ]
-        }
-      }
     ]
     }
 
