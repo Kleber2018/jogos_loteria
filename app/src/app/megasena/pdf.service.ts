@@ -17,7 +17,15 @@ export class PdfService {
       var tabConf = null
       var TabControleExpedicao = null
       var pageMarginTop = 60
+      var txtGarantirAcertos = "3"
 
+      if(varPdfLoteria.garantirAcertos == 4){
+        txtGarantirAcertos = "a quadra"
+      } else if(varPdfLoteria.garantirAcertos == 5){
+        txtGarantirAcertos = "a quina"
+      } else if(varPdfLoteria.garantirAcertos == 2){
+        txtGarantirAcertos = "2 "
+      }
       
 
       return {
@@ -68,7 +76,7 @@ export class PdfService {
                       {text: `Com esse fechamento de ${varPdfLoteria.numeros.length} números e com garantia de pelo menos ${varPdfLoteria.garantirAcertos} acertos, você vai precisar fazer ${varPdfLoteria.jogos.length} jogos de ${varPdfLoteria.tamanhoJogosVolante} números`, alignment: 'center', margin: [0, 8, 0, 4]},
                       {text: `O custo total do bolão vai ser de R$ ${varPdfLoteria.valorTotalBolao},00, dividido por ${varPdfLoteria.qtdCotas} cotas com o valor por cota de R$ ${varPdfLoteria.valorPorCota} reais`, alignment: 'center' , margin: [0, 4, 0, 4]},
                       {text: `Com base nos ultimos ${varPdfLoteria.qtdJogosConfe} jogos de 2024 você teria acertado ${varPdfLoteria.totalQuadras} quadras, ${varPdfLoteria.totalQuinas} quinas, ${varPdfLoteria.totalSenas} senas`, alignment: 'center' , margin: [0, 4, 0, 4]},
-                      {text: `A probabilidade de você acertar  ${varPdfLoteria.garantirAcertos} números entre os escolhidos é de 1 para ${varPdfLoteria.probabilidade} `, alignment: 'center' , margin: [0, 4, 0, 8]},
+                      {text: `A probabilidade de você acertar  ${txtGarantirAcertos} números entre os escolhidos é de 1 para ${varPdfLoteria.probabilidade} `, alignment: 'center' , margin: [0, 4, 0, 8]},
                     ]
                   }
                 ]
@@ -151,15 +159,34 @@ export class PdfService {
 
 
     retornaJogos(jgs: pdfLoteria){
+      var jogosString: string[] = []
 
-      const jogos = jgs.jogos.map(jg => ({ text: jg+", ", margin: [4, 4, 4, 0]}));
+      jgs.jogos.forEach((jg, i1) => {
+
+        var jgString = ""
+        jg.forEach((j, i2) =>{
+          if(i2 == 0){
+            jgString = j.toString()
+          }else if((i2+1) == jg.length && (i1-1)%3 == 1){
+            jgString = jgString+ ", "+j+'\n\n'
+          } else {
+            jgString = jgString+ ", "+j
+          }
+
+        })
+        jogosString.push(jgString)
+      });
+
+      const jogos = jogosString.map(jg => ({ text: jg+"", margin: [8, 4, 4, 0]}));
         
 
 
       return [
         {
+          separator: ['Jogo-', ':    '],
           ol: jogos,
-          alignment: 'start'
+          alignment: 'start',
+          margin: [16, 8, 0, 12]
         },
       ]
     }
