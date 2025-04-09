@@ -16,7 +16,7 @@ export class PdfService {
        
       var tabConf = null
       var TabControleExpedicao = null
-      var pageMarginTop = 60
+      var pageMarginTop = 64
      
       
 
@@ -46,15 +46,15 @@ export class PdfService {
 
         footer: function(currentPage: any, pageCount: any, pageSize: any) { 
          return [
-            { text: 'Esse documento é só um resumo dos números do bolão, NÃO VALE COMO COMPROVANTE DE APOSTA.\nFechamento bolão Mega-Sena - v1.2 \n' + currentPage.toString() + ' de ' + pageCount, alignment: 'center', margin: [0, 0, 29, 0], fontSize: 9,},
-            { canvas: [ { type: 'rect', x: 170, y: 32, w: pageSize.width - 170, h: 40 } ] }
+            { text:  currentPage.toString() + ' de ' + pageCount+'\nEsse documento é só um resumo dos números do bolão, NÃO VALE COMO COMPROVANTE DE APOSTA.\nA loteria é um jogo de sorte. O fechamento não garante prêmios, mas aumenta suas chances de acertar quadras e quinas.', alignment: 'center', margin: [0, 8, 0, 0], fontSize: 9,},
+            { canvas: [ { type: 'rect', x: 170, y: 32, w: pageSize.width, h: 72 } ] }
           ]}, 
   
         // by default we use portrait, you can change it to landscape if you wish
         pageOrientation: 'portrait', //landscape
       
         // [left, top, right, bottom] or [horizontal, vertical] or just a number for equal margins
-        pageMargins: [ 25, pageMarginTop, 23, 40 ],
+        pageMargins: [ 25, pageMarginTop, 23, 80 ],
         content: [
          this.retornaDescricao(varPdfLoteria),
        
@@ -67,7 +67,7 @@ export class PdfService {
               widths: [534],
               heights: [10],
               body: [
-                [this.retornaJogos(varPdfLoteria)]
+                [this.retornaJogos(varPdfLoteria)],
               ]
             }
           },
@@ -148,6 +148,7 @@ export class PdfService {
           }
 
         })
+
         jogosString.push(jgString)
       });
 
@@ -162,6 +163,7 @@ export class PdfService {
           alignment: 'start',
           margin: [16, 8, 0, 12]
         },
+        {text: 'Boa Sorte!\n', style: 'tituloServico'},
       ]
     }
 
