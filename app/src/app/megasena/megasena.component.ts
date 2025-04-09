@@ -109,6 +109,7 @@ export class MegasenaComponent {
     private pdfService: PdfService
   ) { 
 
+
     this.dataProximoConcurso = new FormControl(this.getClosestPreferredDay().toDateString());
 
     this.autenticado = false;
@@ -150,6 +151,8 @@ export class MegasenaComponent {
     
   }
 
+
+
   getClosestPreferredDay(date: Date = new Date()): Date {
     const preferredDays = [2, 4, 6]; // Terça, Quinta, Sábado
     const currentDay = date.getDay(); // 0 = domingo, 6 = sábado
@@ -187,14 +190,16 @@ export class MegasenaComponent {
   }
 
   inicializarFormulárioJogo(){
-    this.numerosGerados = this.megasenaService.gerarJogo(this.numerosMaisSorteados, this.numerosMenosSorteados);
+    this.numerosGerados = this.megasenaService.sugerirJogoCompletoQuadra(resultadoMegaSena, this.tamanhoJogo, Array.from({ length: 60 }, (_, i) => i + 1))
     this.buildForm(this.numerosGerados)
     console.log("+ sorteados em 2024:", this.numerosMaisSorteados)
     console.log("- sorteados em 2024:", this.numerosMenosSorteados)    
   }
 
   gerarJogoNovamente(tamanho: number){
-    this.numerosGerados = this.megasenaService.gerarJogo(this.numerosMaisSorteados, this.numerosMenosSorteados, tamanho);
+   // this.numerosGerados = this.megasenaService.gerarJogo(this.numerosMaisSorteados, this.numerosMenosSorteados, tamanho);
+
+    this.numerosGerados = this.megasenaService.sugerirJogoCompletoQuadra(resultadoMegaSena, tamanho, Array.from({ length: 60 }, (_, i) => i + 1))
     this.buildForm(this.numerosGerados)
   }
 
@@ -373,7 +378,6 @@ export class MegasenaComponent {
   }
 
   submitCalcularFechamento(){
-   
     this.gerarFechamento(this.numeros)
     this.calcularCustoJogo()
   }
