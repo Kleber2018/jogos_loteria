@@ -51,7 +51,7 @@
       </section>
     </section>
 
-    <mat-divider style="width: 100%; margin: 8px 0px;"></mat-divider>
+    <mat-divider style="width: 100%; margin: 8px 0px;" *ngIf="!autenticado"></mat-divider>
 
     <section *ngIf="!autenticado">
       <form [formGroup]="formCodAcesso" (ngSubmit)="verificarCodAutenticacao()" >
@@ -90,7 +90,7 @@
           <p style="padding: 8px; margin: 8px 0px; text-align: center; width: 100%; ">Então vamos ao jogo</p>
           <p style="padding: 8px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Primeiro escolha os seus números da sorte</p>
   
-          <p style="text-align: center; color: rgb(100, 100, 100); ">Se preferir você pode pedir para o sistema te sugerir uma sequencia de números da sorte, utilizando com base os resultados dos concursos após 2021</p>
+          <p style="text-align: center; color: rgb(100, 100, 100); ">Se preferir você pode pedir para o sistema te sugerir uma sequência de números da sorte, utilizando como base os resultados dos últimos {{resultadosUltimos2024.length}} concursos</p>
         </section>
   
        
@@ -287,12 +287,12 @@
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
             <p style="padding: 4px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Escolha a garantia de acertos do fechamento:</p>
             <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; width: 100%">Quanto maior a garantia de acertos, maior vai ser a quantidade de combinações necessárias</p>
-                      <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; padding-bottom: 16px;">O algoritimo garante aproximadamente 99% de chance de acerto se essa quantidade de números estiver na sequencia de números selecionados</p>
+                      <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; padding-bottom: 16px;">O algoritmo garante aproximadamente 99% de chance de acerto se essa quantidade de números estiverem na sequência de números selecionados</p>
           </section>
   
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
             <mat-form-field  appearance="outline">
-              <mat-label>Quantidade minima de de acertos</mat-label>
+              <mat-label>Quantidade mínima de de acertos</mat-label>
               <input
               matInput
               type="number"
@@ -321,7 +321,7 @@
 
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
             <p style="padding: 4px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Informe o valor da comissão do vendedor</p>
-            <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; padding-bottom: 16px;">Esse valor será acresentado no valor da somatória dos jogos para ter o valor de cada cota</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; padding-bottom: 16px;">Esse valor será acrescentado no valor da somatória dos jogos para ter o valor de cada cota</p>
           </section>
   
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
@@ -400,7 +400,7 @@
           </div>
         </section>
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
-            <p class="text-descrip">Com esse fechamento de {{numeros.length}} números e com garantia de pelo menos {{garantirAcertos}} acertos, você vai precisar fazer <b>{{fechamentos.length}} jogos </b> de {{tamanhoJogo}} números</p>
+            <p class="text-descrip">Com esse fechamento de {{numeros.length}} números que busca a garantia de pelo menos {{garantirAcertos}} acertos, você vai precisar fazer <b>{{fechamentos.length}} jogos </b> de {{tamanhoJogo}} números</p>
         </section>
 
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
