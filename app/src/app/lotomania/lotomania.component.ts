@@ -66,7 +66,7 @@ export class LotomaniaComponent {
 
   numeros = [ 14, 23, 27, 28, 29, 30, 32, 38, 39, 40, 41, 44, 45, 70, 71, 79, 86, 88, 93, 97]; // Conjunto principal
   tamanhoJogo = 50; // Quantidade de números por jogo
-  garantirAcertos = 12; // Garantia de 4 acertos
+  garantirAcertos = 9; // Garantia de 4 acertos
   fechamentos: number[][] = []; // Resultado final do fechamento
   processando = false;
 
@@ -208,18 +208,18 @@ export class LotomaniaComponent {
         alert("ALERTA: Para fechamentos com muitos números e com quantidade minima de acertos maior que 12 pode gerar um travamento enquanto é feito o calculo")
   
         if(this.numeros.length > 70){
+          if(this.garantirAcertos > 12){
+            alert("Erro, memória insuficiente, diminua a quantidade minima de acertos ")
+            this.garantirAcertos = 9
+          }
+        } else if(this.numeros.length > 60){
           if(this.garantirAcertos > 15){
             alert("Erro, memória insuficiente, diminua a quantidade minima de acertos ")
             this.garantirAcertos = 12
           }
-        } else if(this.numeros.length > 60){
-          if(this.garantirAcertos > 18){
-            alert("Erro, memória insuficiente, diminua a quantidade minima de acertos ")
-            this.garantirAcertos = 15
-          }
-        } else if(this.garantirAcertos > 20){
+        } else if(this.garantirAcertos > 18){
           alert("Erro, o máximo é 20 ")
-            this.garantirAcertos = 15
+            this.garantirAcertos = 12
         }  
        /*  //teste para gerar numeros aleatórios
         //--------------------------
