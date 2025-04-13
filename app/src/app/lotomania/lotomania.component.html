@@ -1,6 +1,6 @@
 <main class="main-container">
   <section class="section-fechamento">
-    <section class="section-fechamento">
+    <section class="sub-section-fechamento">
 
       <section class="section-fechamento">
         <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
@@ -88,7 +88,7 @@
 
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
             <mat-form-field  appearance="outline">
-              <mat-label>Quantidade minima de de acertos</mat-label>
+              <mat-label>Quantidade minima de acertos</mat-label>
               <input
               matInput
               type="number"
@@ -141,7 +141,7 @@
               formControlName="premio" />
             </mat-form-field>
           </section>
-          
+
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
             <mat-form-field appearance="outline">
               <mat-label>Data do sorteio</mat-label>
@@ -182,7 +182,7 @@
           <p style="padding: 8px; margin: 0px;">O custo total do bolão vai ser de <b>R$ {{valorTotalBolao}},00</b>, dividido por <b *ngIf="formNumSelecionados">{{formNumSelecionados.value.cotas}} cotas</b> com o valor por cota de <b>R$ {{valorPorCota}} reais </b></p>
       </section>
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
-        <p style="padding: 8px; margin: 0px;" >Com base nos ultimos {{resultadosUltimos2024.length}} jogos você teria acertado com 0: {{ this.totalAcertosPeriodo['zero'] }}, 15: {{ this.totalAcertosPeriodo['quinze'] }}, 16: {{ this.totalAcertosPeriodo['dezesseis'] }}, 17: {{ this.totalAcertosPeriodo['dezessete'] }}, 18: {{ this.totalAcertosPeriodo['dezoito'] }}, 19: {{ this.totalAcertosPeriodo['dezenove'] }}, 20: {{ this.totalAcertosPeriodo['vinte'] }} </p>
+        <p style="padding: 8px; margin: 0px;" >Com base nos ultimos {{resultadosUltimos2024.length}} jogos você teria acertado com 0: {{ this.totalAcertosPeriodo['zero'] }}, 15: {{ this.totalAcertosPeriodo['quinze'] }}, 16: {{ this.totalAcertosPeriodo['dezesseis'] }}, 17: {{ this.totalAcertosPeriodo['dezessete'] }}, 18: {{ this.totalAcertosPeriodo['dezoito'] }}, 19: {{ this.totalAcertosPeriodo['dezenove'] }}, 20: {{ this.totalAcertosPeriodo['vinte'] }} =  {{ this.totalAcertosPeriodo['zero'] + this.totalAcertosPeriodo['quinze'] + this.totalAcertosPeriodo['dezesseis'] + this.totalAcertosPeriodo['dezessete'] + this.totalAcertosPeriodo['dezoito'] + this.totalAcertosPeriodo['dezenove'] + this.totalAcertosPeriodo['vinte'] }}</p>
       </section>
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
         <span style="padding: 8px; margin: 0px; color: brown;">{{msgErroCotas}}</span>
@@ -213,6 +213,38 @@
       </section>
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" *ngIf="resultadosJogos.length > 0">
         <p style="padding: 8px; margin: 0px; color: grey; margin-top: 24px;">(0, 15, 16, 17, 18, 19, 20) acertos que seriam feitas nos últimos {{resultadosUltimos2024.length}} jogos</p>
+      </section>
+
+
+
+       <!--botões de download-->
+       <section class="sub-section-fechamento" *ngIf="fechamentos.length > 0">
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap; width: 100%; " >
+          <p style="padding: 8px; margin: 8px 0px; text-align: center; ">Fazer o download do jogo em pdf</p>
+        </section>
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="gerarPDF('resumo')">
+            <mat-icon>cloud_download</mat-icon>Resumo
+          </button>
+            <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="gerarPDF('completo')">
+            <mat-icon>cloud_download</mat-icon>Completo
+          </button>
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="gerarPDF('jogo')">
+            <mat-icon>cloud_download</mat-icon>Jogo
+          </button>
+        </section>
       </section>
     </section>
 

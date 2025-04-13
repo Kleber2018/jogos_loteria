@@ -109,7 +109,6 @@ export class DuplasenaComponent {
     private pdfService: PdfService
   ) { 
 
-
     this.dataProximoConcurso = new FormControl(this.getClosestPreferredDay().toDateString());
 
     this.autenticado = false;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
-import { pdfLoteria } from './duplasena.model';
-import { DuplaSena } from '../../assets/base64/logos';
+import { pdfLoteria } from './lotomania.model';
+import { Lotomania } from '../../assets/base64/logos';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +17,11 @@ export class PdfService {
       var tabConf = null
       var TabControleExpedicao = null
       var pageMarginTop = 64
-     
-      
+           
 
       return {
         pageSize: 'A4',
-        defaultFileName: 'DuplaSena',
+        defaultFileName: 'Lotomania',
 
         header: [{
           style: 'header',
@@ -33,8 +32,8 @@ export class PdfService {
             widths: [ 105, 305, 105 ],
             heights: [19],
             body: [
-              [ {image: DuplaSena, width: 96, margin: [0,1,0,0]},
-                {text: 'FECHAMENTO DA DUPLA-SENA', bold: true, fontSize: 13, margin: [0,2,0,0]}, 
+              [ {image: Lotomania, width: 96, margin: [0,1,0,0]},
+                {text: 'FECHAMENTO DA LOTOMANIA', bold: true, fontSize: 13, margin: [0,2,0,0]}, 
                 {text: [
                   {text: 'Sorteio: ', bold: true, margin: [0,4,0,0]},
                   {text: new Date(varPdfLoteria.dataSorteio).getDate()+'/'+(new Date(varPdfLoteria.dataSorteio).getMonth()+1)+'/'+new Date(varPdfLoteria.dataSorteio).getFullYear(), margin: [0,4,0,0]},
@@ -194,8 +193,8 @@ export class PdfService {
                         {text: `Com esse fechamento de ${varPdfLoteria.numeros.length} números que busca a garantia de pelo menos ${varPdfLoteria.garantirAcertos} acertos, você vai precisar fazer ${varPdfLoteria.jogos.length} jogos de ${varPdfLoteria.tamanhoJogosVolante} números`, alignment: 'center', margin: [0, 8, 0, 4]},
                         {text: `Sorteio dia ${String(new Date(varPdfLoteria.dataSorteio).getDate()).padStart(2, '0')}/${String(new Date(varPdfLoteria.dataSorteio).getMonth() + 1).padStart(2, '0')}/${new Date(varPdfLoteria.dataSorteio).getFullYear()} com prêmio previsto de R$ ${varPdfLoteria.premio },00`, alignment: 'center', margin: [0, 4, 0, 4]},
                         {text: `O custo total do bolão vai ser de R$ ${varPdfLoteria.valorTotalBolao},00, dividido por ${varPdfLoteria.qtdCotas} cotas com o valor por cota de R$ ${varPdfLoteria.valorPorCota} reais`, alignment: 'center' , margin: [0, 4, 0, 4]},
-                        {text: `Com base nos últimos ${varPdfLoteria.qtdJogosConfe} jogos de 2024 você teria acertado ${varPdfLoteria.totalQuadras} quadras, ${varPdfLoteria.totalQuinas} quinas, ${varPdfLoteria.totalSenas} senas`, alignment: 'center' , margin: [0, 4, 0, 4]},
-                        {text: `A probabilidade de você acertar ${txtGarantirAcertos} entre os números escolhidos é de 1 para ${varPdfLoteria.probabilidade} `, alignment: 'center' , margin: [0, 4, 0, 8]},
+                        {text: `Com base nos últimos ${varPdfLoteria.qtdJogosConfe} jogos de 2024 você teria acertado ${varPdfLoteria.totalAcertos.quinze} quinze, ${varPdfLoteria.totalAcertos.dezesseis} dezesseis, ${varPdfLoteria.totalAcertos.dezessete} dezessete`, alignment: 'center' , margin: [0, 4, 0, 4]},
+                        {text: `A probabilidade de você acertar em um jogo 18 números entre os números escolhidos é de 1 para ${varPdfLoteria.probabilidade} `, alignment: 'center' , margin: [0, 4, 0, 8]},
                       ]
                     }
                   ]
@@ -216,8 +215,8 @@ export class PdfService {
                         {text: `Com esse fechamento de ${varPdfLoteria.numeros.length} números que busca a garantia de pelo menos ${varPdfLoteria.garantirAcertos} acertos, você vai precisar fazer ${varPdfLoteria.jogos.length} jogos de ${varPdfLoteria.tamanhoJogosVolante} números`, alignment: 'center', margin: [0, 8, 0, 4]},
                         {text: `Sorteio dia ${String(new Date(varPdfLoteria.dataSorteio).getDate()).padStart(2, '0')}/${String(new Date(varPdfLoteria.dataSorteio).getMonth() + 1).padStart(2, '0')}/${new Date(varPdfLoteria.dataSorteio).getFullYear()}`, alignment: 'center', margin: [0, 4, 0, 4]},
                         {text: `O custo total do bolão vai ser de R$ ${varPdfLoteria.valorTotalBolao},00, dividido por ${varPdfLoteria.qtdCotas} cotas com o valor por cota de R$ ${varPdfLoteria.valorPorCota} reais`, alignment: 'center' , margin: [0, 4, 0, 4]},
-                        {text: `Com base nos últimos ${varPdfLoteria.qtdJogosConfe} jogos você teria acertado ${varPdfLoteria.totalQuadras} quadras, ${varPdfLoteria.totalQuinas} quinas, ${varPdfLoteria.totalSenas} senas`, alignment: 'center' , margin: [0, 4, 0, 4]},
-                        {text: `A probabilidade de você acertar ${txtGarantirAcertos} entre os números escolhidos é de 1 para ${varPdfLoteria.probabilidade} `, alignment: 'center' , margin: [0, 4, 0, 8]},
+                        {text: `Com base nos últimos ${varPdfLoteria.qtdJogosConfe} jogos de 2024 você teria acertado ${varPdfLoteria.totalAcertos.quinze} quinze, ${varPdfLoteria.totalAcertos.dezesseis} dezesseis, ${varPdfLoteria.totalAcertos.dezessete} dezessete`, alignment: 'center' , margin: [0, 4, 0, 4]},
+                        {text: `A probabilidade de você acertar em um jogo 18 números entre os números escolhidos é de 1 para ${varPdfLoteria.probabilidade} `, alignment: 'center' , margin: [0, 4, 0, 8]},
                       ]
                     }
                   ]
@@ -239,7 +238,7 @@ export class PdfService {
                   { 
                     stack: [
                       {text: `Com esse fechamento de ${varPdfLoteria.numeros.length} números que busca a garantia de pelo menos ${varPdfLoteria.garantirAcertos} acertos, você vai precisar fazer ${varPdfLoteria.jogos.length} jogos de ${varPdfLoteria.tamanhoJogosVolante} números`, alignment: 'center', margin: [0, 8, 0, 4]},
-                      {text: `Com base nos ultimos ${varPdfLoteria.qtdJogosConfe} jogos de 2024 você teria acertado ${varPdfLoteria.totalQuadras} quadras, ${varPdfLoteria.totalQuinas} quinas, ${varPdfLoteria.totalSenas} senas`, alignment: 'center' , margin: [0, 4, 0, 4]},
+                      {text: `Com base nos últimos ${varPdfLoteria.qtdJogosConfe} jogos de 2024 você teria acertado ${varPdfLoteria.totalAcertos.quinze} quinze, ${varPdfLoteria.totalAcertos.dezesseis} dezesseis, ${varPdfLoteria.totalAcertos.dezessete} dezessete`, alignment: 'center' , margin: [0, 4, 0, 4]},
                       {text: `A probabilidade de você acertar ${txtGarantirAcertos} entre os números escolhidos é de 1 para ${varPdfLoteria.probabilidade} `, alignment: 'center' , margin: [0, 4, 0, 8]},
                     ]
                   }
@@ -257,26 +256,6 @@ export class PdfService {
 
 
     
-    retornaTabConferencia(DCA: string){
-      return [
-      {text: 'CONFERÊNCIA DO EQUIPAMENTO', style: 'tituloServico'},
-      {
-        style: 'Informacoes',
-        table: {
-          widths: [ 111, 175, 110, 110],
-          heights: [35],
-          body: [
-            [
-              {text: 'Patrimônio: ', bold: true},
-              {text: 'Isolação do Equipamento (Ω):', bold: true},
-              {text: 'N° DCA: '+DCA, bold: true},
-              {text: 'Ass:', bold: true},
-            ],
-          ]
-        }
-      }
-    ]
-    }
 
     retornaTabControleExpedicao(s: any, dataS: any){
       //      {text: 'CONTROLE DO EQUIPAMENTO - '+s.EQUIPAMENTO.identificacao, style: 'tituloServicoControle'},

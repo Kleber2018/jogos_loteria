@@ -22,7 +22,7 @@ export class PdfService {
 
       return {
         pageSize: 'A4',
-        defaultFileName: 'SSE',
+        defaultFileName: 'MegaSena',
 
         header: [{
           style: 'header',

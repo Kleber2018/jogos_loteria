@@ -17,6 +17,12 @@ import { CommonModule } from '@angular/common';
 import { numtop20MenosRepetidos, numtop40MaisRepetidos, resultadoLotomania } from './resultado';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {provideNativeDateAdapter} from '@angular/material/core';
+import { pdfLoteria, totalAcertosPeriodo } from './lotomania.model';
+
+import { PdfService } from './pdf.service';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.vfs;
 
 @Component({
   selector: 'app-setup',
@@ -39,7 +45,11 @@ export class LotomaniaComponent {
 
   resultadosJogos: { jogo: number[]; zero: number; quinze: number; dezesseis: number; dezessete: number; dezoito: number; dezenove: number; vinte: number }[] = [];
 
- 
+  valorCadaJogo = 3;
+  valorTotalBolao = 0;
+  valorPorCota = 0;
+  qtdCotas = 0
+
   numerosGerados: number[] = [];
 
   public formNumSelecionados: FormGroup;
@@ -48,15 +58,7 @@ export class LotomaniaComponent {
     return this.formNumSelecionados?.get('nums') as FormArray;
   }
 
-  totalAcertosPeriodo: {
-   "zero" : number,
-    "quinze" : number,
-    "dezesseis" : number,
-    "dezessete" : number,
-    "dezoito" : number,
-    "dezenove" : number,
-    "vinte" : number
-    } = {
+  totalAcertosPeriodo: totalAcertosPeriodo = {
     "zero" : 0,
       "quinze" : 0,
       "dezesseis" : 0,
@@ -73,9 +75,7 @@ export class LotomaniaComponent {
   fechamentos: number[][] = []; // Resultado final do fechamento
   processando = false;
 
-  valorCadaJogo = 3;
-  valorTotalBolao = 0;
-  valorPorCota = 0;
+
   msgErroCotas = ""
   msgErroCotas2 = ""
   msgErroCotas3 = ""
@@ -85,6 +85,7 @@ export class LotomaniaComponent {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
+    private pdfService: PdfService
   ) { 
     //this.processarNumeros(); para gerar os números mais repetido que montei o arquivo resultado.ts
 
@@ -179,7 +180,7 @@ export class LotomaniaComponent {
 
   submitCalcularFechamento(){
     this.gerarFechamento(this.numeros)
-    //this.calcularCustoJogo()
+
   }
 
   
@@ -188,12 +189,19 @@ export class LotomaniaComponent {
     this.msgErroCotas = ""
     this.msgErroCotas2 = ""
     this.msgErroCotas3 = ""
-    var cotas = 1
-    if(this.formNumSelecionados){
-      cotas = this.formNumSelecionados.value.cotas
-    }
-    this.valorTotalBolao = this.fechamentos.length * this.valorCadaJogo
-    this.valorPorCota = this.valorTotalBolao/cotas
+
+
+    this.qtdCotas = this.formNumSelecionados.value.cotas
+    this.valorTotalBolao = (this.fechamentos.length * this.valorCadaJogo) + this.formNumSelecionados.value.comissao
+    this.valorPorCota = this.valorTotalBolao/this.qtdCotas
+
+
+    console.log("cotas", this.qtdCotas)
+    console.log("valorTotalBolao", this.valorTotalBolao)
+    console.log("valorPorCota", this.valorPorCota)
+
+/*     this.valorTotalBolao = this.fechamentos.length * this.valorCadaJogo
+    this.valorPorCota = this.valorTotalBolao/this.qtdCotas */
   }
 
   
@@ -360,5 +368,33 @@ export class LotomaniaComponent {
     console.log(top40MaisRepetidos)
     console.log(top20MenosRepetidos)
   }
+
+    async gerarPDF(tipoPdf: string) {
+  
+      const varPdfLoteria: pdfLoteria = {
+          numeros: this.numeros, 
+          jogos: this.fechamentos, 
+          garantirAcertos: this.garantirAcertos, 
+          tamanhoJogosVolante: this.tamanhoJogo, 
+          probabilidade: 24235/this.fechamentos.length, 
+          tipoPdf:tipoPdf,
+          valorTotalBolao: this.valorTotalBolao,
+          valorPorCota: this.valorPorCota,
+          qtdCotas: this.qtdCotas,
+          totalAcertos: this.totalAcertosPeriodo,
+          qtdJogosConfe: this.resultadosUltimos2024.length,
+          premio: this.formNumSelecionados.value.premio,
+          dataSorteio: this.formNumSelecionados.value.dataSorteio
+        }
+  
+      const documentDefinition =  await this.pdfService.pdfJogo(varPdfLoteria); // true significa imprimir imagens
+      
+      switch (tipoPdf+"teste") {
+        case 'completo': pdfMake.createPdf(documentDefinition).download(new Date().getDate+'/'+new Date().getMonth+'Fechamento-'+varPdfLoteria.numeros.length+'números-'+varPdfLoteria.garantirAcertos+'acertos - Completo'); break;
+        case 'resumo': pdfMake.createPdf(documentDefinition).download(new Date().getDate+'/'+new Date().getMonth+'Fechamento-'+varPdfLoteria.numeros.length+'números-'+varPdfLoteria.garantirAcertos+'acertos'); break;
+        case 'jogo': pdfMake.createPdf(documentDefinition).download(new Date().getDate+'/'+new Date().getMonth+'Fechamento-'+varPdfLoteria.numeros.length+'números-'+varPdfLoteria.garantirAcertos+'acertos - Jogo'); break;
+        default: pdfMake.createPdf(documentDefinition).open(); break;
+      } 
+    }
 
 }

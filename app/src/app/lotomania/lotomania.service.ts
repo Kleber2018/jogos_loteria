@@ -30,7 +30,7 @@ export class  LotomaniaService {
   gerarJogoLotomania(
     maisSorteados: number[],
     menosSorteados: number[],
-    tamanhoJogo: number = 62
+    tamanhoJogo: number = 68
   ): number[] {
     if (maisSorteados.length < 4 || menosSorteados.length < 2) {
       throw new Error('Listas de mais/menos sorteados insuficientes.');
