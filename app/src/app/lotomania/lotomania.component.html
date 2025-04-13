@@ -109,6 +109,48 @@
             </mat-form-field>
           </section>
 
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+            <p style="padding: 4px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Informe o valor da comissão do vendedor</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; padding-bottom: 16px;">Esse valor será acrescentado no valor da somatória dos jogos para ter o valor de cada cota</p>
+          </section>
+  
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+            <mat-form-field  appearance="outline">
+              <mat-label>Comissão</mat-label>
+              <input
+              matInput
+              type="number"
+              min="0" max="2000"
+              required="true"
+              formControlName="comissao" />
+            </mat-form-field>
+          </section>
+
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+            <p style="padding: 4px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Data do sorteio e valor que está concorrendo</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; padding-bottom: 16px;">Para complementar o relatório</p>
+          </section>
+
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+            <mat-form-field  appearance="outline">
+              <mat-label>Prêmio</mat-label>
+              <input
+              matInput
+              type="number"
+              min="0" max="600000000"
+              formControlName="premio" />
+            </mat-form-field>
+          </section>
+          
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+            <mat-form-field appearance="outline">
+              <mat-label>Data do sorteio</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="dataSorteio">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </section>
+
           <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
             <div>
               <button

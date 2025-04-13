@@ -15,15 +15,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { numtop20MenosRepetidos, numtop40MaisRepetidos, resultadoLotomania } from './resultado';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {provideNativeDateAdapter} from '@angular/material/core';
 
 @Component({
   selector: 'app-setup',
   standalone: true,
+  providers: [provideNativeDateAdapter()],
   imports: [CommonModule, ReactiveFormsModule, 
     MatButtonModule, MatDividerModule, 
     MatIconModule, MatDialogModule, MatFormFieldModule, 
-    MatInputModule, FormsModule ],
+    MatInputModule, FormsModule, MatDatepickerModule ],
   templateUrl: './lotomania.component.html',
   styleUrl: './lotomania.component.scss',
   //exports: [HeaderComponent]
@@ -96,7 +98,10 @@ export class LotomaniaComponent {
       })),
       tamanhoJogo: [this.tamanhoJogo],
       acertos: [this.garantirAcertos, [Validators.min(2), Validators.max(20)]],
-      cotas: [1, [Validators.min(0), Validators.max(100)]]
+      cotas: [1, [Validators.min(0), Validators.max(100)]],
+      comissao: [0, [Validators.min(0), Validators.max(2000)]],
+      dataSorteio: [(new Date()).toISOString()],
+      premio: [0]
     })
 
     this.buildForm(this.numerosGerados, this.garantirAcertos, 1)
@@ -162,7 +167,10 @@ export class LotomaniaComponent {
         })),
         tamanhoJogo: [50],
         acertos: [this.garantirAcertos, [Validators.min(2), Validators.max(20)]],
-        cotas: [1, [Validators.min(0), Validators.max(100)]]
+        cotas: [1, [Validators.min(0), Validators.max(100)]],
+        comissao: [0, [Validators.min(0), Validators.max(2000)]],
+        dataSorteio: [(new Date()).toISOString()],
+        premio: [0]
       })
       console.log("build:, ", this.formNumSelecionados.value)
       //this.gerarFechamento(numGerados)
