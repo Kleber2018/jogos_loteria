@@ -113,13 +113,6 @@
             style="margin: 10px;"
             matSuffix
             mat-stroked-button 
-            (click)="gerarJogoNovamente(11)">
-            11 números
-          </button>
-          <button
-            style="margin: 10px;"
-            matSuffix
-            mat-stroked-button 
             (click)="gerarJogoNovamente(12)">
             12 números
           </button>
@@ -127,15 +120,29 @@
             style="margin: 10px;"
             matSuffix
             mat-stroked-button 
-            (click)="gerarJogoNovamente(13)">
-            13 números
+            (click)="gerarJogoNovamente(14)">
+            14 números
           </button>
           <button
             style="margin: 10px;"
             matSuffix
             mat-stroked-button 
-            (click)="gerarJogoNovamente(14)">
-            14 números
+            (click)="gerarJogoNovamente(15)">
+            15 números
+          </button>
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="gerarJogoNovamente(16)">
+            16 números
+          </button>
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="gerarJogoNovamente(17)">
+            17 números
           </button>
         </section>
         <form [formGroup]="formNumerosSelecionados" (ngSubmit)="submitCalcularFechamento()" >
@@ -149,7 +156,7 @@
               matInput
               type="number"
               required="true"
-              min="0" max="60" 
+              min="0" max="50" 
               formControlName="n1" />
             </mat-form-field>
   
@@ -157,7 +164,7 @@
               <input
               matInput
               type="number"
-              min="0" max="60"
+              min="0" max="50"
               required="true"
               formControlName="n2" />
             </mat-form-field>
@@ -166,7 +173,7 @@
               <input
               matInput
               type="number"
-              min="0" max="60"
+              min="0" max="50"
               required="true"
               formControlName="n3" />
             </mat-form-field>
@@ -175,7 +182,7 @@
               <input
               matInput
               type="number"
-              min="0" max="60"
+              min="0" max="50"
               required="true"
               formControlName="n4" />
             </mat-form-field>
@@ -184,7 +191,7 @@
               <input
               matInput
               type="number"
-              min="0" max="60"
+              min="0" max="50"
               required="true"
               formControlName="n5" />
             </mat-form-field>
@@ -193,7 +200,7 @@
               <input
               matInput
               type="number"
-              min="0" max="60"
+              min="0" max="50"
               required="true"
               formControlName="n6" />
             </mat-form-field>
@@ -202,7 +209,7 @@
               <input
               matInput
               type="number"
-              min="0" max="60"
+              min="0" max="50"
               formControlName="n7" />
             </mat-form-field>
   
@@ -210,7 +217,7 @@
               <input
               matInput
               type="number"
-              min="0" max="60"
+              min="0" max="50"
               formControlName="n8" />
             </mat-form-field>
   
@@ -218,7 +225,7 @@
               <input
               matInput
               type="number"
-              min="0" max="60"
+              min="0" max="50"
               formControlName="n9" />
             </mat-form-field>
   
@@ -226,7 +233,7 @@
               <input
               matInput
               type="number"
-              min="0" max="60"
+              min="0" max="50"
               formControlName="n10" />
             </mat-form-field>
   
@@ -234,7 +241,7 @@
               <input
               matInput
               type="number"
-              min="0" max="60"
+              min="0" max="50"
               formControlName="n11" />
             </mat-form-field>
   
@@ -242,7 +249,7 @@
               <input
               matInput
               type="number"
-              min="0" max="60"
+              min="0" max="50"
               formControlName="n12" />
             </mat-form-field>
   
@@ -250,15 +257,36 @@
               <input
               matInput
               type="number"
-              min="0" max="60"
+              min="0" max="50"
               formControlName="n13" />
             </mat-form-field>
             <mat-form-field class="form-input" appearance="outline">
               <input
               matInput
               type="number"
-              min="0" max="60"
+              min="0" max="50"
               formControlName="n14" />
+            </mat-form-field>
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="0" max="50"
+              formControlName="n15" />
+            </mat-form-field>
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="0" max="50"
+              formControlName="n16" />
+            </mat-form-field>
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="0" max="50"
+              formControlName="n17" />
             </mat-form-field>
           </section>
           

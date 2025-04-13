@@ -36,7 +36,8 @@ export class LotomaniaComponent {
   resultadosUltimos2024 = resultadoLotomania
 
   resultadosJogos: { jogo: number[]; zero: number; quinze: number; dezesseis: number; dezessete: number; dezoito: number; dezenove: number; vinte: number }[] = [];
-  
+
+ 
   numerosGerados: number[] = [];
 
   public formNumSelecionados: FormGroup;
@@ -99,14 +100,13 @@ export class LotomaniaComponent {
     })
 
     this.buildForm(this.numerosGerados, this.garantirAcertos, 1)
-    console.log("+ sorteados em 2024:", this.numerosMaisSorteados)
-    console.log("- sorteados em 2024:", this.numerosMenosSorteados)
   }
   
 
 
   gerarJogoNovamente(tamanho: number){
-    this.numerosGerados = this.lotomaniaService.gerarJogoLotomania(this.numerosMaisSorteados, this.numerosMenosSorteados, tamanho);
+    //this.numerosGerados = this.lotomaniaService.gerarJogoLotomania(this.numerosMaisSorteados, this.numerosMenosSorteados, tamanho);
+    this.numerosGerados = this.lotomaniaService.sugerirJogoCompletoQuadra(resultadoLotomania, tamanho, Array.from({ length: 100 }, (_, i) => i ))
     if(this.formNumSelecionados){
       this.buildForm(this.numerosGerados, this.formNumSelecionados.value.acertos , this.formNumSelecionados.value.cotas)
     } else {
@@ -161,7 +161,7 @@ export class LotomaniaComponent {
           })
         })),
         tamanhoJogo: [50],
-        acertos: [12, [Validators.min(2), Validators.max(20)]],
+        acertos: [this.garantirAcertos, [Validators.min(2), Validators.max(20)]],
         cotas: [1, [Validators.min(0), Validators.max(100)]]
       })
       console.log("build:, ", this.formNumSelecionados.value)
@@ -231,27 +231,43 @@ export class LotomaniaComponent {
         this.processando = true;
         // Gerar fechamento otimizado
 
-        const fechamentoPart1 = await this.fecharJogos(this.numeros.slice(0, ((this.numeros.length-2)/3)), Math.floor(this.tamanhoJogo / 3),  Math.floor(this.garantirAcertos / 3));
-        console.log(fechamentoPart1)
-        const fechamentoPart2 = await this.fecharJogos(this.numeros.slice(((this.numeros.length-2)/3), ((this.numeros.length-2)/3)*2), Math.floor(this.tamanhoJogo / 3), Math.floor(this.garantirAcertos / 3));
-        const fechamentoPart3 = await this.fecharJogos(this.numeros.slice(((this.numeros.length-2)/3)*2, ((this.numeros.length-2)/3)*3), Math.floor(this.tamanhoJogo / 3), Math.floor(this.garantirAcertos / 3));
-        const fechamentoPart4 = [this.numeros[this.numeros.length-2], this.numeros[this.numeros.length-1]]
+        // Exemplo de uso:
+        const embaralhados = this.embaralharArray(this.numeros);
+
+        const fechamentoPart1 = await this.fecharJogos(embaralhados.slice(0, ((this.numeros.length-2)/3)), Math.floor(this.tamanhoJogo / 3),  Math.floor(this.garantirAcertos / 3));
+        const fechamentoPart2 = await this.fecharJogos(embaralhados.slice(((this.numeros.length-2)/3), ((this.numeros.length-2)/3)*2), Math.floor(this.tamanhoJogo / 3), Math.floor(this.garantirAcertos / 3));
+        const fechamentoPart3 = await this.fecharJogos(embaralhados.slice(((this.numeros.length-2)/3)*2, ((this.numeros.length-2)/3)*3), Math.floor(this.tamanhoJogo / 3), Math.floor(this.garantirAcertos / 3));
+        const fechamentoPart4 = [embaralhados[this.numeros.length-2], embaralhados[this.numeros.length-1]]
 
         //this.fechamentos = await this.fecharJogos(this.numeros, this.tamanhoJogo, this.garantirAcertos);
         this.fechamentos = []
         fechamentoPart1.forEach((linha, indiceLinha) => {
           var construindoArrayLinha = linha.concat(fechamentoPart2[indiceLinha]).concat(fechamentoPart3[indiceLinha]).concat(fechamentoPart4)
+          construindoArrayLinha.sort((a, b) => a - b);
           this.fechamentos.push(construindoArrayLinha)
         });
-        console.log("fechamento", this.fechamentos)
+
         this.calcularCustoJogo()
         this.processando = false;
         this.calcularResultados(this.fechamentos);
     }
   }
 
+  embaralharArray(arr: number[]): number[] {
+    const array = [...arr]; // Faz uma cópia para não alterar o original
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]]; // Troca os elementos
+    }
+    return array;
+  }
+  
+ 
+
   // Função para gerar o fechamento otimizado
   fecharJogos(numeros: number[], tamanhoJogo: number, garantirAcertos: number): number[][] {
+
+
     const jogos: number[][] = [];
     const combinacoesDe4 = this.gerarCombinacoes(numeros, garantirAcertos-1);
     // Usar heurística para gerar jogos otimizados
