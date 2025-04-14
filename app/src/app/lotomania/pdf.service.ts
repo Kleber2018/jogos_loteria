@@ -66,6 +66,7 @@ export class PdfService {
               widths: [534],
               heights: [10],
               body: [
+                [this.retornaNumeros(varPdfLoteria)],
                 [this.retornaJogos(varPdfLoteria)],
               ]
             }
@@ -307,6 +308,23 @@ export class PdfService {
         }
       },
     ]
+    }
+
+    retornaNumeros(jgs: pdfLoteria){
+        var jgString = ""
+        jgs.numeros.forEach((j, i2) =>{
+          if(i2 == 0){
+            jgString = j.toString()
+          }else if((i2+1) == jgs.numeros.length){
+            jgString = jgString+ ", "+j+'\n\n'
+          } else {
+            jgString = jgString+ ", "+j
+          }
+        })
+
+      return [
+        {text: 'Números: '+jgString, style: 'tituloServico'},
+      ]
     }
 
     getBase64ImageFromURL(url: string) {

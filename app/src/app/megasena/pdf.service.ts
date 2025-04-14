@@ -12,13 +12,10 @@ export class PdfService {
   ) {}
 
     async pdfJogo(varPdfLoteria: pdfLoteria) {
-     
-       
+            
       var tabConf = null
       var TabControleExpedicao = null
-      var pageMarginTop = 64
-     
-      
+      var pageMarginTop = 64  
 
       return {
         pageSize: 'A4',
@@ -57,7 +54,6 @@ export class PdfService {
         pageMargins: [ 25, pageMarginTop, 23, 80 ],
         content: [
          this.retornaDescricao(varPdfLoteria),
-       
 
           {text: 'Jogos', style: 'tituloServico'},
  
@@ -67,12 +63,11 @@ export class PdfService {
               widths: [534],
               heights: [10],
               body: [
+                [this.retornaNumeros(varPdfLoteria)],
                 [this.retornaJogos(varPdfLoteria)],
               ]
             }
           },
-
-
 
         ],
         styles: {
@@ -136,7 +131,6 @@ export class PdfService {
       var jogosString: string[] = []
 
       jgs.jogos.forEach((jg, i1) => {
-
         var jgString = ""
         jg.forEach((j, i2) =>{
           if(i2 == 0){
@@ -146,15 +140,11 @@ export class PdfService {
           } else {
             jgString = jgString+ ", "+j
           }
-
         })
-
         jogosString.push(jgString)
       });
 
       const jogos = jogosString.map(jg => ({ text: jg+"", margin: [8, 4, 4, 0]}));
-        
-
 
       return [
         {
@@ -164,6 +154,23 @@ export class PdfService {
           margin: [16, 8, 0, 12]
         },
         {text: 'Boa Sorte!\n', style: 'tituloServico'},
+      ]
+    }
+
+    retornaNumeros(jgs: pdfLoteria){
+        var jgString = ""
+        jgs.numeros.forEach((j, i2) =>{
+          if(i2 == 0){
+            jgString = j.toString()
+          }else if((i2+1) == jgs.numeros.length){
+            jgString = jgString+ ", "+j+'\n\n'
+          } else {
+            jgString = jgString+ ", "+j
+          }
+        })
+
+      return [
+        {text: 'Números: '+jgString, style: 'tituloServico'},
       ]
     }
 
@@ -251,8 +258,6 @@ export class PdfService {
       } else {
         return []
       }
-
-      
     }
 
 

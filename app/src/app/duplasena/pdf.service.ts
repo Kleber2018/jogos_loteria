@@ -67,7 +67,9 @@ export class PdfService {
               widths: [534],
               heights: [10],
               body: [
+                [this.retornaNumeros(varPdfLoteria)],
                 [this.retornaJogos(varPdfLoteria)],
+
               ]
             }
           },
@@ -131,6 +133,22 @@ export class PdfService {
 
 
 
+    retornaNumeros(jgs: pdfLoteria){
+        var jgString = ""
+        jgs.numeros.forEach((j, i2) =>{
+          if(i2 == 0){
+            jgString = j.toString()
+          }else if((i2+1) == jgs.numeros.length){
+            jgString = jgString+ ", "+j+'\n\n'
+          } else {
+            jgString = jgString+ ", "+j
+          }
+        })
+
+      return [
+        {text: 'Números: '+jgString, style: 'tituloServico'},
+      ]
+    }
 
     retornaJogos(jgs: pdfLoteria){
       var jogosString: string[] = []
@@ -257,26 +275,7 @@ export class PdfService {
 
 
     
-    retornaTabConferencia(DCA: string){
-      return [
-      {text: 'CONFERÊNCIA DO EQUIPAMENTO', style: 'tituloServico'},
-      {
-        style: 'Informacoes',
-        table: {
-          widths: [ 111, 175, 110, 110],
-          heights: [35],
-          body: [
-            [
-              {text: 'Patrimônio: ', bold: true},
-              {text: 'Isolação do Equipamento (Ω):', bold: true},
-              {text: 'N° DCA: '+DCA, bold: true},
-              {text: 'Ass:', bold: true},
-            ],
-          ]
-        }
-      }
-    ]
-    }
+  
 
     retornaTabControleExpedicao(s: any, dataS: any){
       //      {text: 'CONTROLE DO EQUIPAMENTO - '+s.EQUIPAMENTO.identificacao, style: 'tituloServicoControle'},
