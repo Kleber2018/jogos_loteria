@@ -1,0 +1,523 @@
+ <main class="main-container">
+  <section class="section-fechamento">
+    <!--introdução-->
+    <section class="sub-section-fechamento">
+      <section class="section-fechamento">
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+            <h2 style="padding: 8px; margin: 24px 0px; text-align: center; font-weight: bolder;">Calculadora para motagem de fechamento de jogos da Dupla-Sena</h2>
+        </section>
+        <section style="display: flex; justify-content: center; align-self: center; width: 100%;" >
+          <img src="../assets/logo-lotofacil-512.png"  alt="Logo lotomania" width="200" style="margin: -10px 0px 0px">
+        </section>
+      </section>
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <p style="padding: 8px; margin: 8px 0px; text-align: center; ">Utilizar fechamento de jogos da loteria aumenta as chances de acerto em prêmios secundários, tornando o bolão de jogos mais eficiente e estratégico.</p>
+          
+          <p style="padding: 8px; margin: 4px 0px; text-align: center; font-weight: bolder;">Nessa calculadora de jogos você consegue: </p>
+          <div class="container-logo-text" style="width: 100%; justify-content: center;">
+            <div class="container-logo-text">
+              <mat-icon fontIcon="arrow_right"></mat-icon>
+              <p style="padding: 4px; margin: 0px 0px 0px; text-align: center;  align-self: center;"> Escolher até 14 números para montar o fechamento;</p>
+            </div>
+          </div>
+          <div class="container-logo-text" style="width: 100%; justify-content: center;">
+            <div class="container-logo-text">
+              <mat-icon fontIcon="arrow_right"></mat-icon>
+              <p style="padding: 4px; margin: 0px 0px 0px; text-align: center;  align-self: center;">Escolher a quantidade de números por volante de apostas;</p>
+            </div>
+          </div>
+          <div class="container-logo-text" style="width: 100%; justify-content: center;">
+            <div class="container-logo-text">
+              <mat-icon fontIcon="arrow_right"></mat-icon>
+              <p style="padding: 4px; margin: 0px 0px 0px; text-align: center;  align-self: center;">Escolher a quantidade de acertos que deseja garantir;</p>
+            </div>
+          </div>
+          <div class="container-logo-text" style="width: 100%; justify-content: center;">
+            <div class="container-logo-text">
+              <mat-icon fontIcon="arrow_right"></mat-icon>
+              <p style="padding: 4px; margin: 0px 0px 0px; text-align: center;  align-self: center;">Escolher o número de cotas para ter o valor do bolão por cota;</p>
+            </div>
+          </div>
+          <div class="container-logo-text" style="width: 100%; justify-content: center;">
+            <div class="container-logo-text">
+              <mat-icon fontIcon="arrow_right"></mat-icon>
+              <p style="padding: 4px; margin: 0px 0px 0px; text-align: center;  align-self: center;">Escolher os números ou pedir uma sugestão de jogo.</p>
+            </div>
+          </div>
+        </section>
+
+     
+      </section>
+    </section>
+
+    <mat-divider style="width: 100%; margin: 8px 0px;" *ngIf="!autenticado"></mat-divider>
+
+    <section *ngIf="!autenticado">
+      <form [formGroup]="formCodAcesso" (ngSubmit)="verificarCodAutenticacao()" >
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <p style="padding: 8px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Digite o código de acesso:</p>
+        </section>
+        <section style="display: flex; justify-content: center; align-self: center; flex-direction: column; align-items: center;"  >
+          <mat-form-field class="form-input-cod" appearance="outline">
+            <input
+            matInput
+            type="text"
+            required="true"
+            maxlength="5"
+            formControlName="cod" />
+          </mat-form-field>
+          <mat-error style="margin-top: -8px; margin-bottom: 4px;" *ngIf="msgErro">{{msgErro}}</mat-error>
+          <div>
+            <button
+              style="margin: 10px;"
+              type="submit"
+              matSuffix
+              mat-stroked-button 
+              [disabled]="formCodAcesso.invalid" cdkFocusInitial>
+              Autenticar
+            </button>
+          </div>
+        </section>
+      </form>
+    </section>
+
+    <!--Montagem do jogo-->
+    <section *ngIf="autenticado">
+      <section class="sub-section-fechamento" >
+        <mat-divider style="width: 100%; margin-top: 24px;"></mat-divider>
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <p style="padding: 8px; margin: 8px 0px; text-align: center; width: 100%; ">Então vamos ao jogo</p>
+          <p style="padding: 8px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Primeiro escolha os seus números da sorte</p>
+  
+          <p style="text-align: center; color: rgb(100, 100, 100); ">Se preferir você pode pedir para o sistema te sugerir uma sequência de números da sorte, utilizando como base os resultados dos últimos {{resultadosUltimos2024.length}} concursos</p>
+        </section>
+  
+       
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" *ngIf="this.autenticado">
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="gerarJogoNovamente(17)">
+            17 números
+          </button>
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="gerarJogoNovamente(18)">
+            18 números
+          </button>
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="gerarJogoNovamente(19)">
+            19 números
+          </button>
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="gerarJogoNovamente(20)">
+            20 números
+          </button>
+        </section>
+        <form [formGroup]="formNumerosSelecionados" (ngSubmit)="submitCalcularFechamento()" >
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+            <p style="padding: 8px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Esses são os seus números da sorte:</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); ">Você pode alterar os números da maneira que quiser</p>
+          </section>
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              required="true"
+              min="1" max="25" 
+              formControlName="n1" />
+            </mat-form-field>
+  
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+              required="true"
+              formControlName="n2" />
+            </mat-form-field>
+  
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+              required="true"
+              formControlName="n3" />
+            </mat-form-field>
+  
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+              required="true"
+              formControlName="n4" />
+            </mat-form-field>
+  
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+              required="true"
+              formControlName="n5" />
+            </mat-form-field>
+  
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+              required="true"
+              formControlName="n6" />
+            </mat-form-field>
+  
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+              formControlName="n7" />
+            </mat-form-field>
+  
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+              formControlName="n8" />
+            </mat-form-field>
+  
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+               formControlName="n9" />
+            </mat-form-field>
+  
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+              formControlName="n10" />
+            </mat-form-field>
+  
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+              formControlName="n11" />
+            </mat-form-field>
+  
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+              formControlName="n12" />
+            </mat-form-field>
+  
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+              formControlName="n13" />
+            </mat-form-field>
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+              formControlName="n14" />
+            </mat-form-field>
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+              formControlName="n15" />
+            </mat-form-field>
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+              formControlName="n16" />
+            </mat-form-field>
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+              formControlName="n17" />
+            </mat-form-field>
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+              formControlName="n18" />
+            </mat-form-field>
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+              formControlName="n19" />
+            </mat-form-field>
+            <mat-form-field class="form-input" appearance="outline">
+              <input
+              matInput
+              type="number"
+              min="1" max="25"
+              formControlName="n20" />
+            </mat-form-field>
+          </section>
+          
+          
+          <mat-divider style="width: 100%; margin-top: 24px;"></mat-divider>
+  
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+            <p style="padding: 8px; margin: 8px 0px; text-align: center; width: 100%; ">Configurações do bolão</p>
+            <p style="padding: 4px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Escolha a quantidade de números que vai ser marcado nos volantes:</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px;">Você pode escolher cartela entre 6 e 11 números</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; width: 100%;">Recomendação de menor custo: jogo de 6 números</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; padding-bottom: 16px;">Recomendação para bolões: Jogo de 7 números, para conseguir gerar as cotas com recibos separados</p>
+          </section>
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+            <mat-form-field appearance="outline">
+              <mat-label>Números Cartela</mat-label>
+              <input
+              matInput
+              type="number"
+              required="true"
+              min="15" max="20" 
+              formControlName="tamanhoJogo" />
+            </mat-form-field>
+          </section>
+  
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+            <p style="padding: 4px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Escolha a garantia de acertos do fechamento:</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; width: 100%">Quanto maior a garantia de acertos, maior vai ser a quantidade de combinações necessárias</p>
+                      <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; padding-bottom: 16px;">O algoritmo garante aproximadamente 99% de chance de acerto se essa quantidade de números estiverem na sequência de números selecionados</p>
+          </section>
+  
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+            <mat-form-field  appearance="outline">
+              <mat-label>Quantidade mínima de acertos</mat-label>
+              <input
+              matInput
+              type="number"
+              min="4" max="14"
+              required="true"
+              formControlName="acertos" />
+            </mat-form-field>
+          </section>
+  
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+            <p style="padding: 4px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Escolha a quantidade de cotas do bolão:</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; padding-bottom: 16px;">Para auxiliar no cálculo do valor de cada cota do bolão</p>
+          </section>
+  
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+            <mat-form-field  appearance="outline">
+              <mat-label>Quantidade de cotas do bolão</mat-label>
+              <input
+              matInput
+              type="number"
+              min="1" max="100"
+              required="true"
+              formControlName="cotas" />
+            </mat-form-field>
+          </section>
+
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+            <p style="padding: 4px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Informe o valor da comissão do vendedor</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; padding-bottom: 16px;">Esse valor será acrescentado no valor da somatória dos jogos para ter o valor de cada cota</p>
+          </section>
+  
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+            <mat-form-field  appearance="outline">
+              <mat-label>Comissão</mat-label>
+              <input
+              matInput
+              type="number"
+              min="0" max="2000"
+              required="true"
+              formControlName="comissao" />
+            </mat-form-field>
+          </section>
+
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+            <p style="padding: 4px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; ">Data do sorteio e valor que está concorrendo</p>
+            <p style="text-align: center; color: rgb(100, 100, 100); margin: 4px; padding-bottom: 16px;">Para complementar o relatório</p>
+          </section>
+
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+            <mat-form-field  appearance="outline">
+              <mat-label>Prêmio</mat-label>
+              <input
+              matInput
+              type="number"
+              min="0" max="600000000"
+              required="true"
+              formControlName="premio" />
+            </mat-form-field>
+          </section>
+
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+            <mat-form-field appearance="outline">
+              <mat-label>Data do sorteio</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="dataSorteio">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </section>
+
+  
+          <mat-divider style="width: 100%; margin: 24px 0px 12px;"></mat-divider>
+  
+          <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  >
+            <div>
+              <button
+              style="margin: 10px;"
+              type="submit"
+              matSuffix
+              mat-stroked-button 
+              [disabled]="formNumerosSelecionados.invalid" cdkFocusInitial>
+              Gerar Fechamento
+            </button>
+  
+            </div>
+          </section>
+        </form>
+       
+       
+  
+      </section>
+  
+      <mat-divider style="width: 100%; margin: 8px 0px;"></mat-divider>
+  
+      <!--Resumo sobre o fechamento selecionado-->
+      <section class="sub-section-fechamento" *ngIf="fechamentos.length > 0">
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <p style="padding: 8px; margin: 8px 0px; text-align: center; width: 100%; ">O seu fechamento</p>
+        </section>
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <div style="padding: 4px; margin: 4px 0px; text-align: center;" *ngFor="let numGerado of numerosGerados;  let i = index">
+            <!-- <p *ngIf="i == 0" style="min-width: 28px">( {{numGerado}}</p>
+            <p *ngIf="(i !== (numerosGerados.length-1)) && i!== 0">{{numGerado}},</p>-->
+            <p *ngIf="i == (numerosGerados.length-1)" style="min-width: 28px">{{numGerado}}</p> 
+            <p *ngIf="(i !== (numerosGerados.length-1))">{{numGerado}},</p>
+          </div>
+        </section>
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+            <p class="text-descrip">Com esse fechamento de {{numeros.length}} números que busca a garantia de pelo menos {{garantirAcertos}} acertos, você vai precisar fazer <b>{{fechamentos.length}} jogos </b> de {{tamanhoJogo}} números</p>
+        </section>
+
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+            <p class="text-descrip">O custo total do bolão vai ser de <b>{{valorTotalBolao  | currency}}</b>, dividido por <b>{{qtdCotas}} cotas</b> com o valor por cota de <b>{{valorPorCota  | currency}} reais </b></p>
+        </section>
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <p class="text-descrip">O próximo sorteio é dia {{this.formNumerosSelecionados.value.dataSorteio | date: 'd/M/yy'}} com prêmio previsto de  {{this.formNumerosSelecionados.value.premio | currency }}</p>
+        </section>
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <p class="text-descrip">Com base nos ultimos {{resultadosUltimos2024.length}} jogos você teria acertado {{totalQuadras}} de 11 acerto, {{totalQuinas}} de 12 acertos, {{totalSenas}} de 13 acertos , {{totalQuatorzeAcertos}} de 14 acertos</p>
+        </section>
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" *ngIf="probabilidade !== 0">
+          <p class="text-descrip"> A probabilidade de você acertar  {{garantirAcertos}} números entre os escolhidos é de 1 para {{probabilidade}}</p>
+        </section>
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" *ngIf="msgErroCotas">
+          <span style="padding: 8px; margin: 0px; color: brown;">{{msgErroCotas}}</span>
+        </section>
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" *ngIf="msgErroCotas2">
+          <span style="padding: 8px; margin: 0px; color: brown;">{{msgErroCotas2}}</span>
+        </section>
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" *ngIf="msgErroCotas3" >
+          <span style="padding: 8px; margin: 0px; color: brown;">{{msgErroCotas3}}</span>
+        </section>
+      </section>
+  
+      <!--array de jogos gerados-->
+      <section class="sub-section-fechamento" style="margin-top: 32px;" *ngIf="resultadosJogos.length > 0">
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  *ngFor="let resultJogo of resultadosJogos; index as i">
+          <mat-divider *ngIf="(i%3) == 1"> </mat-divider>
+
+          <mat-divider style="width: 100%; margin: 8px 0px;" *ngIf="((i+1)%3) == 1">jogo</mat-divider>
+          <div *ngFor="let res of resultJogo.jogo">
+            <p style="padding: 8px; margin: 0px;">{{res}}</p>
+          </div>
+          <p style="padding: 8px; margin: 0px; color: grey;">({{resultJogo.quadras}} {{resultJogo.quinas}} {{resultJogo.senas}} {{resultJogo.quatorzer}})</p>
+        </section>
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;">
+          <p style="padding: 8px; margin: 0px; color: grey; margin-top: 24px; text-align: center">(11 12 13 14) acertos que seriam feitas nos ultimos {{resultadosUltimos2024.length}} jogos</p>
+        </section>
+      </section>
+  
+      <!--botões de download-->
+      <section class="sub-section-fechamento" *ngIf="fechamentos.length > 0">
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap; width: 100%; " >
+          <p style="padding: 8px; margin: 8px 0px; text-align: center; ">Fazer o download do jogo em pdf</p>
+        </section>
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="gerarPDF('resumo')">
+            <mat-icon>cloud_download</mat-icon>Resumo
+          </button>
+            <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="gerarPDF('completo')">
+            <mat-icon>cloud_download</mat-icon>Completo
+          </button>
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="gerarPDF('jogo')">
+            <mat-icon>cloud_download</mat-icon>Jogo
+          </button>
+        </section>
+      </section>
+    </section>
+    
+
+    
+
+    <mat-divider style="width: 100%; margin: 54px 0px 54px;"></mat-divider>
+    <section class="section-fechamento">
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap; margin: 8px 0px 0px 0px; " >
+          <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85); align-items: center;">Atualização 11/04/25 - Outras informações em </p>
+          <a  style="padding: 4px 0px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85); align-items: center;" href="https://loterias.caixa.gov.br/Paginas/Dupla-Sena.aspx" target="_blank" rel="noopener noreferrer">Loterias Caixa</a>
+          <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85); align-items: center;">| Desenvolvido por KLRS</p>
+      </section>
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap; margin: 8px 0px 40px 0px; " >
+        <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85); text-align: center">A estratégia de fechamentos de jogos é uma abordagem econômica para aumentar as chances de ganhar prêmios secundários. Para otimizar a quantidade de apostas, o algoritmo pode excluir algumas combinações.</p>
+    </section>
+    </section>
+
+     
+
+  </section>
+
+  </main>
