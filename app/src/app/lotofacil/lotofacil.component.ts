@@ -514,11 +514,31 @@ export class LotofacilComponent {
 
     this.processando = true;
     // Gerar fechamento otimizado
-    this.fechamentos = await this.fecharJogos(this.numeros, this.tamanhoJogo, this.garantirAcertos);
+
+    const embaralhados = this.embaralharArray(this.numeros);
+    
+    //this.fechamentos = await this.fecharJogos(this.numeros, this.tamanhoJogo, this.garantirAcertos);
+    const fechamentoEmbaralhado = await this.fecharJogos(embaralhados, this.tamanhoJogo, this.garantirAcertos);
+    this.fechamentos = []
+    fechamentoEmbaralhado.forEach((linha, indiceLinha) => {
+      var construindoArrayLinha = linha
+      construindoArrayLinha.sort((a, b) => a - b);
+      this.fechamentos.push(construindoArrayLinha)
+    });
+
     this.calcularCustoJogo()
     this.processando = false;
     this.calcularResultados(this.fechamentos);
     this.verificarProbabilidade(this.numeros.length, this.garantirAcertos)
+  }
+
+  embaralharArray(arr: number[]): number[] {
+    const array = [...arr]; // Faz uma cópia para não alterar o original
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]]; // Troca os elementos
+    }
+    return array;
   }
 
   // Função para gerar o fechamento otimizado
