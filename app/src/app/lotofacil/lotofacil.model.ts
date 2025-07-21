@@ -38,3 +38,19 @@ export interface ConfiguracaoLoteria {
     tamanhoJogo: number;   // Quantos números devem ser sugeridos (ex: 6, 15, 5)
     jogosAnteriores: number[][]; // Lista dos jogos passados
   }
+
+
+
+  export interface ResultadoLotofacil {
+  concurso: number;
+  dataApuracao: string;
+  listaDezenas: string[]; // ex: ["01", "05", "..."]
+  valorEstimadoProximoConcurso: number;
+  // outros campos conforme a API
+}
+
+
+export interface ResultadoJogo {
+  numeros: [number, boolean][]; // Lista de [número, acertou?]
+  acertos: number;              // Total de acertos
+}

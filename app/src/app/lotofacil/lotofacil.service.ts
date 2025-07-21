@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { ConfiguracaoLoteria } from './lotofacil.model';
+import { ConfiguracaoLoteria, ResultadoLotofacil } from './lotofacil.model';
+import { HttpClient } from '@angular/common/http';
 //import { AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 /* import { Firestore, collectionData, doc, getDoc, onSnapshot } from '@angular/fire/firestore';
 import { collection, addDoc, Timestamp, setDoc, serverTimestamp } from "firebase/firestore"; 
@@ -8,7 +9,7 @@ import { collection, addDoc, Timestamp, setDoc, serverTimestamp } from "firebase
 // import { PesquisaArquetipo } from './question.model';
 import { observeInsideAngular } from '@angular/fire'; */
 
-
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class  LotofacilService {
 
  // firestore: Firestore = inject(Firestore);
 
-  constructor() {    }
+  constructor(private http: HttpClient) {    }
     
 
   private numerosLotofacil = Array.from({ length: 25 }, (_, i) => i + 1); // Números de 1 a 60
@@ -359,6 +360,17 @@ export class  LotofacilService {
       sugestao,
       numerosMaisFrequentes: maisFrequentes
     };
+  }
+
+
+
+
+
+
+  private base = 'https://servicebus2.caixa.gov.br/portaldeloterias/api';
+
+   getUltimoResultadoLotofacil(): Observable<ResultadoLotofacil> {
+    return this.http.get<ResultadoLotofacil>(`${this.base}/lotofacil/`);
   }
 
 

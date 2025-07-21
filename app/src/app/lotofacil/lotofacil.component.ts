@@ -19,10 +19,11 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { cods, resultadoLotofacil } from './resultado';
 import { PdfService } from './pdf.service';
-import { pdfLoteria } from './lotofacil.model';
+import { pdfLoteria, ResultadoJogo, ResultadoLotofacil } from './lotofacil.model';
 pdfMake.vfs = pdfFonts.vfs;
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {provideNativeDateAdapter} from '@angular/material/core';
+
 
 @Component({
   selector: 'app-setup',
@@ -650,6 +651,38 @@ export class LotofacilComponent {
       case 'jogo': pdfMake.createPdf(documentDefinition).download(new Date().getDate+'/'+new Date().getMonth+'Fechamento-'+varPdfLoteria.numeros.length+'números-'+varPdfLoteria.garantirAcertos+'acertos - Jogo'); break;
       default: pdfMake.createPdf(documentDefinition).open(); break;
     } 
+  }
+
+  resultado!: ResultadoLotofacil;
+
+  fechamentosConferidos: ResultadoJogo[] = []
+
+  conferirJogos(){
+    this.loteriaService.getUltimoResultadoLotofacil().subscribe(res => {
+      this.resultado = res;
+      const dezenas = res.listaDezenas.map(d => Number(d));
+      this.fechamentosConferidos = this.conferirJogosDetalhadoComAcertos(this.fechamentos, dezenas);
+      console.log(this.fechamentosConferidos);
+    });
+  }
+
+  conferirJogosDetalhadoComAcertos(
+    jogosFechamento: number[][],
+    resultadoSorteio: number[]
+  ): ResultadoJogo[] {
+    return jogosFechamento.map(jogo => {
+      const resultadoNumeros: [number, boolean][] = jogo.map(numero => {
+        const acertou = resultadoSorteio.includes(numero);
+        return [numero, acertou];
+      });
+
+      const acertos = resultadoNumeros.filter(([_, acertou]) => acertou).length;
+
+      return {
+        numeros: resultadoNumeros,
+        acertos
+      };
+    });
   }
 
 }

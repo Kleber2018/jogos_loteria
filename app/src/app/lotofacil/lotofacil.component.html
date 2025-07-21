@@ -530,6 +530,59 @@
             <mat-icon>cloud_download</mat-icon>Jogo
           </button>
         </section>
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="conferirJogos()">
+            <mat-icon>manage_search</mat-icon>Conferir jogo
+          </button>
+        </section>
+      </section>
+    </section>
+
+
+
+    <!-- Jogos conferidos com resultado -->
+    <section class="sub-section-fechamento" style="margin-top: 32px;" *ngIf="fechamentosConferidos.length > 0">
+      <section 
+        style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  
+        *ngFor="let resultJogo of fechamentosConferidos; index as i"
+      >
+        <mat-divider *ngIf="(i % 3) == 1"></mat-divider>
+
+        <mat-divider style="width: 100%; margin: 8px 0px;" *ngIf="((i + 1) % 3) == 1">
+          Jogo {{ i + 1 }} – {{ resultJogo.acertos }} acertos
+        </mat-divider>
+
+      <div *ngFor="let par of resultJogo.numeros">
+        <span 
+          [ngStyle]="{
+            padding: '8px', 
+            margin: '0px', 
+            display: 'inline-block',
+            color: par[1] ? 'green' : 'gray',
+            fontWeight: par[1] ? 'bold' : 'normal'
+          }"
+        >
+          {{ par[0] }}
+        </span>
+      </div>
+
+        <p 
+          style="padding: 8px; margin: 0px; color: grey; width: 100%; text-align: center;"
+        >
+          Total de acertos: {{ resultJogo.acertos }}
+        </p>
+      </section>
+
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;">
+        <p 
+          style="padding: 8px; margin: 0px; color: grey; margin-top: 24px; text-align: center"
+        >
+          (11 12 13 14) acertos que seriam feitas nos últimos {{ fechamentosConferidos.length }} jogos
+        </p>
       </section>
     </section>
     
@@ -539,7 +592,7 @@
     <mat-divider style="width: 100%; margin: 54px 0px 54px;"></mat-divider>
     <section class="section-fechamento">
       <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap; margin: 8px 0px 0px 0px; " >
-          <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85); align-items: center;">Atualização 15/04/25 - Outras informações em </p>
+          <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85); align-items: center;">Atualização 20/07/25 - Outras informações em </p>
           <a  style="padding: 4px 0px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85); align-items: center;" href="https://loterias.caixa.gov.br/Paginas/lotofacil.aspx" target="_blank" rel="noopener noreferrer">Loterias Caixa</a>
           <p style="padding: 4px; margin: 4px 0px 4px 0px; color: rgb(85, 85, 85); align-items: center;">| Desenvolvido por KLRS</p>
       </section>
