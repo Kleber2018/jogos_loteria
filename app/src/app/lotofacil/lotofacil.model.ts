@@ -31,3 +31,10 @@ export interface timeTotalizerProjects {
         premio: number,
         dataSorteio: any
       }
+
+
+export interface ConfiguracaoLoteria {
+    universo: number;      // Ex: 60 para Mega, 80 para Quina, etc.
+    tamanhoJogo: number;   // Quantos números devem ser sugeridos (ex: 6, 15, 5)
+    jogosAnteriores: number[][]; // Lista dos jogos passados
+  }

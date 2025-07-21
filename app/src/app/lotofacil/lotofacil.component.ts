@@ -40,8 +40,6 @@ export class LotofacilComponent {
 
   title = 'Calculadora de Fechamento';
 
-  numerosMaisSorteados = [46, 25, 45, 33, 11, 19, 20, 34, 43, 47]
-  numerosMenosSorteados = [12, 53, 44, 30, 51, 36, 23]
 
    resultadosUltimos2024 = resultadoLotofacil
 
@@ -57,7 +55,7 @@ export class LotofacilComponent {
   totalQuinas = 0;
   totalSenas = 0;
   totalQuatorzeAcertos = 0;
-  numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]; // Conjunto principal
+  //numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]; // Conjunto principal
   tamanhoJogo = 15; // Quantidade de números por jogo
   garantirAcertos = 11; // Garantia de 4 acertos
   fechamentos: number[][] = []; // Resultado final do fechamento
@@ -173,16 +171,48 @@ export class LotofacilComponent {
   }
 
   inicializarFormulárioJogo(){
-    this.numerosGerados = this.loteriaService.sugerirJogoCompletoQuadra(resultadoLotofacil, this.tamanhoJogo, Array.from({ length: 25 }, (_, i) => i + 1))
+    this.numerosGerados = this.loteriaService.sugerirJogoCompletoAlgoritmo1(resultadoLotofacil, this.tamanhoJogo, Array.from({ length: 25 }, (_, i) => i + 1))
     this.buildForm(this.numerosGerados)
-    console.log("+ sorteados em 2024:", this.numerosMaisSorteados)
-    console.log("- sorteados em 2024:", this.numerosMenosSorteados)    
   }
 
   gerarJogoNovamente(tamanho: number){
    // this.numerosGerados = this.megasenaService.gerarJogo(this.numerosMaisSorteados, this.numerosMenosSorteados, tamanho);
 
-    this.numerosGerados = this.loteriaService.sugerirJogoCompletoQuadra(resultadoLotofacil, tamanho, Array.from({ length: 25 }, (_, i) => i + 1))
+    this.numerosGerados = this.loteriaService.sugerirJogoCompletoAlgoritmo1(resultadoLotofacil, tamanho, Array.from({ length: 25 }, (_, i) => i + 1))
+    this.buildForm(this.numerosGerados)
+  }
+
+  gerarJogoNovamente2(tamanho: number){
+   // this.numerosGerados = this.megasenaService.gerarJogo(this.numerosMaisSorteados, this.numerosMenosSorteados, tamanho);
+  if(tamanho == 17){
+    this.garantirAcertos = 11
+    this.formNumerosSelecionados.patchValue({acertos: this.garantirAcertos });
+   } else if(tamanho == 18){
+    if(this.garantirAcertos > 9){
+      this.garantirAcertos = 9
+      this.formNumerosSelecionados.patchValue({acertos: this.garantirAcertos });
+    }
+   } else if(tamanho == 19){
+    if(this.garantirAcertos > 7){
+      this.garantirAcertos = 7
+      this.formNumerosSelecionados.patchValue({acertos: this.garantirAcertos });
+    }
+   } else if(tamanho >= 20){
+      if(this.garantirAcertos > 6){
+      this.garantirAcertos = 5
+      this.formNumerosSelecionados.patchValue({acertos: this.garantirAcertos });
+    }
+   }
+
+    const resultado = this.loteriaService.gerarSugestaoPorAgrupamento({
+      universo: 25,
+      tamanhoJogo: tamanho,
+      jogosAnteriores: resultadoLotofacil
+    })
+
+    console.log('Sugestão de jogo:', resultado.sugestao);
+    console.table(resultado.numerosMaisFrequentes);
+    this.numerosGerados = resultado.sugestao
     this.buildForm(this.numerosGerados)
   }
 
@@ -241,7 +271,7 @@ export class LotofacilComponent {
         premio: [this.formNumerosSelecionados.value.premio]
       }); 
 
-      this.gerarFechamento(numGerados)
+      //this.gerarFechamento(numGerados)
     } else  if(numGerados.length == 17){
       this.formNumerosSelecionados = this.formBuilder.group({
         n1: [numGerados[0], [ Validators.required, Validators.min(1), Validators.max(25)]],
@@ -272,7 +302,7 @@ export class LotofacilComponent {
         premio: [this.formNumerosSelecionados.value.premio]
       }); 
 
-      this.gerarFechamento(numGerados)
+      //this.gerarFechamento(numGerados)
     } else  if(numGerados.length == 18){
       this.formNumerosSelecionados = this.formBuilder.group({
         n1: [numGerados[0], [ Validators.required, Validators.min(1), Validators.max(25)]],
@@ -303,7 +333,7 @@ export class LotofacilComponent {
         premio: [this.formNumerosSelecionados.value.premio]
       }); 
 
-      this.gerarFechamento(numGerados)
+      //this.gerarFechamento(numGerados)
     } else  if(numGerados.length == 19){
       this.formNumerosSelecionados = this.formBuilder.group({
         n1: [numGerados[0], [ Validators.required, Validators.min(1), Validators.max(25)]],
@@ -334,7 +364,7 @@ export class LotofacilComponent {
         premio: [this.formNumerosSelecionados.value.premio]
       }); 
 
-      this.gerarFechamento(numGerados)
+     // this.gerarFechamento(numGerados)
     } else  if(numGerados.length == 20){
       this.formNumerosSelecionados = this.formBuilder.group({
         n1: [numGerados[0], [ Validators.required, Validators.min(1), Validators.max(25)]],
@@ -365,12 +395,15 @@ export class LotofacilComponent {
         premio: [this.formNumerosSelecionados.value.premio]
       }); 
 
-      this.gerarFechamento(numGerados)
+     // this.gerarFechamento(numGerados)
     } 
   }
 
   submitCalcularFechamento(){
-    this.gerarFechamento(this.numeros)
+
+
+    
+    this.gerarFechamento()
     this.calcularCustoJogo()
   }
 
@@ -380,17 +413,17 @@ export class LotofacilComponent {
     this.msgErroCotas2 = ""
     this.msgErroCotas3 = ""
     if (this.tamanhoJogo == 15) {
-      this.valorCadaJogo = 3;
+      this.valorCadaJogo = 3.5;
     } else if (this.tamanhoJogo == 16) {
-      this.valorCadaJogo = 48;
+      this.valorCadaJogo = 56;
     } else if (this.tamanhoJogo == 17) {
-      this.valorCadaJogo = 408;
+      this.valorCadaJogo = 476;
     } else if (this.tamanhoJogo == 18) {
-      this.valorCadaJogo = 2448;
+      this.valorCadaJogo = 2856;
     } else if (this.tamanhoJogo == 19) {
-      this.valorCadaJogo = 11628;
+      this.valorCadaJogo = 13566;
     } else if (this.tamanhoJogo == 20) {
-      this.valorCadaJogo = 46512;
+      this.valorCadaJogo = 54264;
     } 
 
 
@@ -499,7 +532,7 @@ export class LotofacilComponent {
   }
 
 
-  async gerarFechamento(nGerados: number[]) {
+  async gerarFechamento() {
     let nums = Array.from({ length: 21 }, (_, i) => 
       this.formNumerosSelecionados.value[`n${i + 1}`]
     );
@@ -507,7 +540,7 @@ export class LotofacilComponent {
     nums = [...new Set(nums)].filter(num => num !== null && num !== undefined);
     // Exibir o resultado
 
-    this.numeros = nums;
+    this.numerosGerados = nums;
     this.tamanhoJogo = this.formNumerosSelecionados.value.tamanhoJogo
     this.garantirAcertos = this.formNumerosSelecionados.value.acertos
 
@@ -515,7 +548,7 @@ export class LotofacilComponent {
     this.processando = true;
     // Gerar fechamento otimizado
 
-    const embaralhados = this.embaralharArray(this.numeros);
+    const embaralhados = this.embaralharArray(this.numerosGerados);
     
     //this.fechamentos = await this.fecharJogos(this.numeros, this.tamanhoJogo, this.garantirAcertos);
     const fechamentoEmbaralhado = await this.fecharJogos(embaralhados, this.tamanhoJogo, this.garantirAcertos);
@@ -529,7 +562,7 @@ export class LotofacilComponent {
     this.calcularCustoJogo()
     this.processando = false;
     this.calcularResultados(this.fechamentos);
-    this.verificarProbabilidade(this.numeros.length, this.garantirAcertos)
+    this.verificarProbabilidade(this.numerosGerados.length, this.garantirAcertos)
   }
 
   embaralharArray(arr: number[]): number[] {
@@ -592,7 +625,7 @@ export class LotofacilComponent {
   async gerarPDF(tipoPdf: string) {
 
     const varPdfLoteria: pdfLoteria = {
-        numeros: this.numeros, 
+        numeros: this.numerosGerados, 
         jogos: this.fechamentos, 
         garantirAcertos: this.garantirAcertos, 
         tamanhoJogosVolante: this.tamanhoJogo, 

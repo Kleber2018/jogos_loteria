@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { ConfiguracaoLoteria } from './lotofacil.model';
 //import { AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 /* import { Firestore, collectionData, doc, getDoc, onSnapshot } from '@angular/fire/firestore';
 import { collection, addDoc, Timestamp, setDoc, serverTimestamp } from "firebase/firestore"; 
@@ -243,7 +244,7 @@ export class  LotofacilService {
       return count;
     }
 
-    sugerirJogoCompletoQuadra(jogos: number[][], quantidadeNumeros: number, universo: number[]): number[] {
+    sugerirJogoCompletoAlgoritmo1(jogos: number[][], quantidadeNumeros: number, universo: number[]): number[] {
       const freq = this.contarFrequencias(jogos);
       const mediaSoma = this.calcularMediaSoma(jogos, quantidadeNumeros);
       const numerosMenosFrequentes = this.encontrarNumerosMenosFrequentes(jogos, universo, 10);
@@ -290,6 +291,75 @@ export class  LotofacilService {
   
       return melhor;
     }
+
+
+
+
+
+
+
+
+
+ 
+
+  gerarSugestaoPorAgrupamento(config: ConfiguracaoLoteria): {
+    sugestao: number[],
+    numerosMaisFrequentes: { numero: number, ocorrencias: number }[]
+  } {
+    const { universo, tamanhoJogo, jogosAnteriores } = config;
+
+    const grupos: number[][][] = [];
+    for (let i = 0; i < jogosAnteriores.length; i += 10) {
+      grupos.push(jogosAnteriores.slice(i, i + 10));
+    }
+
+    const frequenciaGlobal: Record<number, number> = {};
+
+    for (const grupo of grupos) {
+      const contador: Record<number, number> = {};
+
+      for (const jogo of grupo) {
+        for (const numero of jogo) {
+          contador[numero] = (contador[numero] || 0) + 1;
+        }
+      }
+
+      const top5 = Object.entries(contador)
+        .sort((a, b) => Number(b[1]) - Number(a[1]))
+        .slice(0, 10)
+        .map(([numero]) => Number(numero));
+
+      for (const numero of top5) {
+        frequenciaGlobal[numero] = (frequenciaGlobal[numero] || 0) + 1;
+      }
+    }
+
+    // Top 25 números mais frequentes globalmente
+    const maisFrequentes = Object.entries(frequenciaGlobal)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 25)
+      .map(([numero, ocorrencias]) => ({
+        numero: Number(numero),
+        ocorrencias: ocorrencias
+      }));
+
+    const pool = maisFrequentes.map((n) => {return n.numero;});
+
+    // Gerar sugestão de jogo a partir dos mais frequentes
+    const sugestaoSet = new Set<number>();
+    while (sugestaoSet.size < tamanhoJogo) {
+      const escolhido = pool[Math.floor(Math.random() * pool.length)];
+      sugestaoSet.add(escolhido);
+    }
+
+
+    const sugestao = Array.from(sugestaoSet).sort((a, b) => a - b);
+
+    return {
+      sugestao,
+      numerosMaisFrequentes: maisFrequentes
+    };
+  }
 
 
   }
