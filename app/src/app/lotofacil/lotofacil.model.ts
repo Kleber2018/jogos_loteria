@@ -42,7 +42,7 @@ export interface ConfiguracaoLoteria {
 
 
   export interface ResultadoLotofacil {
-  concurso: number;
+  numero: number;
   dataApuracao: string;
   listaDezenas: string[]; // ex: ["01", "05", "..."]
   valorEstimadoProximoConcurso: number;

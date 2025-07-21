@@ -18,7 +18,7 @@
           <div class="container-logo-text" style="width: 100%; justify-content: center;">
             <div class="container-logo-text">
               <mat-icon fontIcon="arrow_right"></mat-icon>
-              <p style="padding: 4px; margin: 0px 0px 0px; text-align: center;  align-self: center;"> Escolher até 14 números para montar o fechamento;</p>
+              <p style="padding: 4px; margin: 0px 0px 0px; text-align: center;  align-self: center;"> Escolher até 20 números para montar o fechamento;</p>
             </div>
           </div>
           <div class="container-logo-text" style="width: 100%; justify-content: center;">
@@ -540,12 +540,33 @@
           </button>
         </section>
       </section>
+      <mat-divider></mat-divider>
     </section>
 
 
 
     <!-- Jogos conferidos com resultado -->
     <section class="sub-section-fechamento" style="margin-top: 32px;" *ngIf="fechamentosConferidos.length > 0">
+      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;" >
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="conferirJogos(resultado.numero-1)">
+            <mat-icon>arrow_back</mat-icon>Sorteio anterior
+          </button>
+          <button
+            style="margin: 10px;"
+            matSuffix
+            mat-stroked-button 
+            (click)="conferirJogos(resultado.numero+1)">
+            <mat-icon>arrow_forward</mat-icon>Próximo Sorteio
+          </button>
+        </section>
+
+        <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;">
+           <p style="padding: 4px; margin: 8px 0px; text-align: center; font-weight: bolder; width: 100%; "> Resultado Conferido - Concurso {{ resultado.numero }} do dia {{ resultado.dataApuracao}}</p>
+        </section>
       <section 
         style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;"  
         *ngFor="let resultJogo of fechamentosConferidos; index as i"
@@ -577,13 +598,6 @@
         </p>
       </section>
 
-      <section style="display: flex; justify-content: center; align-self: center; flex-wrap: wrap;">
-        <p 
-          style="padding: 8px; margin: 0px; color: grey; margin-top: 24px; text-align: center"
-        >
-          (11 12 13 14) acertos que seriam feitas nos últimos {{ fechamentosConferidos.length }} jogos
-        </p>
-      </section>
     </section>
     
 

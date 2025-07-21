@@ -369,8 +369,13 @@ export class  LotofacilService {
 
   private base = 'https://servicebus2.caixa.gov.br/portaldeloterias/api';
 
-   getUltimoResultadoLotofacil(): Observable<ResultadoLotofacil> {
-    return this.http.get<ResultadoLotofacil>(`${this.base}/lotofacil/`);
+   getUltimoResultadoLotofacil(sorteioNumero?: number): Observable<ResultadoLotofacil> {
+    if(sorteioNumero){
+      return this.http.get<ResultadoLotofacil>(`${this.base}/lotofacil/${sorteioNumero}`);
+    } else {
+      return this.http.get<ResultadoLotofacil>(`${this.base}/lotofacil/`);
+    }
+
   }
 
 

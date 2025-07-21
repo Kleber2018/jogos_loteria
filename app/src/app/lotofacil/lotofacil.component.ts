@@ -657,13 +657,16 @@ export class LotofacilComponent {
 
   fechamentosConferidos: ResultadoJogo[] = []
 
-  conferirJogos(){
-    this.loteriaService.getUltimoResultadoLotofacil().subscribe(res => {
-      this.resultado = res;
-      const dezenas = res.listaDezenas.map(d => Number(d));
-      this.fechamentosConferidos = this.conferirJogosDetalhadoComAcertos(this.fechamentos, dezenas);
-      console.log(this.fechamentosConferidos);
-    });
+  conferirJogos(sorteioNumero?: number){
+
+      this.loteriaService.getUltimoResultadoLotofacil(sorteioNumero).subscribe(res => {
+        this.resultado = res;
+        const dezenas = res.listaDezenas.map(d => Number(d));
+        this.fechamentosConferidos = this.conferirJogosDetalhadoComAcertos(this.fechamentos, dezenas);
+        console.log(this.fechamentosConferidos);
+      });
+
+ 
   }
 
   conferirJogosDetalhadoComAcertos(
